@@ -1,0 +1,119 @@
+// def pizza
+------------
+Django code:
+
+pizza_list = Orders.objects.filter(user_name="admin")
+
+for pizza in pizza_list
+    pizza.pizza_name
+----------------------------------------
+SQL
+
+SELECT pizza_name
+FROM   Orders
+WHERE  user_name="admin"
+---------------------------------
+// def toppings
+--------------
+Django code:
+
+topping_list = Topping.objects.all()
+
+for topping in topping_list
+    topping.topping_name
+----------------------------------
+SQL
+
+SELECT topping_name
+FROM   Topping
+----------------------------------
+// def crust
+------------------------------
+Django code:
+
+crust_list = Crust.objects.all()
+
+for crust in crust_list
+    crust.crust_name
+-----------------------------
+SQL
+
+SELECT crust_name
+FROM   Crust
+------------------------------
+// def sauce
+------------------------------
+Django code:
+
+sauce_list = Sauce.objects.all()
+
+for sauce in sauce-list
+    sauce.sauce_name
+-----------------------------
+SQL
+
+SELECT sauce_name
+FROM   Sauce
+----------------------------
+// def calorie
+----------------------------
+pizza = Pizza.objects.get(pizza_name="Sausage")
+crust = Crust.objects.get(crust_name=pizza.crust_name)
+crust_calorie = crust.calorie
+
+sauce = Sauce.objects.get(sauce_name=pizza.sauce_name)
+sauce_calorie = sauce.calorie
+
+hasToppings = HasTopping.objects.filter(pizza_name=pizza.pizza_name)
+top_cal_sum = 0
+for ht in hasToppings:
+    topping = Topping.objects.get(topping_name = ht.topping_name)  
+    top_cal_sum = top_cal_sum + topping.calorie;
+--------------------------------------
+SQL
+
+SELECT calorie
+FROM   Pizza naturalJoin Crust
+WHERE  pizza_name = "Sausage"
+
+SELECT calorie
+FROM   Pizza naturalJoin Sauce
+WHERE  pizza_name = "Sausage"
+
+SELECT sum (calorie)
+FROM   Topping naturalJoin HasTopping
+WHERE  pizza_name = "Sausage"
+----------------------------------------------
+// def waste
+
+wasted_toppings = HasTopping.objects.filter(pizza_name="Pepperoni") \
+                      .select_related('order__pizza_name')
+
+for topping in wasted_toppings
+    topping.topping_name
+
+wasted_sauce = Pizza.objects.filter(pizza_name="Pepperoni") \
+                      .select_related('orders__pizza_name')
+
+for sauce in wasted_sauce
+    sauce.sauce_name
+
+wasted_crust = Pizza.objects.filter(pizza_name="Pepperoni") \
+                      .select_related('orders__pizza_name')
+
+for crust in wasted_crust
+    crust.crust.name
+----------------------------------------------------
+SQL
+
+SELECT topping_name
+FROM   Orders naturalJoin HasTopping
+WHERE  pizza_name = "Pepperoni"
+
+SELECT crust_name
+FROM   Orders naturalJoin Pizza
+WHERE  pizza_name = "Pepperoni"
+
+SELECT sauce_name
+FROM   Orders naturalJoin Pizza
+WHERE  pizza_name = "Pepperoni"
