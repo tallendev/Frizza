@@ -1,5 +1,14 @@
 # Django settings for Frizza project.
+import dj_database_url
 import os, sys
+
+DATABASES['default'] = dj_database_url.config()
+
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+ALLOWED_HOSTS = ['*']
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 #stackoverflow.com/questions/14012340/django-setting-up-urls-py-and-views-py
 PROJECT_ROOT = os.path.dirname(__file__)
