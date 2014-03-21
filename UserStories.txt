@@ -1,0 +1,75 @@
+1. Feature: Quick Select Pizzas
+2. As a user
+3. So I can pick a pizza that has already been created before
+4. I want to be able to click a pre-created pizza to quickly 
+choose my pizza.
+
+
+1. Feature: Create Your Own Pizza
+2. As a user
+3. So I can make my own pizza 
+4. I want to be able to click on the "Make Your Own!" button to 
+begin creating a pizza.
+
+
+1. Feature: New User Registration
+2. As a user
+3. So I can create an account
+4. I want to be able to click the "Register" button to go to 
+the "Registration" page to register as a new user.
+
+
+1. Feature: Topping Information
+2. As a user
+3. So I can verify my topping information
+4. I want to be prompted to check my toppings on the "Confirmation" 
+page, after I click the "Dispense" button.
+
+
+1. Feature: Pick Toppings
+2. As a user
+3. So that I can choose the toppings I want
+4. I want to be able to click the "Proceed to Toppings" button from 
+the "Sauce" page and go to a new page where the toppings are listed.
+
+
+1. Feature: Returns
+2. As a user
+3. So I can return unused pizzas.
+4. I want to be able to click the "Return" button that will take 
+me to the return pizza page.
+
+
+1. Feature: Allergy Warning
+2. As a user
+3. So that I don't die a horrible death
+4. I want to be able to see a screen warning about potential 
+allergies associated with the contents of my pizza, after clicking 
+"Confirm" on the "Confirmation" page. 
+
+
+________________
+
+
+1. Feature: Choose Sauce
+2. As a user
+3. So I can pick which sauce I want
+4. I want to be able to click the "Proceed to Sauce" button and 
+proceed to a new page where the sauce types are listed.
+
+
+1. Feature: Wastage
+2. As an employee
+3. So I can report wasted pizza
+4. I want to be able to click "Submit" and get a report of 
+wasted toppings in the same way that it reports returned toppings.
+
+
+1. Feature: Back
+2. As a user
+3. So I can back up if I make a wrong selection
+4. I want to be able to click the "Back" button to return 
+to the previous page from the crust, sauce, and toppings pages.
+
+
+________________
