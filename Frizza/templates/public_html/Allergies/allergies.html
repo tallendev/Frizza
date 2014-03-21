@@ -64,7 +64,7 @@
                         {% endfor %}
                     {% else %}
                         <p>No allergies are available.</p>
-                    {% endif %}
+                    {% endif %}                       </ul> <!-- added close -->
                      {% if crust_allergies %}
                         <ul>
                         {% for allergy in crust_allergies %}
@@ -80,13 +80,12 @@
                         {% endfor %}
                     {% else %}
                         <p>No allergies are available.</p>
-                    {% endif %}                  </div>
+                    {% endif %}                       </ul> <!-- added close -->
+                    </div>
                 </div>
                 <p class="lead">
-                    <a href="http://getbootstrap.com/examples/cover/#"
-                       class="btn btn-lg btn-primary">I Understand</a>
-                    <a href="http://getbootstrap.com/examples/cover/#"
-                       class="btn btn-lg btn-default">Back to Pizza</a>
+                    <a href="/goodbye" class="btn btn-lg btn-primary">I Understand</a>
+                    <a href="/pizza" class="btn btn-lg btn-default" type="submit">Back to Pizza</a>
                 </p>
             </div>
 

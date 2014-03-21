@@ -7,25 +7,30 @@ from django.conf.urls.static import static
 # admin.autodiscover()
 
 urlpatterns = patterns('',
-    # Examples:
-    # url(r'^$', 'Frizza.views.home', name='home'),
-    # url(r'^Frizza/', include('Frizza.foo.urls')),
-
-    # Uncomment the admin/doc line below to enable admin documentation:
-    # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
-
-    # Uncomment the next line to enable the admin:
-    # url(r'^admin/', include(admin.site.urls)),
+    # View for login page.
     url(r'^login/', views.LoginView.as_view()),
+    # Login is the default page.
     url(r'^$', views.LoginView.as_view(), name='login'),
+    # View for the disclaimer page.
     url(r'^disclaimer/', views.DisclaimerView.as_view(), name='disclaimer'),
-    #url(r'^admin/', include('admin.urls')),
+    # View for toppings page.
     url(r'^toppings/', 'Frizza.views.toppings', name='toppings'),
-    url(r'^allergies/', 'Frizza.views.allergy', name='allergies'),
+    # View for registration page.
+    url(r'^registration/', views.RegistrationView.as_view(), name='registeration'),
+    # View for allergies page.
+    url(r'^allergies/', views.AllergiesView.as_view(), name='allergies'),
+    # View for Pizza display page.
     url(r'^pizza/', 'Frizza.views.pizza', name='pizza'),
+    # View for crust page.
     url(r'^crust/', 'Frizza.views.crust', name='crust'),
+    # View for sauce page.
     url(r'^sauce/', 'Frizza.views.sauce', name='sauce'),
+    # View for confirmation page. Currently being displayed by calorie.
     url(r'^confirmation/', 'Frizza.views.calorie', name='confirmation'),
+    # View for goodbye page.
     url(r'^goodbye/', views.GoodbyeView.as_view(), name='goodbye'),
+    # View for login page.
     url(r'^return/', 'Frizza.views.waste', name='return'),
+    # This sets up the static section properly so that static content
+    # is distributed properly in production.
 ) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

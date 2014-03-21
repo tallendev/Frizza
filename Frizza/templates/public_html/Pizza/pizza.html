@@ -64,8 +64,8 @@
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
                 <li class="active"><a href="http://getbootstrap.com/examples/theme/#">Pizza</a></li>
-                <li><a href="http://getbootstrap.com/examples/theme/#about">Return Pizza</a></li>
-                <li><a href="http://getbootstrap.com/examples/theme/#about">Sign Out</a></li>
+                <li><a href="/return">Return Pizza</a></li>
+                <li><a href="/login">Sign Out</a></li>
             </ul>
         </div><!--/.nav-collapse -->
     </div>
@@ -84,24 +84,30 @@
                 <div class="list-group">
                 {% if admin_list %}
                     {% for pizza in admin_list %}
-                        <a href="/confirmation/" class="btn btn-lg btn-default">{{ pizza.pizza_name }}</a>                {% endfor %}
+                        <a href="/confirmation" class="btn btn-lg btn-default">{{ pizza.pizza_name }}</a>                {% endfor %}
                 {% else %}
                     <p> No default pizzas are available.</p>
                 {% endif %}
                 {% if user_list %}
                     {% for pizza in user_list %}
-                    <a href="/confirmation/" class="btn btn-lg btn-default">{{ pizza.pizza_name }}</a>
+                    <a href="/confirmation" class="btn btn-lg btn-default">{{ pizza.pizza_name }}</a>
                     {% endfor %}
                 {% endif %}
-                    <a href="/crust/" class="btn btn-lg btn-info">Make Your
-                        Own!</a>
+                    <a href="/crust" class="btn btn-lg btn-info">Make Your Own!</a>
                 </div>
             </div>
         </div>
     </div>
 
+
+    <div class="alert alert-success">
+        <strong>Your registration was successful!</strong>
+    </div>
     <div class="alert alert-success">
         <strong>Your order has been completed.</strong>
+    </div>
+    <div class="alert alert-success">
+        <strong>Your pizza has been returned successfully.</strong>
     </div>
     <div class="alert alert-danger">
         <strong>Your order has been canceled.</strong>

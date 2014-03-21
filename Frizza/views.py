@@ -133,65 +133,86 @@ def waste(request):
     })
     return HttpResponse(template.render(context))
 
-# Most of the following functions are unused and were replaced by the above
-# functions. However, I am keeping them here in case something still depends
-# on them or if they become useful in the future.
+
+# This function provides the appropriate response to a request for the registration
+# page.
+def registration(request):
+    registration_list = Registration.objects.all()
+    template = loader.get_template(settings.TEMPLATE_DIRS + \
+                                   '/public_html/Registration/registration.html')
+
+    context = RequestContext(request, {
+         'registration_list': registration_list,
+    })
+    return HttpResponse(template.render(context))
+
+
+
+
+
+# This provides the template path for the urls.py file.
 class LoginView(TemplateView):
     model = User
     template_name = settings.TEMPLATE_DIRS + \
                     '/public_html/login.html'
 
-
+# This provides the template path for the urls.py file.
 class DisclaimerView(TemplateView):
     model = User
     template_name = settings.TEMPLATE_DIRS + \
                     '/public_html/Disclaimer/disclaimer.html'
 
 
+# This provides the template path for the urls.py file.
 class ToppingsView(TemplateView):
     model = User
     template_name = settings.TEMPLATE_DIRS + \
                     '/public_html/Toppings/toppings.html'
 
-
+# This provides the template path for the urls.py file.
 class AllergiesView(TemplateView):
     model = User
     template_name = settings.TEMPLATE_DIRS + \
                     '/public_html/Allergies/allergies.html'
 
-
+# This provides the template path for the urls.py file.
 class PizzaView(TemplateView):
     model = User
     template_name = settings.TEMPLATE_DIRS + \
                     '/public_html/Pizza/pizza.html'
 
-
+# This provides the template path for the urls.py file.
 class CrustView(TemplateView):
     model = User
     template_name = settings.TEMPLATE_DIRS + \
                     '/public_html/Crust/crust.html'
 
-
+# This provides the template path for the urls.py file.
 class SauceView(TemplateView):
     model = User
     template_name = settings.TEMPLATE_DIRS + \
                     '/public_html/Sauce/sauce.html'
 
-
+# This provides the template path for the urls.py file.
 class ConfirmationView(TemplateView):
     model = User
     template_name = settings.TEMPLATE_DIRS + \
                     '/public_html/Confirmation/confirmation.html'
 
-
+# This provides the template path for the urls.py file.
 class GoodbyeView(TemplateView):
     model = User
     template_name = settings.TEMPLATE_DIRS + \
                     '/public_html/Goodbye/goodbye.html'
 
-
+# This provides the template path for the urls.py file.
 class ReturnView(TemplateView):
     model = User
     template_name = settings.TEMPLATE_DIRS + \
                     '/public_html/Return/return.html'
 
+# This provides the template path for the urls.py file.
+class RegistrationView(TemplateView):
+    model = User
+    template_name = settings.TEMPLATE_DIRS + \
+                    '/public_html/Registration/registration.html'

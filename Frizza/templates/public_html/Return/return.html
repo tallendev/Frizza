@@ -85,13 +85,9 @@
         <div class="page-header">
         </div>
 
-        <div class="alert alert-success">
-            <strong>Please put your pizza in the box and slide it into the machine below.</strong>
-        </div>
-        <div class="alert alert-danger">
-            <strong>Oops!</strong> Please choose a pizza to return.
-        </div>
-       
+
+        <p class="lead">Wasted Toppings:</p>
+
         {% if wasted_toppings %}
             <ul>
             {% for topping in wasted_toppings %}
@@ -101,6 +97,9 @@
         {% else %}
         <p> No toppings wasted </p>
         {% endif %}
+
+        <p class="lead">Wasted Sauce:</p>
+
         {% if wasted_sauce %}
             <ul>
             {% for sauce in wasted_sauce %}
@@ -110,6 +109,9 @@
         {% else %}
         <p> No sauce wasted </p>
         {% endif %}
+
+        <p class="lead">Wasted Crust:</p>
+
         {% if wasted_crust %}
             <ul>
             {% for crust in wasted_crust %}
@@ -120,12 +122,21 @@
         <p> No crust wasted </p>
         {% endif %}
 
+
+        <div class="alert alert-success">
+            <strong>Please put your pizza in the box and slide it into the machine below.</strong>
+        </div>
+        <div class="alert alert-danger">
+            <strong>Oops!</strong> Please choose a pizza to return.
+        </div>
+
+
         <div class="row">
             <div class="column">
                 <div class="button_container">
                     <p>
-                        <button type="button" class="btn btn-lg btn-primary">Return Pizza</button>
-                        <button type="button" class="btn btn-lg btn-default">Back to Pizzas</button>
+                        <a href="/pizza" class="btn btn-lg btn-primary" type="submit">Return Pizza</a>
+                        <a href="/pizza" class="btn btn-lg btn-default" type="submit">Back to Pizzas</a>
                     </p>
                 </div>
             </div>

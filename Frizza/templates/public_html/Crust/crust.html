@@ -58,8 +58,9 @@
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                <li class="active"><a
-                        href="http://getbootstrap.com/examples/theme/#">Crust</a></li>
+                <li class="active"><a href="">Crust</a></li> <!-- http://getbootstrap.com/examples/theme/# -->
+
+
             </ul>
         </div><!--/.nav-collapse -->
     </div>
@@ -77,8 +78,7 @@
                 <div class="list-group">
                 {% if crust_list %}
                     {% for crust in crust_list %}
-                    <a href="http://getbootstrap.com/examples/theme/#"
-                       class="list-group-item">{{ crust.crust_name }}</a>
+                    <a href="" class="list-group-item">{{ crust.crust_name }}</a><!-- http://getbootstrap.com/examples/theme/# -->
                     {% endfor %}
                 {% else %}
                     <p>No crust</p>
@@ -101,8 +101,8 @@
             <div class="column">
                 <div class="button_container">
                     <p>
-                        <button type="button" class="btn btn-lg btn-primary">Proceed to Sauce</button>
-                        <button type="button" class="btn btn-lg btn-default">Back</button>
+                        <a href="/sauce" class="btn btn-lg btn-primary" type="submit">Proceed to Sauce</a>
+                        <a href="/pizza" class="btn btn-lg btn-default">Back</a>
                     </p>
                 </div>
             </div>
