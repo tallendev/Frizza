@@ -59,6 +59,11 @@
                         <ul>
                             <li>Item 1</li>
                             <li>Item 2</li>
+                        {% if cal_total %}
+                        <p>Total Calories: {{ cal_total }}</p>
+                        {% else %}
+                        <p>No calories!</p>
+                        {% endif %}
                         </ul>
                     </div>
                 </div>
