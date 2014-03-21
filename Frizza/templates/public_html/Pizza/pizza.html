@@ -1,0 +1,122 @@
+<!--This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+    Tyler Allen, Trevor Griggs, Hayden Thomas
+
+-->
+
+
+<!DOCTYPE html>
+<!-- saved from url=(0039)http://getbootstrap.com/examples/theme/ -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="/static/favicon.ico">
+
+    <title>Pizza</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="/static/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap theme -->
+    <link href="/static/dist/css/bootstrap-theme.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="/static/pizza.css" rel="stylesheet">
+
+    <!-- Just for debugging purposes. Don't actually copy this line! -->
+    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <style type="text/css"></style><style id="holderjs-style" type="text/css"></style></head>
+
+<body role="document">
+
+<!-- Fixed navbar -->
+<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand"
+               href="http://getbootstrap.com/examples/theme/#">Frizza</a>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="http://getbootstrap.com/examples/theme/#">Pizza</a></li>
+                <li><a href="http://getbootstrap.com/examples/theme/#about">Return Pizza</a></li>
+                <li><a href="http://getbootstrap.com/examples/theme/#about">Sign Out</a></li>
+            </ul>
+        </div><!--/.nav-collapse -->
+    </div>
+</div>
+
+<div class="container theme-showcase" role="main">
+
+    <div class="page-header">
+        <h1>What pizza would you like?</h1>
+        <p class="lead">Default pizzas come with classic crust and tomato sauce.</p>
+    </div>
+
+    <div class="list_container">
+        <div class="row">
+            <div class="column">
+                <div class="list-group">
+                {% if admin_list %}
+                    {% for pizza in admin_list %}
+                        <a href="/confirmation/" class="btn btn-lg btn-default">{{ pizza.pizza_name }}</a>                {% endfor %}
+                {% else %}
+                    <p> No default pizzas are available.</p>
+                {% endif %}
+                {% if user_list %}
+                    {% for pizza in user_list %}
+                    <a href="/confirmation/" class="btn btn-lg btn-default">{{ pizza.pizza_name }}</a>
+                    {% endfor %}
+                {% endif %}
+                    <a href="/crust/" class="btn btn-lg btn-info">Make Your
+                        Own!</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="alert alert-success">
+        <strong>Your order has been completed.</strong>
+    </div>
+    <div class="alert alert-danger">
+        <strong>Your order has been canceled.</strong>
+    </div>
+
+
+</div> <!-- /container -->
+
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="static/jquery.js"></script>
+<script src="static/dist/js/bootstrap.min.js"></script>
+<!-- <script src="./Theme Template for Bootstrap_files/docs.min.js"></script> -->
+
+
+</body></html>
