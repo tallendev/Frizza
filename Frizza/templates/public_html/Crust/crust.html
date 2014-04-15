@@ -102,13 +102,13 @@
         </div>
 
         <input type="hidden" name="next" value="/sauce" />
-
-        {% if form.errors %}
-        <div class="alert alert-danger">
-            <strong>Please choose a crust.</strong>
-        </div>
-        {% endif %}
     </form>
+
+    {% if form.errors %}
+    <div class="alert alert-danger">
+        <strong>Please choose a crust.</strong>
+    </div>
+    {% endif %}
 
     {% endblock %}
 
