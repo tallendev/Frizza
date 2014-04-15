@@ -61,7 +61,7 @@
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li><a >{{ user.username }}</a> </li>
-                <li><a href="/login">Sign Out</a></li>
+                <li><a href="/logout">Sign Out</a></li>
             </ul>
         </div><!--/.nav-collapse -->
     </div>
@@ -123,9 +123,14 @@
         <p> No crust wasted </p>
         {% endif %}
 
-
-        <div class="alert alert-success">
-            <strong>Please put your pizza in the box and slide it into the machine below.</strong>
+        <div class="row">
+            <div class="column">
+                <div class="button_container">
+                    <p>
+                        <a href="/pizza" class="btn btn-lg btn-primary" type="submit">Return Pizza</a>
+                    </p>
+                </div>
+            </div>
         </div>
 
         {% if form.errors %}
@@ -134,17 +139,6 @@
         </div>
         {% endif %}
 
-
-        <div class="row">
-            <div class="column">
-                <div class="button_container">
-                    <p>
-                        <a href="/pizza" class="btn btn-lg btn-primary" type="submit">Return Pizza</a>
-                        <a href="/pizza" class="btn btn-lg btn-default" type="submit">Back to Pizzas</a>
-                    </p>
-                </div>
-            </div>
-        </div>
     </div>
 </div>
 

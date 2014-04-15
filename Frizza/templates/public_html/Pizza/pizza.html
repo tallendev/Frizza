@@ -36,14 +36,6 @@
     <!-- Custom styles for this template -->
     <link href="/static/pizza.css" rel="stylesheet">
 
-    <!-- Just for debugging purposes. Don't actually copy this line! -->
-    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
-
-    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
     <style type="text/css"></style><style id="holderjs-style" type="text/css"></style></head>
 
 <body role="document">
@@ -67,7 +59,7 @@
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li><a >{{ user.username }}</a> </li>
-                <li><a href="/login">Sign Out</a></li>
+                <li><a href="/logout">Sign Out</a></li>
             </ul>
         </div><!--/.nav-collapse -->
     </div>
@@ -79,28 +71,34 @@
         <h1>What pizza would you like?</h1>
         <p class="lead">Default pizzas come with classic crust and tomato sauce.</p>
     </div>
-
     <div class="list_container">
         <div class="row">
             <div class="column">
                 <div class="list-group">
+
                 {% if admin_list %}
                     {% for pizza in admin_list %}
-                        <a href="/confirmation" class="btn btn-lg btn-default">{{ pizza.pizza_name }}</a>                {% endfor %}
+                    <form action="" method="post">{% csrf_token %}
+                        <input type="submit" class="btn btn-lg btn-default" name="pizza" value="{{ pizza.pizza_name }}">
+                    </form>
+                    {% endfor %}
                 {% else %}
                     <p> No default pizzas are available.</p>
                 {% endif %}
                 {% if user_list %}
                     {% for pizza in user_list %}
-                    <a href="/confirmation" class="btn btn-lg btn-default">{{ pizza.pizza_name }}</a>
+                    <form action="" method="post">{% csrf_token %}
+                    <input type="submit" class="btn btn-lg btn-default" name="pizza" value="{{ pizza.pizza_name }}">
+                    </form>
                     {% endfor %}
                 {% endif %}
-                    <a href="/crust" class="btn btn-lg btn-info">Make Your Own!</a>
+                    <form action="" method="post">{% csrf_token %}
+                    <input type="submit" class="btn btn-lg btn-info" name="pizza" value="Make Your Own!">
+                    </form>
                 </div>
             </div>
         </div>
     </div>
-
 
     <div class="alert alert-success">
         <strong>Your registration was successful!</strong>
@@ -127,6 +125,13 @@
 <!-- Placed at the end of the document so the pages load faster -->
 <script src="static/jquery.js"></script>
 <script src="static/dist/js/bootstrap.min.js"></script>
+<!-- Just for debugging purposes. Don't actually copy this line! -->
+<!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
 <!-- <script src="./Theme Template for Bootstrap_files/docs.min.js"></script> -->
 
 

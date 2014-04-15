@@ -61,7 +61,7 @@
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li><a >{{ user.username }}</a> </li>
-                <li><a href="/login">Sign Out</a></li>
+                <li><a href="/logout">Sign Out</a></li>
             </ul>
         </div><!--/.nav-collapse -->
     </div>
@@ -73,45 +73,45 @@
     <div class="page-header">
         <h1>What crust would you like?</h1>
     </div>
-    <div class="list_container">
+    <form action="" class="form-signin" method="post">{% csrf_token %}
         <div class="row">
             <div class="column">
-                <div class="list-group">
                 {% if crust_list %}
-                    {% for crust in crust_list %}
-                    <a class="list-group-item">{{ crust.crust_name }}</a><!-- http://getbootstrap.com/examples/theme/# -->
-                    {% endfor %}
+                {% for crust in crust_list %}
+                <input type="radio" name="crust" value="{{ crust.crust_name }}">{{ crust.crust_name }}<br>
+                {% endfor %}
                 {% else %}
-                    <p>No crust</p>
+                <p>No crust</p>
                 {% endif %}
-                </div>
             </div><!-- /.col-sm-4 -->
         </div>
 
-        <div class="page-header">
+        <div class="page-header"></div>
+
+        {% block content %}
+
+        <div class="row">
+            <div class="column">
+                <div class="button_container">
+                    <p>
+                        <input type="submit" class="btn btn-lg btn-primary" value="Proceed to Sauce">
+                        <a href="/pizza" class="btn btn-lg btn-default">Back</a>
+                    </p>
+                </div>
+            </div>
         </div>
 
-        <div class="alert alert-success">
-            <strong>Choice: </strong>
-        </div>
+        <input type="hidden" name="next" value="/sauce" />
 
         {% if form.errors %}
         <div class="alert alert-danger">
             <strong>Please choose a crust.</strong>
         </div>
         {% endif %}
+    </form>
 
-        <div class="row">
-            <div class="column">
-                <div class="button_container">
-                    <p>
-                        <a href="/sauce" class="btn btn-lg btn-primary" type="submit">Proceed to Sauce</a>
-                        <a href="/pizza" class="btn btn-lg btn-default">Back</a>
-                    </p>
-                </div>
-            </div>
-        </div>
-    </div>
+    {% endblock %}
+
 </div>
 
 

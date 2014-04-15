@@ -34,14 +34,6 @@
     <!-- Custom styles for this template -->
     <link href="/static/confirmation.css" rel="stylesheet">
 
-    <!-- Just for debugging purposes. Don't actually copy this line! -->
-    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
-
-    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
     <style type="text/css"></style><style id="holderjs-style" type="text/css"></style></head>
 
 <body>
@@ -57,8 +49,14 @@
                 <div class="row">
                     <div class="column">
                         <ul>
-                            <li>Item 1</li>
-                            <li>Item 2</li>
+                            <li>{{ crust }} Crust: {{ crust.calorie }} Calories</li>
+                            <li>{{ sauce }} Sauce: {{ sauce.calorie }} Calories</li>
+                            {% if toppings %}
+                                {% for topping in toppings %}
+                                    <li>{{ topping }}: {{ topping.calorie }} Calories</li>
+                                {% endfor %}
+                            {% endif %}
+                            <li> Total Calories: {{ cal_total }}</li>
                         </ul>
                     </div>
                 </div>
@@ -80,6 +78,14 @@
 <script src="static/jquery.js"></script>
 <script src="static/dist/js/bootstrap.min.js"></script>
 <script src="./Cover Template for Bootstrap_files/docs.min.js"></script>
+<!-- Just for debugging purposes. Don't actually copy this line! -->
+<!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+
+<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
 
 
 </body></html>

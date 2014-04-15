@@ -34,11 +34,6 @@
       <!-- Custom styles for this template -->
       <link href="/static/registration.css" rel="stylesheet">
 
-    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
   </head>
 
   <body>
@@ -49,6 +44,8 @@
         <h1><i>Frizza</i></h1>
 
           <h2>"Frozen Pizza Dispenser"</h2>
+
+          {% block content %}
 
           <form class="form-signin" role="form" method="post">{% csrf_token %}
               <h3 class="form-signin-heading">Please Register</h3>
@@ -66,12 +63,19 @@
           </div>
           {% endif %}
 
+          {% endblock %}
+
       </div>
 
     </div> <!-- /container -->
 
     <!-- Bootstrap core JavaScript
     ================================================== -->
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
     <!-- Placed at the end of the document so the pages load faster -->
   </body>
 </html>

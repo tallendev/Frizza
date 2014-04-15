@@ -61,7 +61,7 @@
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li><a >{{ user.username }}</a> </li>
-                <li><a href="/login">Sign Out</a></li>
+                <li><a href="/logout">Sign Out</a></li>
             </ul>
         </div><!--/.nav-collapse -->
     </div>
@@ -73,39 +73,39 @@
     <div class="page-header">
         <h1>What toppings would you like?</h1>
     </div>
-    <div class="list_container">
+    <form action="" class="form-signin" method="post">{% csrf_token %}
         <div class="row">
             <div class="column">
-                <div class="list-group">
                 {% if topping_list %}
                     {% for topping in topping_list %}
-                    <a class="list-group-item">{{ topping.topping_name }}</a>
+                    <input type="checkbox" name="{{ topping.topping_name }}" value="{{ topping.topping_name }}">{{ topping.topping_name }}<br>
                     {% endfor %}
                 {% else %}
-                    <p>No toppings</p>
+                    <p> No toppings </p>
                 {% endif %}
-                </div>
             </div><!-- /.col-sm-4 -->
         </div>
 
-        <div class="page-header">
-        </div>
+        <div class="page-header"></div>
 
-        <div class="alert alert-success">
-            <strong>Choice: </strong>
-        </div>
+        {% block content %}
 
         <div class="row">
             <div class="column">
                 <div class="button_container">
                     <p>
-                        <a href="/confirmation" class="btn btn-lg btn-primary" type="submit">Dispense</a>
+                        <input type="submit" class="btn btn-lg btn-primary" value="Dispense">
                         <a href="/sauce" class="btn btn-lg btn-default">Back</a>
                     </p>
                 </div>
             </div>
         </div>
-    </div>
+
+        <input type="hidden" name="next" value="/confirmation" />
+    </form>
+
+    {% endblock %}
+
 </div>
 
 
