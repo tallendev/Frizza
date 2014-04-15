@@ -57,26 +57,29 @@
                 <p class="lead">This pizza may be dangerous if you have any of the following allergies:</p>
                 <div class="row">
                     <div class="column">
+                    <h2 class="cover-heading">Topping Allergies:</h2>
                     {% if topping_allergies %}
                         <ul>
                         {% for allergy in topping_allergies %}
-                            <li>{{ allergy.topping_name  }}</li>
+                            <li>{{ allergy.allergy_name }}</li>
                         {% endfor %}
                     {% else %}
                         <p>No allergies are available.</p>
                     {% endif %}                       </ul> <!-- added close -->
+                    <h2 class="cover-heading">Crust Allergies:</h2>
                      {% if crust_allergies %}
                         <ul>
                         {% for allergy in crust_allergies %}
-                            <li>{{ crust.topping_name  }}</li>
+                            <li>{{ allergy.allergy_name  }}</li>
                         {% endfor %}
                     {% else %}
                         <p>No allergies are available.</p>
                     {% endif %}                       </ul>
+                    <h2 class="cover-heading">Sauce Allergies:</h2>
                       {% if sauce_allergies %}
                         <ul>
                         {% for allergy in sauce_allergies %}
-                            <li>{{ allergy.sauce_name  }}</li>
+                            <li>{{ allergy.allergy_name  }}</li>
                         {% endfor %}
                     {% else %}
                         <p>No allergies are available.</p>

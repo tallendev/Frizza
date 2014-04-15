@@ -49,36 +49,33 @@ def sauce(request):
 
 #This function does not work, but we would like to revisit it in the future.
 def allergies(request):
-    allergies_list = Allergy.objects.all()
-    context = {'allergy_list': allergies_list}
+
+    # Sausage is a placeholder for the actual, variable pizza name.
+    pizza = Pizza.objects.get(pizza_name="Sausage")
+    crust = Crust.objects.get(crust_name=pizza.crust_name);
+    sauce = Sauce.objects.get(sauce_name=pizza.sauce_name);
+
+    pizzaToppings = HasTopping.objects.filter(pizza_name=pizza.pizza_name)
+
+    topping_allergies = []    
+
+    for topping in pizzaToppings:
+        allergies = Allergy.objects.filter(ingredient_name=topping.topping_name)        
+        
+        for allergy in allergies:
+            topping_allergies.append(allergy)
+
+    sauce_allergies = Allergy.objects.filter(ingredient_name=sauce.sauce_name)
+    crust_allergies = Allergy.objects.filter(ingredient_name=crust.crust_name)
+
+    context =  {
+        'topping_allergies': topping_allergies,
+        'sauce_allergies': sauce_allergies,
+        'crust_allergies': crust_allergies,
+    }
     return render(request, settings.TEMPLATE_DIRS +
-                  '/public_html/Allergy/allergy.html', context)
+                  '/public_html/Allergies/allergies.html', context)
 
-    # topping_allergies = HasTopping.objects.filter(pizza_name="Sausage") \
-    #                         .select_related('allergy__ingredient_name')
-     
-# topping_allergies = HasTopping.objects.raw('''SELECT topping_name, FROM frizza_hastopping as h, \
-#                            frizza_allergy as a, \
-#                            WHERE a.ingredient_name=h.topping_name \
-#                            and h.pizza_name=Sausage''')    
-
-    #sauce_allergies = Pizza.objects.filter(pizza_name="Sausage") \
-    #                        .select_related('allergy__ingredient_name')
-
-    #crust_allergies = Pizza.objects.filter(pizza_name="Sausage") \
-    #                         .select_related('allergy__ingredient_name')
-
-#    template = loader.get_template(settings.TEMPLATE_DIRS + \
- #                                   '/public_html/Allergies/allergies.html')
-  #  context = RequestContext(request, {
-   #     'topping_allergies': topping_allergies,
-    #    'sauce_allergies': sauce_allergies,
-    #    'crust_allergies': crust_allergies,
-   # })
-   # print(str(topping_allergies))
-    #print(str(sauce_allergies))
-    #print(str(crust_allergies))
-   # return HttpResponse(template.render(context))
 
 # This function provides an appropriate response to a request for the calorie
 # page.
