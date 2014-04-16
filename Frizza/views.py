@@ -261,26 +261,40 @@ def calorie(request):
          return HttpResponseRedirect('/login')
 
 
+def return(request):
+    
+    if request.user.is_authenticated():
+        uorder_list = Orders.objects.filter(user_name=str(request.user))
+        orders = Pizza.objects.filter(pizza_id__in=uorder_list).select_related()
+       
+        if request.method == 'POST' and 'return_pizza' in request.POST:
+            request.session['return_pizza'] = request.POST['return_pizza']
+            return HttpResponseRedirect('/waste')
+
+            context = {'orders': orders}
+
+            return render(request, settings.TEMPLATE_DIRS +
+                          '/public_html/Return/return.html', context)
+
+    else:
+
+        return HttpResponseRedirect('/login')
+            
+
 # This function provides an appropriate response to a request for the
 # returns/waste page.
 def waste(request):
 
     if request.user.is_authenticated():
-        uorder_list = Orders.objects.filter(user_name=str(request.user))
-        orders = Pizza.objects.filter(pizza_id__in=uorder_list).select_related()
-        #user = User.objects.filter(user_name=str(request.user))[:1].get()
-        #orders = Orders.objects.filter(user_name = user.user_name)
 
-
-        #This section of the code determines the wasted ingredients and is incomplete.
-        pizza = Pizza.objects.get(pizza_name="Pepperoni")
+        pizza = Pizza.objects.get(pizza_name=str(request.return_pizza))
         wasted_toppings = HasTopping.objects.filter(pizza_id=pizza.pizza_id).\
                                      select_related('orders__pizza_name')
 
-        wasted_sauce = Pizza.objects.filter(pizza_name="Pepperoni").\
+        wasted_sauce = Pizza.objects.filter(pizza_name=str(request.return_pizza)).\
                              select_related('orders__pizza_name')
 
-        wasted_crust = Pizza.objects.filter(pizza_name="Pepperoni").\
+        wasted_crust = Pizza.objects.filter(pizza_name=str(request.return_pizza)).\
                              select_related('orders__pizza_name')
 
         context = {'wasted_toppings': wasted_toppings,

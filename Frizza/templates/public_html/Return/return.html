@@ -73,66 +73,29 @@
     <div class="page-header">
         <h1>Which pizza are you returning?</h1>
     </div>
-    <div class="list_container">
+
+    <form action="" class="form-signin" method="post">{% csrf_token %}
         <div class="row">
             <div class="column">
-                <div class="list-group">
                 {% if orders %}
-                    {% for order in orders %}
-                        <a class="list-group-item">{{ order.pizza_name }}</a>
-                    {% endfor %}
+                {% for order in orders %}
+                <input type="radio" name="order" value="{{ order.pizza_name }}">{{ crust.crust_name }}<br>
+                {% endfor %}
                 {% else %}
-                    <a class="list-group-item">No Orders to Return</a>
+                <p>No orders to return</p>
                 {% endif %}
-                </div>
-            </div><!-- /.col-sm-4 -->
+            </div>
         </div>
 
         <div class="page-header">
         </div>
 
-
-        <p class="lead">Wasted Toppings:</p>
-
-        {% if wasted_toppings %}
-            <ul>
-            {% for topping in wasted_toppings %}
-                <li>{{ topping.topping_name }}</li>
-            {% endfor %}
-            </ul>
-        {% else %}
-        <p> No toppings wasted </p>
-        {% endif %}
-
-        <p class="lead">Wasted Sauce:</p>
-
-        {% if wasted_sauce %}
-            <ul>
-            {% for sauce in wasted_sauce %}
-                 <li>{{ sauce.sauce_name }}</li>
-            {% endfor %}
-            </ul>
-        {% else %}
-        <p> No sauce wasted </p>
-        {% endif %}
-
-        <p class="lead">Wasted Crust:</p>
-
-        {% if wasted_crust %}
-            <ul>
-            {% for crust in wasted_crust %}
-                <li>{{ crust.crust_name }}</li>
-            {% endfor %}
-            </ul>
-        {% else %}
-        <p> No crust wasted </p>
-        {% endif %}
-
         <div class="row">
             <div class="column">
                 <div class="button_container">
                     <p>
-                        <a href="/pizza" class="btn btn-lg btn-primary" type="submit">Return Pizza</a>
+                        <input type="submit" class="btn btn-lg btn-primary" value="Proceed to Waste">
+                        <a href="/pizza" class="btn btn-lg btn-default">Back</a>
                     </p>
                 </div>
             </div>
