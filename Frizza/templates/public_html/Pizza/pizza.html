@@ -81,22 +81,22 @@
             <div class="column">
                 {% if admin_list %}
                     {% for pizza in admin_list %}
-                    <form action="" method="post">{% csrf_token %}
-                        <input type="submit" class="btn btn-lg btn-default" name="pizza" value="{{ pizza.pizza_name }}">
-                    </form>
+                        <form action="" method="post">{% csrf_token %}
+                            <input type="submit" class="btn btn-lg btn-default" name="pizza" value="{{ pizza.pizza_name }}">
+                        </form>
                     {% endfor %}
                 {% else %}
                     <p> No default pizzas are available.</p>
                 {% endif %}
                 {% if user_list %}
                     {% for pizza in user_list %}
-                    <form action="" method="post">{% csrf_token %}
-                    <input type="submit" class="btn btn-lg btn-default" name="pizza" value="{{ pizza.pizza_name }}">
-                    </form>
+                        <form action="" method="post">{% csrf_token %}
+                            <input type="submit" class="btn btn-lg btn-primary" name="pizza" value="{{ pizza.pizza_name }}">
+                        </form>
                     {% endfor %}
                 {% endif %}
                     <form action="" method="post">{% csrf_token %}
-                    <input type="submit" class="btn btn-lg btn-info" name="pizza" value="Make Your Own!">
+                        <input type="submit" class="btn btn-lg btn-info" name="pizza" value="Make Your Own!">
                     </form>
             </div>
         </div>
@@ -104,16 +104,14 @@
     <div class="alert alert-success">
         <strong>Your order has been completed.</strong>
     </div>
+
     <div class="alert alert-success">
         <strong>Your pizza has been returned successfully.</strong>
     </div>
 
-    {% if form.errors %}
     <div class="alert alert-danger">
         <strong>Your order has been canceled.</strong>
     </div>
-    {% endif %}
-
 
 </div> <!-- /container -->
 
