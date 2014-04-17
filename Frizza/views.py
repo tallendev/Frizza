@@ -172,7 +172,7 @@ def login(request):
         return HttpResponseRedirect("/public_html/Disclaimer/disclaimer.html")
     else:
         # Show an error page
-        return HttpResponseRedirect("/public_html/Login/login.html")
+        return HttpResponseRedirect("/public_html/login.html")
 
 
 def goodbye(request):
