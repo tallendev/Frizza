@@ -19,14 +19,15 @@ MANAGERS = ADMINS
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'frizzadb',                      # Or path to database file if using sqlite3.
-        'USER': 'hayden',                      # Not used with sqlite3.
+        'NAME': 'frizza',                      # Or path to database file if using sqlite3.
+        'USER': 'tyler',                      # Not used with sqlite3.
         'PASSWORD': 'sharknado',                  # Not used with sqlite3.
         'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
         'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
     }
 }
-#import dj_database_url
+import dj_database_url
+DATABASES['default'] = dj_database_url.config()
 #DATABASES['default'] = dj_database_url.config(default='postgres://icowxynaccyism:plPLUP3xzFpHlG6ZC_KmoGeWyx@ec2-54-204-27-119.compute-1.amazonaws.com:5432/dakh2i75c4ql0a')
 # Hosts/domain names that are valid for this site; required if DEBUG is False
 # See https://docs.djangoproject.com/en/1.4/ref/settings/#allowed-hosts
