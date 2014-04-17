@@ -148,6 +148,12 @@ def waste(request):
     return HttpResponse(template.render(context))
 
 
+def disclaimer(request):
+    template = loader.get_template(settings.TEMPLATE_DIRS +
+                                   '/public_html/Disclaimer/disclaimer.html')
+    context = RequestContext(request, None)
+    return HttpResponse(template.render(context))
+
 # This function provides the appropriate response to a request for the registration
 # page.
 def registration(request):
