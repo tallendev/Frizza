@@ -167,7 +167,7 @@ def login(request):
                                    '/public_html/login.html')
 
     context = RequestContext(request, {
-        'registration_list': user_list,
+        'user_list': user_list,
         })
 
     username = request.POST.get('username', '')
