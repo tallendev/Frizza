@@ -3,14 +3,15 @@ from django.contrib.auth.views import login, logout
 import views
 import settings
 from django.conf.urls.static import static
+from django.template import loader
 # Uncomment the next two lines to enable the admin:
 # from django.contrib import admin
 # admin.autodiscover()
 
 urlpatterns = patterns('',
     # View for login page.
-    (r'^accounts/login/$',  login, '/public_html/login'),
-    (r'^accounts/logout/$', logout, '/public_html/Goodbye/goodbye'),
+    (r'^accounts/login/$',  login, loader.get_template(settings.TEMPLATE_DIRS + '/public_html/login')),
+    (r'^accounts/logout/$', logout, loader.get_template(settings.TEMPLATE_DIRS + '/public_html/Goodbye/goodbye')),
     #url(r'^login/', 'Frizza.views.login'), #views.LoginView.as_view()),
     # Login is the default page.
     url(r'^$', 'Frizza.views.login', name='login'),
