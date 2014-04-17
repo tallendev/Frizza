@@ -178,7 +178,7 @@ def login(request):
 def goodbye(request):
     auth.logout(request)
     # Redirect to a success page.
-    return HttpResponseRedirect("/public_html/Login/login/")
+    return HttpResponseRedirect("/public_html/login/")
 
 
 # This provides the template path for the urls.py file.
