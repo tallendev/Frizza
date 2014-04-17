@@ -15,7 +15,7 @@ urlpatterns = patterns('',
     #url(r'^login/', 'Frizza.views.login', name='login'),
     #url(r'^login/', 'Frizza.views.login'), #views.LoginView.as_view()),
     # Login is the default page.
-    url(r'^$', 'Frizza.views.login', name='login'),
+    url(r'^$', login, 'Frizza.views.login'),
     # View for the disclaimer page.
     url(r'^disclaimer/', 'Frizza.views.disclaimer', name='disclaimer'),
     # View for toppings page.
