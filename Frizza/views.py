@@ -162,6 +162,9 @@ def registration(request):
 
 
 def login(request):
+
+    template = loader.get_template(settings.TEMPLATE_DIRS +
+                                   '/public_html/login.html')
     username = request.POST.get('username', '')
     password = request.POST.get('password', '')
     user = auth.authenticate(username=username, password=password)
