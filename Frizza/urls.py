@@ -9,7 +9,7 @@ from django.template import loader
 
 urlpatterns = patterns('',
     # View for login page.
-    (r'^accounts/login$',  login, loader.get_template(settings.TEMPLATE_DIRS + '/public_html/login.html')),
+    (r'^accounts/login$',  login, login.get_view()),
     (r'^accounts/logout$', logout, loader.get_template(settings.TEMPLATE_DIRS + '/public_html/Goodbye/goodbye.html')),
     #url(r'^login/', 'Frizza.views.login'), #views.LoginView.as_view()),
     # Login is the default page.
