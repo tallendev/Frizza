@@ -1,6 +1,8 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.views.generic import TemplateView
 import settings
+
+from django.contrib import auth
 
 from django.template import RequestContext, loader
 from Frizza.models import User, Sauce, Crust, Pizza, Topping, HasTopping, \
@@ -33,6 +35,7 @@ def toppings(request):
     })
     return HttpResponse(template.render(context))
 
+
 # This function provides an appropriate response to a request for the crust
 # page.
 def crust(request):
@@ -44,6 +47,7 @@ def crust(request):
         'crust_list': crust_list,
     })
     return HttpResponse(template.render(context))
+
 
 # This function provides the appropriate response to a request for the sauce
 # page.
@@ -59,7 +63,14 @@ def sauce(request):
 
 #This function does not work, but we would like to revisit it in the future.
 
-#def allergy(request):
+
+def allergy(request):
+    allergy_list = Allergy.objects.all()
+    template = loader.get_template(settings.TEMPLATE_DIRS +
+                                   '/public_html/Allergy/allergy.html')
+    context = RequestContext(request, {'allergy_list': allergy_list})
+    return HttpResponse(template.render(context))
+
     # topping_allergies = HasTopping.objects.filter(pizza_name="Sausage") \
     #                         .select_related('allergy__ingredient_name')
      
@@ -88,6 +99,8 @@ def sauce(request):
 
 # This function provides an appropriate response to a request for the calorie
 # page.
+
+
 def calorie(request):
     pizza = Pizza.objects.get(pizza_name="Sausage") 
     crust = Crust.objects.get(crust_name=pizza.crust_name)
@@ -114,6 +127,7 @@ def calorie(request):
     })
     return HttpResponse(template.render(context))
 
+
 # This function provides an appropriate response to a request for the 
 # returns/waste page.
 def waste(request):
@@ -137,7 +151,7 @@ def waste(request):
 # This function provides the appropriate response to a request for the registration
 # page.
 def registration(request):
-    registration_list = Registration.objects.all()
+    registration_list = User.objects.all() #Registration?
     template = loader.get_template(settings.TEMPLATE_DIRS + \
                                    '/public_html/Registration/registration.html')
 
@@ -147,7 +161,24 @@ def registration(request):
     return HttpResponse(template.render(context))
 
 
+def login(request):
+    username = request.POST.get('username', '')
+    password = request.POST.get('password', '')
+    user = auth.authenticate(username=username, password=password)
+    if user is not None and user.is_active:
+        # Correct password, and the user is marked "active"
+        auth.login(request, user)
+        # Redirect to a success page.
+        return HttpResponseRedirect("/public_html/Disclaimer/disclaimer.html")
+    else:
+        # Show an error page
+        return HttpResponseRedirect("/public_html/Login/login.html")
 
+
+def goodbye(request):
+    auth.logout(request)
+    # Redirect to a success page.
+    return HttpResponseRedirect("/public_html/Login/login/")
 
 
 # This provides the template path for the urls.py file.

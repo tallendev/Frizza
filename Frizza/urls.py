@@ -1,4 +1,5 @@
 from django.conf.urls import patterns, include, url
+from django.contrib.auth.views import login, logout
 import views
 import settings
 from django.conf.urls.static import static
@@ -8,17 +9,19 @@ from django.conf.urls.static import static
 
 urlpatterns = patterns('',
     # View for login page.
-    url(r'^login/', views.LoginView.as_view()),
+    (r'^accounts/login/$',  login, '/public_html/Login/login'),
+    (r'^accounts/logout/$', logout, '/public_html/Goodbye/goodbye'),
+    #url(r'^login/', 'Frizza.views.login'), #views.LoginView.as_view()),
     # Login is the default page.
-    url(r'^$', views.LoginView.as_view(), name='login'),
+    url(r'^$', 'Frizza.views.login', name='login'),
     # View for the disclaimer page.
-    url(r'^disclaimer/', views.DisclaimerView.as_view(), name='disclaimer'),
+    url(r'^disclaimer/', 'Frizza.views.disclaimer', name='disclaimer'),
     # View for toppings page.
     url(r'^toppings/', 'Frizza.views.toppings', name='toppings'),
     # View for registration page.
-    url(r'^registration/', views.RegistrationView.as_view(), name='registeration'),
+    url(r'^registration/', 'Frizza.views.registration', name='registration'),
     # View for allergies page.
-    url(r'^allergies/', views.AllergiesView.as_view(), name='allergies'),
+    url(r'^allergies/', 'Frizza.views.allergies', name='allergies'),
     # View for Pizza display page.
     url(r'^pizza/', 'Frizza.views.pizza', name='pizza'),
     # View for crust page.
@@ -28,7 +31,7 @@ urlpatterns = patterns('',
     # View for confirmation page. Currently being displayed by calorie.
     url(r'^confirmation/', 'Frizza.views.calorie', name='confirmation'),
     # View for goodbye page.
-    url(r'^goodbye/', views.GoodbyeView.as_view(), name='goodbye'),
+    url(r'^goodbye/', 'Frizza.views.goodbye', name='goodbye'),
     # View for login page.
     url(r'^return/', 'Frizza.views.waste', name='return'),
     # This sets up the static section properly so that static content
