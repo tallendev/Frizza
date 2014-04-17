@@ -152,7 +152,7 @@ def waste(request):
 # page.
 def registration(request):
     registration_list = User.objects.all() #Registration?
-    template = loader.get_template(settings.TEMPLATE_DIRS + \
+    template = loader.get_template(settings.TEMPLATE_DIRS +
                                    '/public_html/Registration/registration.html')
 
     context = RequestContext(request, {
@@ -169,10 +169,10 @@ def login(request):
         # Correct password, and the user is marked "active"
         auth.login(request, user)
         # Redirect to a success page.
-        return HttpResponseRedirect("/public_html/Disclaimer/disclaimer.html")
+        return HttpResponseRedirect(settings.TEMPLATE_DIRS + "/public_html/Disclaimer/disclaimer.html")
     else:
         # Show an error page
-        return HttpResponseRedirect("/public_html/login.html")
+        return HttpResponseRedirect(settings.TEMPLATE_DIRS + "/public_html/login.html")
 
 
 def goodbye(request):
