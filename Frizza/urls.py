@@ -14,7 +14,7 @@ urlpatterns = patterns('',
     (r'^accounts/logout$', logout, loader.get_template(settings.TEMPLATE_DIRS + '/public_html/Goodbye/goodbye.html')),
     #url(r'^login/', 'Frizza.views.login'), #views.LoginView.as_view()),
     # Login is the default page.
-    #url(r'^$', 'Frizza.views.login', name='login'),
+    url(r'^$', login, name='login'),
     # View for the disclaimer page.
     url(r'^disclaimer/', 'Frizza.views.disclaimer', name='disclaimer'),
     # View for toppings page.
