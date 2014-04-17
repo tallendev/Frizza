@@ -162,9 +162,14 @@ def registration(request):
 
 
 def login(request):
-
+    user_list = User.objects.all()
     template = loader.get_template(settings.TEMPLATE_DIRS +
                                    '/public_html/login.html')
+
+    context = RequestContext(request, {
+        'registration_list': user_list,
+        })
+
     username = request.POST.get('username', '')
     password = request.POST.get('password', '')
     user = auth.authenticate(username=username, password=password)
@@ -175,7 +180,7 @@ def login(request):
         return HttpResponseRedirect(settings.TEMPLATE_DIRS + "/public_html/Disclaimer/disclaimer.html")
     else:
         # Show an error page
-        return HttpResponseRedirect(settings.TEMPLATE_DIRS + "/public_html/login.html")
+        return HttpResponse(template.render(context))
 
 
 def goodbye(request):
