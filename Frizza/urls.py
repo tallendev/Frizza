@@ -9,7 +9,7 @@ from django.conf.urls.static import static
 
 urlpatterns = patterns('',
     # View for login page.
-    (r'^accounts/login/$',  login, '/public_html/Login/login'),
+    (r'^accounts/login/$',  login, '/public_html/login'),
     (r'^accounts/logout/$', logout, '/public_html/Goodbye/goodbye'),
     #url(r'^login/', 'Frizza.views.login'), #views.LoginView.as_view()),
     # Login is the default page.
