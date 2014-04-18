@@ -15,13 +15,15 @@ from django.db.models import F
 # page.
 def pizza(request):
     admin_list = Orders.objects.filter(user_name="admin")
+    #admin_list = Orders.objects.filter(user_name="admin")
     #user_list = Orders.objects.filter(user_name=USER)    
 
     #template = loader.get_template(settings.TEMPLATE_DIRS + \
     #                               '/public_html/Pizza/pizza.html')
     context = {'admin_list': admin_list}
     #'user_list': user_list,
-    return render(request, '/public_html/Pizza/pizza.html', context)
+    return render(request, settings.TEMPLATE_DIRS +
+                  '/public_html/Pizza/pizza.html', context)
     #return HttpResponse(template.render(context))
 
 
