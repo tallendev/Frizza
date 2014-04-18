@@ -134,12 +134,12 @@ def registration(request):
     if request.method == 'POST':
         username = request.POST.get('username', '')
         password = request.POST.get('password', '')
-        print(username)
+
+
         #User.
-    else:
-        registration_list = User.objects.all() #Registration?
-        context = {'registration_list': registration_list}
-        return render(request, settings.TEMPLATE_DIRS +
+    registration_list = User.objects.all() #Registration?
+    context = {'registration_list': registration_list}
+    return render(request, settings.TEMPLATE_DIRS +
                       '/public_html/Registration/registration.html', context)
 
 
