@@ -11,7 +11,9 @@ from django.db.models import F
 # page.
 def pizza(request):
     admin_list = Orders.objects.filter(user_name="admin")
+    #user_list = Orders.objects.filter(user_name=USER)
     context = {'admin_list': admin_list}
+    #context = {'user_list': user_list}
     return render(request, settings.TEMPLATE_DIRS +
                   '/public_html/Pizza/pizza.html', context)
 
