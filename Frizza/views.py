@@ -134,9 +134,9 @@ def disclaimer(request):
 def registration(request):
     if request.method == 'POST':
         post = request.POST
+        form = UserCreationForm(post)
         username = post.get('username', '')
         password = post.get('password', '')
-        form = UserCreationForm(post)
         if form.is_valid():
             u = User(username, password)
             u.save()
