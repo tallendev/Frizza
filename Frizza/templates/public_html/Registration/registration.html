@@ -50,7 +50,7 @@
 
           <h2>"Frozen Pizza Dispenser"</h2>
 
-          <form class="form-signin" role="form" method="post">
+          <form class="form-signin" role="form" method="post">{% csrf_token %}
               <h3 class="form-signin-heading">Please Register</h3>
               <input type="text" class="form-control" placeholder="New User Name" required autofocus><br>
               <input type="password" class="form-control" placeholder="New Password" required>
