@@ -95,7 +95,7 @@ def calorie(request):
     top_cal_sum = 0
     for ht in hasToppings:
         topping = Topping.objects.get(topping_name = ht.topping_name)
-        top_cal_sum = top_cal_sum + topping.calorie;
+        top_cal_sum = top_cal_sum + topping.calorie
     
     cal_total = top_cal_sum + sauce_calorie + crust_calorie
     
@@ -135,13 +135,12 @@ def registration(request):
         var = request.POST
         username = var.get('username', '')
         password = var.get('password', '')
-
-
+        print(username)
         #User.
     registration_list = User.objects.all() #Registration?
     context = {'registration_list': registration_list}
     return render(request, settings.TEMPLATE_DIRS +
-                      '/public_html/Registration/registration.html', context)
+                  '/public_html/Registration/registration.html', context)
 
 
 def login(request):
