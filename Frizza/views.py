@@ -1,11 +1,7 @@
-from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.views.generic import TemplateView
 import settings
-
 from django.contrib import auth
-
-from django.template import RequestContext, loader
 from Frizza.models import User, Sauce, Crust, Pizza, Topping, HasTopping, \
                           Orders, Allergy
 from django.db.models import F
