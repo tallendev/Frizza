@@ -15,65 +15,44 @@ from django.db.models import F
 # page.
 def pizza(request):
     admin_list = Orders.objects.filter(user_name="admin")
-    #admin_list = Orders.objects.filter(user_name="admin")
-    #user_list = Orders.objects.filter(user_name=USER)    
-
-    #template = loader.get_template(settings.TEMPLATE_DIRS + \
-    #                               '/public_html/Pizza/pizza.html')
     context = {'admin_list': admin_list}
-    #'user_list': user_list,
     return render(request, settings.TEMPLATE_DIRS +
                   '/public_html/Pizza/pizza.html', context)
-    #return HttpResponse(template.render(context))
 
 
 # This function provides an appropriate response to a request for the toppings
 # page.
 def toppings(request):
     topping_list = Topping.objects.all()
-    template = loader.get_template(settings.TEMPLATE_DIRS +
-                                   '/public_html/Toppings/toppings.html')
-
-    context = RequestContext(request, {
-        'topping_list': topping_list,
-    })
-    return HttpResponse(template.render(context))
+    context = {'topping_list': topping_list}
+    return render(request, settings.TEMPLATE_DIRS +
+                  '/public_html/Toppings/toppings.html', context)
 
 
 # This function provides an appropriate response to a request for the crust
 # page.
 def crust(request):
     crust_list = Crust.objects.all()
-    template = loader.get_template(settings.TEMPLATE_DIRS +
-                                   '/public_html/Crust/crust.html')
- 
-    context = RequestContext(request, {
-        'crust_list': crust_list,
-    })
-    return HttpResponse(template.render(context))
+    context = {'crust_list': crust_list}
+    return render(request, settings.TEMPLATE_DIRS +
+                  '/public_html/Crust/crust.html', context)
 
 
 # This function provides the appropriate response to a request for the sauce
 # page.
 def sauce(request):
     sauce_list = Sauce.objects.all()
-    template = loader.get_template(settings.TEMPLATE_DIRS +
-                                   '/public_html/Sauce/sauce.html')
+    context = {'sauce_list': sauce_list}
+    return render(request, settings.TEMPLATE_DIRS +
+                  '/public_html/Sauce/sauce.html', context)
 
-    context = RequestContext(request, {
-         'sauce_list': sauce_list,
-    })
-    return HttpResponse(template.render(context))
 
 #This function does not work, but we would like to revisit it in the future.
-
-
 def allergy(request):
     allergy_list = Allergy.objects.all()
-    template = loader.get_template(settings.TEMPLATE_DIRS +
-                                   '/public_html/Allergy/allergy.html')
-    context = RequestContext(request, {'allergy_list': allergy_list})
-    return HttpResponse(template.render(context))
+    context = {'allergy_list': allergy_list}
+    return render(request, settings.TEMPLATE_DIRS +
+                  '/public_html/Allergy/allergy.html', context)
 
     # topping_allergies = HasTopping.objects.filter(pizza_name="Sausage") \
     #                         .select_related('allergy__ingredient_name')
@@ -121,15 +100,10 @@ def calorie(request):
         top_cal_sum = top_cal_sum + topping.calorie;
     
     cal_total = top_cal_sum + sauce_calorie + crust_calorie
-
-
-    template = loader.get_template(settings.TEMPLATE_DIRS + \
-                              '/public_html/Confirmation/confirmation.html')
     
-    context = RequestContext(request,  {
-        'cal_total': cal_total,
-    })
-    return HttpResponse(template.render(context))
+    context = {'cal_total': cal_total}
+    return render(request, settings.TEMPLATE_DIRS +
+                  '/public_html/Confirmation/confirmation.html', context)
 
 
 # This function provides an appropriate response to a request for the 
@@ -140,24 +114,18 @@ def waste(request):
     wasted_sauce = Pizza.objects.filter(pizza_name="Pepperoni").select_related('orders__pizza_name')
 
     wasted_crust = Pizza.objects.filter(pizza_name="Pepperoni").select_related('orders__pizza_name')
-
-    template = loader.get_template(settings.TEMPLATE_DIRS + \
-                               '/public_html/Return/return.html')
      
-    context = RequestContext(request, {
-        'wasted_toppings': wasted_toppings,
-        'wasted_sauce': wasted_sauce,
-        'wasted_crust': wasted_crust,
-    })
-    return HttpResponse(template.render(context))
+    context = {'wasted_toppings': wasted_toppings,
+               'wasted_sauce': wasted_sauce,
+               'wasted_crust': wasted_crust}
+    return render(request, settings.TEMPLATE_DIRS +
+                  '/public_html/Return/return.html', context)
 
 
 def disclaimer(request):
     if request.user.is_authenticated():
-        template = loader.get_template(settings.TEMPLATE_DIRS +
-                                   '/public_html/Disclaimer/disclaimer.html')
-        context = RequestContext(request, None)
-        return HttpResponse(template.render(context))
+        return render(request, settings.TEMPLATE_DIRS +
+                      '/public_html/Disclaimer/disclaimer.html')
     else:
         return login(request)
 
@@ -166,23 +134,14 @@ def disclaimer(request):
 # registration page.
 def registration(request):
     registration_list = User.objects.all() #Registration?
-    template = loader.get_template(settings.TEMPLATE_DIRS +
-                                   '/public_html/Registration/registration.html')
-
-    context = RequestContext(request, {
-        'registration_list': registration_list,
-    })
-    return HttpResponse(template.render(context))
+    context = {'registration_list': registration_list}
+    return render(request, settings.TEMPLATE_DIRS +
+                  '/public_html/Registration/registration.html', context)
 
 
 def login(request):
     user_list = User.objects.all()
-    template = loader.get_template(settings.TEMPLATE_DIRS +
-                                   '/public_html/login.html')
-
-    context = RequestContext(request, {
-        'user_list': user_list,
-        })
+    context = {'user_list': user_list}
 
     #username = request.POST.get('username', '')
     #password = request.POST.get('password', '')
@@ -194,87 +153,11 @@ def login(request):
       #  return HttpResponseRedirect(settings.TEMPLATE_DIRS + "/public_html/Disclaimer/disclaimer.html")
     #else:
         # Show an error page
-    return HttpResponse(template.render(context))
+    return render(request, settings.TEMPLATE_DIRS +
+                  '/public_html/login.html', context)
 
 
 def goodbye(request):
     auth.logout(request)
     # Redirect to a success page.
-    return HttpResponseRedirect("/public_html/login/")
-
-
-# This provides the template path for the urls.py file.
-class LoginView(TemplateView):
-    model = User
-    template_name = settings.TEMPLATE_DIRS + \
-                            '/public_html/login.html'
-
-
-# This provides the template path for the urls.py file.
-class DisclaimerView(TemplateView):
-    model = User
-    template_name = settings.TEMPLATE_DIRS + \
-                    '/public_html/Disclaimer/disclaimer.html'
-
-
-# This provides the template path for the urls.py file.
-class ToppingsView(TemplateView):
-    model = User
-    template_name = settings.TEMPLATE_DIRS + \
-                    '/public_html/Toppings/toppings.html'
-
-
-# This provides the template path for the urls.py file.
-class AllergiesView(TemplateView):
-    model = User
-    template_name = settings.TEMPLATE_DIRS + \
-                    '/public_html/Allergies/allergies.html'
-
-
-# This provides the template path for the urls.py file.
-class PizzaView(TemplateView):
-    model = User
-    template_name = settings.TEMPLATE_DIRS + \
-                    '/public_html/Pizza/pizza.html'
-
-
-# This provides the template path for the urls.py file.
-class CrustView(TemplateView):
-    model = User
-    template_name = settings.TEMPLATE_DIRS + \
-                    '/public_html/Crust/crust.html'
-
-
-# This provides the template path for the urls.py file.
-class SauceView(TemplateView):
-    model = User
-    template_name = settings.TEMPLATE_DIRS + \
-                    '/public_html/Sauce/sauce.html'
-
-
-# This provides the template path for the urls.py file.
-class ConfirmationView(TemplateView):
-    model = User
-    template_name = settings.TEMPLATE_DIRS + \
-                    '/public_html/Confirmation/confirmation.html'
-
-
-# This provides the template path for the urls.py file.
-class GoodbyeView(TemplateView):
-    model = User
-    template_name = settings.TEMPLATE_DIRS + \
-                    '/public_html/Goodbye/goodbye.html'
-
-
-# This provides the template path for the urls.py file.
-class ReturnView(TemplateView):
-    model = User
-    template_name = settings.TEMPLATE_DIRS + \
-                    '/public_html/Return/return.html'
-
-
-# This provides the template path for the urls.py file.
-class RegistrationView(TemplateView):
-    model = User
-    template_name = settings.TEMPLATE_DIRS + \
-                    '/public_html/Registration/registration.html'
+    return render(request, settings.TEMPLATE_DIRS + "/public_html/login/")
