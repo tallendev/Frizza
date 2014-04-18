@@ -142,7 +142,8 @@ def registration(request):
             u = User(username, email, password)
             u.save()
             new_user = form.save()
-            return HttpResponseRedirect("/disclaimer")
+            disclaimer(request)
+            #return HttpResponseRedirect("/disclaimer")
         #User.
     registration_list = User.objects.all() #Registration?
     context = {'registration_list': registration_list}
