@@ -137,10 +137,11 @@ def registration(request):
         password = var.get('password', '')
         print(username)
         #User.
-    registration_list = User.objects.all() #Registration?
-    context = {'registration_list': registration_list}
-    return render(request, settings.TEMPLATE_DIRS +
-                  '/public_html/Registration/registration.html', context)
+    else:
+        registration_list = User.objects.all() #Registration?
+        context = {'registration_list': registration_list}
+        return render(request, settings.TEMPLATE_DIRS +
+                    '/public_html/Registration/registration.html', context)
 
 
 def login(request):
