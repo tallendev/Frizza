@@ -10,7 +10,7 @@ from django.template import loader
 
 urlpatterns = patterns('',
     # View for login page.
-    (r'^accounts/login$',  login, 'Frizza.views.login'),
+    (r'^login/$',  login, 'Frizza.views.login'),
     #(r'^accounts/logout$', logout, loader.get_template(settings.TEMPLATE_DIRS + '/public_html/Goodbye/goodbye.html')),
     #url(r'^login/', 'Frizza.views.login', name='login'),
     #url(r'^login/', 'Frizza.views.login'), #views.LoginView.as_view()),
