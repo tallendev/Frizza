@@ -29,7 +29,7 @@ def pizza(request):
 # page.
 def toppings(request):
     topping_list = Topping.objects.all()
-    template = loader.get_template(settings.TEMPLATE_DIRS + \
+    template = loader.get_template(settings.TEMPLATE_DIRS +
                                    '/public_html/Toppings/toppings.html')
 
     context = RequestContext(request, {
@@ -42,7 +42,7 @@ def toppings(request):
 # page.
 def crust(request):
     crust_list = Crust.objects.all()
-    template = loader.get_template(settings.TEMPLATE_DIRS + \
+    template = loader.get_template(settings.TEMPLATE_DIRS +
                                    '/public_html/Crust/crust.html')
  
     context = RequestContext(request, {
@@ -55,7 +55,7 @@ def crust(request):
 # page.
 def sauce(request):
     sauce_list = Sauce.objects.all()
-    template = loader.get_template(settings.TEMPLATE_DIRS + \
+    template = loader.get_template(settings.TEMPLATE_DIRS +
                                    '/public_html/Sauce/sauce.html')
 
     context = RequestContext(request, {
@@ -151,10 +151,13 @@ def waste(request):
 
 
 def disclaimer(request):
-    template = loader.get_template(settings.TEMPLATE_DIRS +
+    if request.user.is_authenticated():
+        template = loader.get_template(settings.TEMPLATE_DIRS +
                                    '/public_html/Disclaimer/disclaimer.html')
-    context = RequestContext(request, None)
-    return HttpResponse(template.render(context))
+        context = RequestContext(request, None)
+        return HttpResponse(template.render(context))
+    else:
+        return login(request)
 
 
 # This function provides the appropriate response to a request for the
