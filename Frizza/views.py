@@ -131,9 +131,15 @@ def disclaimer(request):
 # This function provides the appropriate response to a request for the
 # registration page.
 def registration(request):
-    registration_list = User.objects.all() #Registration?
-    context = {'registration_list': registration_list}
-    return render(request, settings.TEMPLATE_DIRS +
+    if request.method != 'POST':
+        username = request.POST.get('username', '')
+        password = request.POST.get('password', '')
+        print(username)
+        #User.
+    else:
+        registration_list = User.objects.all() #Registration?
+        context = {'registration_list': registration_list}
+        return render(request, settings.TEMPLATE_DIRS +
                   '/public_html/Registration/registration.html', context)
 
 
