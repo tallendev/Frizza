@@ -132,8 +132,9 @@ def disclaimer(request):
 # registration page.
 def registration(request):
     if request.method == 'POST':
-        username = request.POST.get('username', '')
-        password = request.POST.get('password', '')
+        var = request.POST
+        username = var.get('username', '')
+        password = var.get('password', '')
 
 
         #User.
