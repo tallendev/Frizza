@@ -136,9 +136,10 @@ def registration(request):
         post = request.POST
         form = UserCreationForm(post)
         username = post.get('username', '')
+        email = post.get('email', '')
         password = post.get('password', '')
         if form.is_valid():
-            u = User(username, password)
+            u = User(username, email, password)
             u.save()
             new_user = form.save()
             return HttpResponseRedirect("/disclaimer")
