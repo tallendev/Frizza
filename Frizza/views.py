@@ -46,9 +46,9 @@ def sauce(request):
 
 
 #This function does not work, but we would like to revisit it in the future.
-def allergy(request):
-    allergy_list = Allergy.objects.all()
-    context = {'allergy_list': allergy_list}
+def allergies(request):
+    allergies_list = Allergy.objects.all()
+    context = {'allergy_list': allergies_list}
     return render(request, settings.TEMPLATE_DIRS +
                   '/public_html/Allergy/allergy.html', context)
 
