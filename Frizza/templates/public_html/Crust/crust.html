@@ -93,9 +93,12 @@
         <div class="alert alert-success">
             <strong>Choice: </strong>
         </div>
+
+        {% if form.errors %}
         <div class="alert alert-danger">
-            <strong>Oops!</strong> Please choose a crust.
+            <strong>Please choose a crust.</strong>
         </div>
+        {% endif %}
 
         <div class="row">
             <div class="column">
