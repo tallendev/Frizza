@@ -4,7 +4,8 @@ import settings
 from django.contrib import auth
 from Frizza.models import User, Sauce, Crust, Pizza, Topping, HasTopping, \
                           Orders, Allergy
-from django.db.models import F
+from django.contrib.auth.forms import UserCreationForm
+from django.http import HttpResponseRedirect
 
 
 # This function provides an appropriate response to a request for the pizza
@@ -132,16 +133,21 @@ def disclaimer(request):
 # registration page.
 def registration(request):
     if request.method == 'POST':
-        var = request.POST
-        username = var.get('username', '')
-        password = var.get('password', '')
-        print(username)
+        post = request.POST
+        username = post.get('username', '')
+        password = post.get('password', '')
+        form = UserCreationForm(post)
+        if form.is_valid():
+            u = User(username, password)
+            u.save()
+            new_user = form.save()
+            return HttpResponseRedirect("/disclaimer")
         #User.
     else:
         registration_list = User.objects.all() #Registration?
         context = {'registration_list': registration_list}
-        return render(request, settings.TEMPLATE_DIRS +
-                    '/public_html/Registration/registration.html', context)
+    return render(request, settings.TEMPLATE_DIRS +
+                '/public_html/Registration/registration.html', context)
 
 
 def login(request):
