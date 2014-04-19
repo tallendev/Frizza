@@ -139,7 +139,7 @@ def registration(request):
         post = request.POST
         form = UserCreationForm(post, request)
         username = post.get('Username', '')
-        email = post.get('Email', '')
+        #email = post.get('Email', '')
         password = post.get('Password', '')
         print('Post: ' + str(request.POST))
         #print('Errors: ' + str(form.error_messages))
