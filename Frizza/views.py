@@ -148,6 +148,12 @@ def registration(request):
             new_user = form.save()
             disclaimer(request)
             return HttpResponseRedirect("/disclaimer")
+        else:
+            registration_list = User.objects.all()  # Registration?
+        context = {'registration_list': registration_list}
+        return render(request, settings.TEMPLATE_DIRS +
+                           '/public_html/Toppings/toppings.html', context)
+
         #User.
     registration_list = User.objects.all()  # Registration?
     context = {'registration_list': registration_list}
