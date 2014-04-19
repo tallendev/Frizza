@@ -138,9 +138,9 @@ def registration(request):
         logger.debug('Successful post from registration')
         post = request.POST
         form = UserCreationForm(post, request)
-        username = post.get('username', '')
-        email = post.get('email', '')
-        password = post.get('password', '')
+        username = post.get('Username', '')
+        email = post.get('Email', '')
+        password = post.get('Password', '')
         if form.is_valid():
             logger.debug('Is_Valid from registration')
             u = User(username, email, password)
