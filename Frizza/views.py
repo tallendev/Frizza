@@ -145,7 +145,7 @@ def registration(request):
             disclaimer(request)
             #return HttpResponseRedirect("/disclaimer")
         #User.
-    registration_list = User.objects.all() #Registration?
+    registration_list = User.objects.all()  # Registration?
     context = {'registration_list': registration_list}
     return render(request, settings.TEMPLATE_DIRS +
                 '/public_html/Registration/registration.html', context)
