@@ -142,6 +142,7 @@ def registration(request):
         email = post.get('Email', '')
         password = post.get('Password', '')
         print(request.POST)
+        print(post.error_messages)
         if form.is_valid():
             logger.debug('Is_Valid from registration')
             u = User(username, email, password)
