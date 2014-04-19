@@ -79,8 +79,7 @@
                 <div class="list-group">
                 {% if topping_list %}
                     {% for topping in topping_list %}
-                    <a href="http://getbootstrap.com/examples/theme/#"
-                       class="list-group-item">{{ topping.topping_name }}</a>
+                    <a class="list-group-item">{{ topping.topping_name }}</a>
                     {% endfor %}
                 {% else %}
                     <p>No toppings</p>

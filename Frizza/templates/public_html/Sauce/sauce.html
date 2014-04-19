@@ -80,8 +80,7 @@
                 <div class="list-group">
                 {% if sauce_list %}
                     {% for sauce in sauce_list %}
-                    <a href="http://getbootstrap.com/examples/theme/#"
-                       class="list-group-item">{{ sauce.sauce_name }}</a>
+                    <a class="list-group-item">{{ sauce.sauce_name }}</a>
                     {% endfor %}
                 {% else %}
                    <p> No sauce </p>
