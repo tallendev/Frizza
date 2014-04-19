@@ -137,7 +137,7 @@ def registration(request):
     if request.method == 'POST':
         logger.debug('Successful post from registration')
         post = request.POST
-        form = UserCreationForm(request, post)
+        form = UserCreationForm(post, request)
         username = post.get('username', '')
         email = post.get('email', '')
         password = post.get('password', '')
