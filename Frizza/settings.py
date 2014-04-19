@@ -157,7 +157,7 @@ LOGGING = {
             'level': 'DEBUG',
             'class': 'logging.FileHandler',
             'filename': LOG_DIRS + 'debug.log',
-            },
+        },
     },
     'loggers': {
         'django.request': {

@@ -133,6 +133,7 @@ def disclaimer(request):
 # This function provides the appropriate response to a request for the
 # registration page.
 def registration(request):
+    logger.debug('In registration')
     if request.method == 'POST':
         logger.debug('Successful post from registration')
         post = request.POST
