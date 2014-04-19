@@ -134,14 +134,14 @@ def disclaimer(request):
 # registration page.
 def registration(request):
     if request.method == 'POST':
-        logger.error('Successful post from registration')
+        logger.debug('Successful post from registration')
         post = request.POST
         form = UserCreationForm(post)
         username = post.get('username', '')
         email = post.get('email', '')
         password = post.get('password', '')
         if form.is_valid():
-            logger.error('Is_Valid from registration')
+            logger.debug('Is_Valid from registration')
             u = User(username, email, password)
             u.save()
             new_user = form.save()

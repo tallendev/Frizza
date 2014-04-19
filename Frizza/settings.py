@@ -6,6 +6,9 @@ PROJECT_ROOT = os.path.dirname(__file__)
 TEMPLATE_DIRS = ( 
     os.path.join(PROJECT_ROOT, 'templates')
 )
+LOG_DIRS = (
+    os.path.join(PROJECT_ROOT, 'log')
+)
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -149,7 +152,12 @@ LOGGING = {
             'level': 'ERROR',
             'filters': ['require_debug_false'],
             'class': 'django.utils.log.AdminEmailHandler'
-        }
+        },
+        'file': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': LOG_DIRS + 'debug.log',
+            },
     },
     'loggers': {
         'django.request': {
