@@ -141,6 +141,7 @@ def registration(request):
         username = post.get('Username', '')
         #email = post.get('Email', '')
         password = post.get('Password', '')
+        print('Username: ' + str(username) + '\nPassword: ' + str(password) + "\n")
         print('Post: ' + str(request.POST))
         #print('Errors: ' + str(form.error_messages))
         print('Is Valid: ' + str(form.is_valid()))
