@@ -139,7 +139,6 @@ def registration(request):
         post = request.POST
         form = UserCreationForm(post, request)
 
-        print('Username: ' + str(username) + '\nPassword: ' + str(password) + "\n")
         print('Post: ' + str(request.POST))
         #print('Errors: ' + str(form.error_messages))
         print('Is Valid: ' + str(form.is_valid()))
