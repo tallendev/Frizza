@@ -1,5 +1,6 @@
 from django.db import models
 
+
 # This is a table representation for Sauces types, containing two fields:
 # a name for the sauce and
 # a calorie count
@@ -10,6 +11,7 @@ class Sauce(models.Model):
     def __unicode__(self):
         return self.sauce_name
 
+
 # This is a table representation for Crust types, containing two fields:
 # a name for the crust and
 # a calorie count
@@ -18,7 +20,8 @@ class Crust(models.Model):
     calorie = models.IntegerField()
 
     def __unicode__(self):
-         return self.crust_name
+        return self.crust_name
+
 
 # This is a table representation for Pizza types, containing four fields:
 # a name for the pizza, which will be specified per user
@@ -30,10 +33,11 @@ class Pizza(models.Model):
     order_count = models.IntegerField()
     sauce_name = models.ForeignKey(Sauce)
     crust_name = models.ForeignKey(Crust)
-	
+
     # to string returns pizza name
     def __unicode__(self):
         return self.pizza_name
+
 
 # This is a table representation for topping types, containing two fields:
 # a name for the topping
@@ -46,6 +50,7 @@ class Topping(models.Model):
     def __unicode__(self):
         return self.topping_name
 
+
 # Table for a user, containing: 
 # their user name
 # the password
@@ -57,6 +62,7 @@ class User(models.Model):
     # returns the user name as a to string
     def __unicode__(self):
         return self.user_name
+
 
 # Relationship for toppings on pizzas, containing two fields:
 # the pizza name
@@ -71,6 +77,7 @@ class HasTopping(models.Model):
     def __unicode__(self):
         return str(self.id)
 
+
 # A table for orders, containing:
 # the user name of the person with the order
 # name of the pizza that they ordered
@@ -81,6 +88,7 @@ class Orders(models.Model):
     def __unicode__(self):
         return str(self.id)
 
+
 # A table of allergies, containing:
 # the name of the allergy
 # the name of the ingredient
@@ -90,4 +98,3 @@ class Allergy(models.Model):
 
     def __unicode__(self):
         return str(self.id)
-
