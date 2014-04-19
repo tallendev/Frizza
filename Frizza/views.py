@@ -138,15 +138,16 @@ def registration(request):
         logger.debug('Successful post from registration')
         post = request.POST
         form = UserCreationForm(post, request)
-        username = post.get('Username', '')
-        #email = post.get('Email', '')
-        password = post.get('Password', '')
+
         print('Username: ' + str(username) + '\nPassword: ' + str(password) + "\n")
         print('Post: ' + str(request.POST))
         #print('Errors: ' + str(form.error_messages))
         print('Is Valid: ' + str(form.is_valid()))
         print('More Errors: ' + str(form.errors) + "\n\n")
         if form.is_valid():
+            username = post.get('username', '')
+            #email = post.get('Email', '')
+            password = post.get('password1', '')
             logger.debug('Is_Valid from registration')
             u = User(user_name=username, password=password)
             u.save()
