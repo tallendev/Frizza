@@ -143,7 +143,7 @@ def registration(request):
         password = post.get('Password', '')
         print('Post: ' + str(request.POST))
         print('Errors: ' + str(form.error_messages))
-        print('More Errors?: ' + str(form.errors))
+        #print('More Errors?: ' + str(form.errors))
         print('Is Valid: ' + str(form.is_valid()))
         if form.is_valid():
             logger.debug('Is_Valid from registration')
