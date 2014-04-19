@@ -147,7 +147,7 @@ def registration(request):
         print('More Errors: ' + str(form.errors) + "\n\n")
         if form.is_valid():
             logger.debug('Is_Valid from registration')
-            u = User(username, password)
+            u = User(user_name=username, password=password)
             u.save()
             new_user = form.save()
             registration_list = User.objects.all()  # Registration?
