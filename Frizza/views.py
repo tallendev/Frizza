@@ -127,8 +127,8 @@ def disclaimer(request):
         return render(request, settings.TEMPLATE_DIRS +
                       '/public_html/Disclaimer/disclaimer.html')
     else:
-        return login(request)
-
+        return HttpResponseRedirect(settings.TEMPLATE_DIRS +
+                                    '/public_html/Disclaimer/disclaimer.html')
 
 # This function provides the appropriate response to a request for the
 # registration page.
