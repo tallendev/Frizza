@@ -8,7 +8,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.http import HttpResponseRedirect
 import logging
 
-logger = logging.getLogger(__name__)
+logger = logging.getLogger('registration')
 # This function provides an appropriate response to a request for the pizza
 # page.
 def pizza(request):
