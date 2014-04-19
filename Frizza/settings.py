@@ -165,5 +165,10 @@ LOGGING = {
             'level': 'ERROR',
             'propagate': True,
         },
+        'registration': {
+            'handlers': ['file'],
+            'level': 'DEBUG',
+            'propagate': True,
+            },
     }
 }
