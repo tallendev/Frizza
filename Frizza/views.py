@@ -23,14 +23,16 @@ def pizza(request):
             request.session[pizza] = PizzaOrder()
             post = request.POST
             #FIXME are these conditions right?
-            clicked = post.get('Make Your Own')
-            if clicked != '':
+            if 'Make Your Own' in request.session:
                 HttpResponseRedirect('/crust')
             for i in admin_list:
-                clicked = post.get(i, '')
-                if (clicked != ''):
+                if (i in request.session):
                     break
             # need else here to dynamically rebuild prebuilt pizzas
+            context = {'admin_list': admin_list}
+            print ("Context: " + str(admin_list) + "\n")
+            return render(request, settings.TEMPLATE_DIRS +
+                               '/public_html/Pizza/pizza.html', context)
         else:
             context = {'admin_list': admin_list}
             print ("Context: " + str(admin_list) + "\n")
