@@ -78,9 +78,11 @@
             <div class="column">
                 <div class="list-group">
                 {% if crust_list %}
+                    <form>
                     {% for crust in crust_list %}
-                    <a class="list-group-item">{{ crust.crust_name }}</a><!-- http://getbootstrap.com/examples/theme/# -->
+                    <input class="radio" name="crust" value="{{ crust.crust_name }}">
                     {% endfor %}
+                    </form>
                 {% else %}
                     <p>No crust</p>
                 {% endif %}
