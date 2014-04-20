@@ -71,7 +71,7 @@ class User(models.Model):
 #
 # Weird behavior due to no composite primary keys.
 class HasTopping(models.Model):
-    pizza_name = models.ForeignKey(Pizza)
+    pizza_id = models.ForeignKey(Pizza)
     topping_name = models.ForeignKey(Topping)
     
     # returns ids

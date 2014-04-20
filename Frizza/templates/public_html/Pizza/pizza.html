@@ -78,17 +78,17 @@
                 <div class="list-group">
                 {% if admin_list %}
                     {% for pizza in admin_list %}
-                        <a class="btn btn-lg btn-default" name="{{ pizza.pizza_name }}" placeholder="{{ pizza.pizza_name }}">
+                        <a class="btn btn-lg btn-default" name="{{ pizza.pizza_name }}">{{ pizza.pizza_name }}</a>
                     {% endfor %}
                 {% else %}
                     <p> No default pizzas are available.</p>
                 {% endif %}
                 {% if user_list %}
                     {% for pizza in user_list %}
-                    <a class="btn btn-lg btn-default" name="{{ pizza.pizza_name }}" placeholder="{{ pizza.pizza_name }}">
+                    <a class="btn btn-lg btn-default" name={{ pizza.pizza_name }}>{{ pizza.pizza_name }}</a>
                     {% endfor %}
                 {% endif %}
-                    <a class="btn btn-lg btn-info" name="Make Your Own" placeholder="Make Your Own!">
+                    <a class="btn btn-lg btn-info" name="Make Your Own">Make Your Own!</a>
                 </div>
             </div>
         </div>
