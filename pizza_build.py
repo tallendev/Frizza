@@ -1,5 +1,5 @@
-import Frizza.settings
-settings.configure()
+#import Frizza.settings
+#settings.configure()
 from Frizza.models import Sauce
 Sauce('Tomato', 100).save()
 Sauce('Alfredo', 100).save()
