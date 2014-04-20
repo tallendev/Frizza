@@ -20,7 +20,7 @@ def pizza(request):
         #TODO add user stuff
         if request.method == 'POST':
             print(request.POST)
-            request.session.setitem('pizza', PizzaOrder())
+            request.session[pizza] = PizzaOrder()
             post = request.POST
             #FIXME are these conditions right?
             clicked = post.get('Make Your Own')
