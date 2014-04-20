@@ -17,7 +17,7 @@ def pizza(request):
     if request.user.is_authenticated():
         admin_list = Orders.objects.filter(user_name="admin").select_related('pizza__pizza_id')
         context = {'admin_list': admin_list}
-        print (context)
+        print ("Context: " + str(context) + "\n")
         return render(request, settings.TEMPLATE_DIRS +
                                '/public_html/Pizza/pizza.html', context)
     else:
