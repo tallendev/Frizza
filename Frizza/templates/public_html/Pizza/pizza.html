@@ -71,28 +71,29 @@
         <h1>What pizza would you like?</h1>
         <p class="lead">Default pizzas come with classic crust and tomato sauce.</p>
     </div>
-
+    <form action="" class="form-signin" method="post">{% csrf_token %}
     <div class="list_container">
         <div class="row">
             <div class="column">
                 <div class="list-group">
                 {% if admin_list %}
                     {% for pizza in admin_list %}
-                        <a href="/confirmation" class="btn btn-lg btn-default">{{ pizza.pizza_name }}</a>                {% endfor %}
+                        <input class="btn btn-lg btn-default" name="{{ pizza.pizza_name }}" placeholder="{{ pizza.pizza_name }}">
+                    {% endfor %}
                 {% else %}
                     <p> No default pizzas are available.</p>
                 {% endif %}
                 {% if user_list %}
                     {% for pizza in user_list %}
-                    <a href="/confirmation" class="btn btn-lg btn-default">{{ pizza.pizza_name }}</a>
+                    <input class="btn btn-lg btn-default" name="{{ pizza.pizza_name }}" placeholder="{{ pizza.pizza_name }}">
                     {% endfor %}
                 {% endif %}
-                    <a href="/crust" class="btn btn-lg btn-info">Make Your Own!</a>
+                    <input class="btn btn-lg btn-info" name="Make Your Own" placeholder="Make Your Own!">
                 </div>
             </div>
         </div>
     </div>
-
+    </form>
 
     <div class="alert alert-success">
         <strong>Your registration was successful!</strong>
