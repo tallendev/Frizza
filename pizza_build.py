@@ -1,3 +1,4 @@
+#!/usr/bin/python
 #import Frizza.settings
 #settings.configure()
 from Frizza.models import Sauce
