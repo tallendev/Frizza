@@ -217,10 +217,16 @@ def login(request):
                   '/public_html/login.html', context)
 
 
+def return_pizza(request):
+    # Redirect to a success page.
+    return render(request, settings.TEMPLATE_DIRS +
+                  "/public_html/Return/return.html")
+
+
 def goodbye(request):
     # Redirect to a success page.
     return render(request, settings.TEMPLATE_DIRS +
-                  "/public_html/Goodbye/goodbye/")
+                  "/public_html/Goodbye/goodbye.html")
 
 
 def logout(request):
