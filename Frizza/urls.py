@@ -36,6 +36,8 @@ urlpatterns = patterns('',
     url(r'^goodbye/', 'Frizza.views.goodbye', name='goodbye'),
     # View for login page.
     url(r'^return/', 'Frizza.views.waste', name='return'),
+    # View for logout page.
+    url(r'^logout/', 'django.contrib.auth.views.logout', {'template_name': settings.TEMPLATE_DIRS + '/public_html/logout.html'}, 'Frizza.views.logout', name='logout'),
     # This sets up the static section properly so that static content
     # is distributed properly in production.
 ) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
