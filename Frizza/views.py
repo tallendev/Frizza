@@ -15,7 +15,7 @@ logger = logging.getLogger('registration')
 # page.
 def pizza(request):
     if request.user.is_authenticated():
-        admin_list = Orders.objects.filter(user_name="admin")
+        admin_list = Orders.objects.filter(user_name="admin").select_related('orders__pizza_name')
         context = {'admin_list': admin_list}
         return render(request, settings.TEMPLATE_DIRS +
                                '/public_html/Pizza/pizza.html', context)
@@ -45,6 +45,7 @@ def crust(request):
                                '/public_html/Crust/crust.html', context)
     else:
         return HttpResponseRedirect('/login')
+
 
 # This function provides the appropriate response to a request for the sauce
 # page.
