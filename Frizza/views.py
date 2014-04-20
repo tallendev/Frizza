@@ -61,6 +61,16 @@ def sauce(request):
         return HttpResponseRedirect('/login')
 
 
+# This function provides an appropriate response to a request for the
+# confirmation page.
+def confirmation(request):
+    if request.user.is_authenticated():
+        return render(request, settings.TEMPLATE_DIRS +
+                      '/public_html/Confirmation/confirmation.html')
+    else:
+        return HttpResponseRedirect('/login')
+
+
 #This function does not work, but we would like to revisit it in the future.
 def allergies(request):
     if request.user.is_authenticated():
