@@ -19,6 +19,7 @@ def pizza(request):
         admin_list = Pizza.objects.filter(pizza_id=order_list).select_related()
         #TODO add user stuff
         if request.method == 'POST':
+            print(request.POST)
             request.session.setitem('pizza', PizzaOrder())
             post = request.POST
             #FIXME are these conditions right?
