@@ -112,7 +112,7 @@ def allergies(request):
 
 def calorie(request):
     if request.user.is_authenticated():
-        pizza = Pizza.objects.get(pizza_name="Sausage")
+        pizza = Pizza.objects.get(pizza_name="Pepperoni")
         crust = Crust.objects.get(crust_name=pizza.crust_name)
         crust_calorie = crust.calorie
     
@@ -123,7 +123,7 @@ def calorie(request):
     
         top_cal_sum = 0
         for ht in hasToppings:
-            topping = Topping.objects.get(topping_name = ht.topping_name)
+            topping = Topping.objects.get(topping_name=ht.topping_name)
             top_cal_sum = top_cal_sum + topping.calorie
     
         cal_total = top_cal_sum + sauce_calorie + crust_calorie
