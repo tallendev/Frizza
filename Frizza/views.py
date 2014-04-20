@@ -20,7 +20,7 @@ def pizza(request):
         #TODO add user stuff
         if request.method == 'POST':
             print(request.POST)
-            request.session['pizza'] = PizzaOrder()
+            request.session['pizza'] = ''
             post = request.POST
             #FIXME are these conditions right?
             if 'Make Your Own' in post:
@@ -58,8 +58,7 @@ def toppings(request):
 # page.
 def crust(request):
     if request.user.is_authenticated():
-        sessionPizza = request.session.getitem('pizza')
-        if sessionPizza is not None:
+        if 'pizza' in request.session:
             #TODO Check for 'POST'
             crust_list = Crust.objects.all()
             context = {'crust_list': crust_list}
