@@ -1,5 +1,4 @@
 from django.shortcuts import render
-from django.views.generic import TemplateView
 import settings
 from django.contrib import auth
 from Frizza.models import User, Sauce, Crust, Pizza, Topping, HasTopping, \
@@ -7,6 +6,7 @@ from Frizza.models import User, Sauce, Crust, Pizza, Topping, HasTopping, \
 from django.contrib.auth.forms import UserCreationForm
 from django.http import HttpResponseRedirect
 import logging
+from pizza import PizzaOrder
 
 logger = logging.getLogger('registration')
 
@@ -15,12 +15,26 @@ logger = logging.getLogger('registration')
 # page.
 def pizza(request):
     if request.user.is_authenticated():
-        order_list = Orders.objects.filter(user_name="admin")#.select_related('pizza__pizza_name')
+        order_list = Orders.objects.filter(user_name="admin")
         admin_list = Pizza.objects.filter(pizza_id=order_list).select_related()
-        context = {'admin_list': admin_list}
-        print ("Context: " + str(admin_list) + "\n")
-        return render(request, settings.TEMPLATE_DIRS +
-                               '/public_html/Pizza/pizza.html', context)
+        #TODO add user stuff
+        if request.method == 'POST':
+            request.session.setitem('pizza', PizzaOrder())
+            post = request.POST
+            #FIXME are these conditions right?
+            clicked = post.get('Make Your Own')
+            if clicked != '':
+                HttpResponseRedirect('/crust')
+            for i in admin_list:
+                clicked = post.get(i, '')
+                if (clicked != ''):
+                    break
+            # need else here to dynamically rebuild prebuilt pizzas
+        else:
+            context = {'admin_list': admin_list}
+            print ("Context: " + str(admin_list) + "\n")
+            return render(request, settings.TEMPLATE_DIRS +
+                                   '/public_html/Pizza/pizza.html', context)
     else:
         return HttpResponseRedirect('/login')
 
@@ -41,10 +55,15 @@ def toppings(request):
 # page.
 def crust(request):
     if request.user.is_authenticated():
-        crust_list = Crust.objects.all()
-        context = {'crust_list': crust_list}
-        return render(request, settings.TEMPLATE_DIRS +
-                               '/public_html/Crust/crust.html', context)
+        sessionPizza = request.session.getitem('pizza')
+        if sessionPizza is not None:
+            #TODO Check for 'POST'
+            crust_list = Crust.objects.all()
+            context = {'crust_list': crust_list}
+            return render(request, settings.TEMPLATE_DIRS +
+                                   '/public_html/Crust/crust.html', context)
+        else:
+            return HttpResponseRedirect('/pizza')
     else:
         return HttpResponseRedirect('/login')
 
@@ -53,10 +72,18 @@ def crust(request):
 # page.
 def sauce(request):
     if request.user.is_authenticated():
-        sauce_list = Sauce.objects.all()
-        context = {'sauce_list': sauce_list}
-        return render(request, settings.TEMPLATE_DIRS +
-                               '/public_html/Sauce/sauce.html', context)
+        sessionPizza = request.session.getitem('pizza')
+        if sessionPizza is not None:
+            if sessionPizza.crust is not None:
+                sauce_list = Sauce.objects.all()
+                context = {'sauce_list': sauce_list}
+                # TODO Check for Post
+                return render(request, settings.TEMPLATE_DIRS +
+                                   '/public_html/Sauce/sauce.html', context)
+            else:
+                HttpResponseRedirect('/crust')
+        else:
+            HttpResponseRedirect('/pizza')
     else:
         return HttpResponseRedirect('/login')
 
