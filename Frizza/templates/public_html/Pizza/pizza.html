@@ -79,7 +79,7 @@
                 {% if admin_list %}
                     {% for pizza in admin_list %}
                     <form action="" method="post">{% csrf_token %}
-                        <input type="button" class="btn btn-lg btn-default" name="{{ pizza.pizza_name }}" value="{{ pizza.pizza_name }}">
+                        <input type="submit" class="btn btn-lg btn-default" name="{{ pizza.pizza_name }}" value="{{ pizza.pizza_name }}">
                     </form>
                     {% endfor %}
                 {% else %}
@@ -88,12 +88,12 @@
                 {% if user_list %}
                     {% for pizza in user_list %}
                     <form action="" method="post">{% csrf_token %}
-                    <input type="button" class="btn btn-lg btn-default" name="{{ pizza.pizza_name }}" value="{{ pizza.pizza_name }}">
+                    <input type="submit" class="btn btn-lg btn-default" name="{{ pizza.pizza_name }}" value="{{ pizza.pizza_name }}">
                     </form>
                     {% endfor %}
                 {% endif %}
                     <form action="" method="post">{% csrf_token %}
-                    <input type="button" class="btn btn-lg btn-info" name="Make Your Own" value="Make Your Own!">
+                    <input type="submit" class="btn btn-lg btn-info" name="Make Your Own" value="Make Your Own!">
                     </form>
                 </div>
             </div>
