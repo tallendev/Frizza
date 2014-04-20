@@ -9,14 +9,14 @@ from django.http import HttpResponseRedirect
 import logging
 
 logger = logging.getLogger('registration')
+
+
 # This function provides an appropriate response to a request for the pizza
 # page.
 def pizza(request):
     if request.user.is_authenticated():
         admin_list = Orders.objects.filter(user_name="admin")
-        #user_list = Orders.objects.filter(user_name=USER)
         context = {'admin_list': admin_list}
-        #context = {'user_list': user_list}
         return render(request, settings.TEMPLATE_DIRS +
                                '/public_html/Pizza/pizza.html', context)
     else:
@@ -122,8 +122,7 @@ def calorie(request):
         return HttpResponseRedirect('/login')
 
 
-
-# This function provides an appropriate response to a request for the 
+# This function provides an appropriate response to a request for the
 # returns/waste page.
 def waste(request):
     if request.user.is_authenticated():
