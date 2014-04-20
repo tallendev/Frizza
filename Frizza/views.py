@@ -26,7 +26,7 @@ def pizza(request):
             if 'Make Your Own' in post:
                 HttpResponseRedirect('/crust')
             for i in admin_list:
-                if (i in post):
+                if (str(i) in post):
                     break
             # need else here to dynamically rebuild prebuilt pizzas
             context = {'admin_list': admin_list}
