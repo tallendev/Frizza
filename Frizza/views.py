@@ -23,10 +23,10 @@ def pizza(request):
             request.session[pizza] = PizzaOrder()
             post = request.POST
             #FIXME are these conditions right?
-            if 'Make Your Own' in request.session:
+            if 'Make Your Own' in post:
                 HttpResponseRedirect('/crust')
             for i in admin_list:
-                if (i in request.session):
+                if (i in post):
                     break
             # need else here to dynamically rebuild prebuilt pizzas
             context = {'admin_list': admin_list}
