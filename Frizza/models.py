@@ -29,7 +29,7 @@ class Crust(models.Model):
 # the name of the sauce on the pizza
 # the name of the crust on the pizza
 class Pizza(models.Model):
-    #pizza_id = models.IntegerField(primary_key=True)
+    pizza_id = models.IntegerField(primary_key=True)
     pizza_name = models.CharField(max_length=20)
     order_count = models.IntegerField()
     sauce_name = models.ForeignKey(Sauce)
