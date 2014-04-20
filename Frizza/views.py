@@ -205,6 +205,12 @@ def login(request):
 
 
 def goodbye(request):
+    # Redirect to a success page.
+    return render(request, settings.TEMPLATE_DIRS +
+                  "/public_html/Goodbye/goodbye/")
+
+
+def logout(request):
     auth.logout(request)
     # Redirect to a success page.
-    return render(request, settings.TEMPLATE_DIRS + "/public_html/login/")
+    return render(request, settings.TEMPLATE_DIRS + "/public_html/logout/")
