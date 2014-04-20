@@ -129,7 +129,8 @@ def calorie(request):
 # returns/waste page.
 def waste(request):
     if request.user.is_authenticated():
-        wasted_toppings = HasTopping.objects.filter(pizza_name="Pepperoni").\
+        pizza = Pizza.objects.get(pizza_name="Pepperoni")
+        wasted_toppings = HasTopping.objects.filter(pizza_id=pizza.pizza_id).\
                                      select_related('orders__pizza_name')
 
         wasted_sauce = Pizza.objects.filter(pizza_name="Pepperoni").\
@@ -205,12 +206,6 @@ def login(request):
         # Show an error page
     return render(request, settings.TEMPLATE_DIRS +
                   '/public_html/login.html', context)
-
-
-def return_pizza(request):
-    # Redirect to a success page.
-    return render(request, settings.TEMPLATE_DIRS +
-                  "/public_html/Return/return.html")
 
 
 def goodbye(request):
