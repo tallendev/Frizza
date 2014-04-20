@@ -61,16 +61,6 @@ def sauce(request):
         return HttpResponseRedirect('/login')
 
 
-# This function provides an appropriate response to a request for the
-# confirmation page.
-def confirmation(request):
-    if request.user.is_authenticated():
-        return render(request, settings.TEMPLATE_DIRS +
-                      '/public_html/Confirmation/confirmation.html')
-    else:
-        return HttpResponseRedirect('/login')
-
-
 #This function does not work, but we would like to revisit it in the future.
 def allergies(request):
     if request.user.is_authenticated():
@@ -119,7 +109,7 @@ def calorie(request):
         sauce = Sauce.objects.get(sauce_name=pizza.sauce_name)
         sauce_calorie = sauce.calorie
 
-        hasToppings = HasTopping.objects.filter(pizza_name=pizza.pizza_name)
+        hasToppings = HasTopping.objects.filter(pizza_id=pizza.pizza_id)
     
         top_cal_sum = 0
         for ht in hasToppings:
