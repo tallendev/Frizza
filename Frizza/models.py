@@ -29,7 +29,7 @@ class Crust(models.Model):
 # the name of the sauce on the pizza
 # the name of the crust on the pizza
 class Pizza(models.Model):
-    pizza_name = models.CharField(max_length=20, primary_key=True)
+    pizza_name = models.CharField(max_length=20)
     order_count = models.IntegerField()
     sauce_name = models.ForeignKey(Sauce)
     crust_name = models.ForeignKey(Crust)
@@ -83,7 +83,7 @@ class HasTopping(models.Model):
 # name of the pizza that they ordered
 class Orders(models.Model):
     user_name = models.ForeignKey(User)
-    pizza_name = models.ForeignKey(Pizza)
+    pizza_id = models.ForeignKey(Pizza)
 
     def __unicode__(self):
         return str(self.id)

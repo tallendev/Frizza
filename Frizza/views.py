@@ -3,7 +3,7 @@ from django.views.generic import TemplateView
 import settings
 from django.contrib import auth
 from Frizza.models import User, Sauce, Crust, Pizza, Topping, HasTopping, \
-                          Orders, Allergy
+                           Allergy
 from django.contrib.auth.forms import UserCreationForm
 from django.http import HttpResponseRedirect
 import logging
@@ -15,7 +15,7 @@ logger = logging.getLogger('registration')
 # page.
 def pizza(request):
     if request.user.is_authenticated():
-        admin_list = Orders.objects.filter(user_name="admin")
+        admin_list = Pizza.objects.filter(user_name="admin")
         context = {'admin_list': admin_list}
         return render(request, settings.TEMPLATE_DIRS +
                                '/public_html/Pizza/pizza.html', context)
