@@ -15,7 +15,7 @@ logger = logging.getLogger('registration')
 # page.
 def pizza(request):
     if request.user.is_authenticated():
-        admin_list = Orders.objects.filter(user_name="admin").select_related('orders__pizza_name')
+        admin_list = Orders.objects.filter(user_name="admin").select_related('pizza__pizza_id')
         context = {'admin_list': admin_list}
         return render(request, settings.TEMPLATE_DIRS +
                                '/public_html/Pizza/pizza.html', context)
