@@ -45,6 +45,8 @@
 
           <h2>"Frozen Pizza Dispenser"</h2>
 
+          {% block content %}
+
           <form class="form-signin" role="form" method="post">{% csrf_token %}
               <h3 class="form-signin-heading">Please Register</h3>
               <input type="text" name="username" class="form-control" placeholder="New User Name" required autofocus>
@@ -60,6 +62,8 @@
               <strong>Invalid username or password.</strong>
           </div>
           {% endif %}
+
+          {% endblock %}
 
       </div>
 
