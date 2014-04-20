@@ -24,9 +24,9 @@ def pizza(request):
             post = request.POST
             #FIXME are these conditions right?
             if 'Make Your Own' in post:
-                HttpResponseRedirect('/crust')
+                return HttpResponseRedirect('/crust')
             for i in admin_list:
-                if (str(i) in post):
+                if str(i) in post:
                     break
             # need else here to dynamically rebuild prebuilt pizzas
             context = {'admin_list': admin_list}
