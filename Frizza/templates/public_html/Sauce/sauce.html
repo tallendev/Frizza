@@ -92,17 +92,6 @@
         <div class="page-header">
         </div>
 
-        <div class="alert alert-success">
-            <strong>Choice: </strong>
-        </div>
-
-        {% if form.errors %}
-        <div class="alert alert-danger">
-            <strong>Oops!</strong> Please choose at least one sauce.
-        </div>
-        {% endif %}
-
-
         <div class="row">
             <div class="column">
                 <div class="button_container">
@@ -113,6 +102,17 @@
                 </div>
             </div>
         </div>
+
+        <div class="alert alert-success">
+            <strong>Choice: </strong>
+        </div>
+
+        {% if form.errors %}
+        <div class="alert alert-danger">
+            <strong>Oops!</strong> Please choose at least one sauce.
+        </div>
+        {% endif %}
+
     </div>
 </div>
 

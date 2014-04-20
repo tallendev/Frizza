@@ -88,11 +88,27 @@
             </div><!-- /.col-sm-4 -->
         </div>
 
-        <div class="page-header">
-        </div>
+        <div class="page-header"></div>
+
+        {% block content %}
+
+        <form action="" class="form-signin" method="post">{% csrf_token %}
+            <div class="row">
+                <div class="column">
+                    <div class="button_container">
+                        <p>
+                            <a href="/sauce" class="btn btn-lg btn-primary" type="submit">Proceed to Sauce</a>
+                            <a href="/pizza" class="btn btn-lg btn-default">Back</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <input type="hidden" name="next" value="/sauce" />
+        </form>
 
         <div class="alert alert-success">
-            <strong>Choice: </strong>
+            <strong>Choice: </strong><a >{{ user.username }}</a>
         </div>
 
         {% if form.errors %}
@@ -101,16 +117,8 @@
         </div>
         {% endif %}
 
-        <div class="row">
-            <div class="column">
-                <div class="button_container">
-                    <p>
-                        <a href="/sauce" class="btn btn-lg btn-primary" type="submit">Proceed to Sauce</a>
-                        <a href="/pizza" class="btn btn-lg btn-default">Back</a>
-                    </p>
-                </div>
-            </div>
-        </div>
+        {% endblock %}
+
     </div>
 </div>
 
