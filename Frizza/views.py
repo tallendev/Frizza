@@ -120,7 +120,7 @@ def allergies(request):
         allergies_list = Allergy.objects.all()
         context = {'allergy_list': allergies_list}
         return render(request, settings.TEMPLATE_DIRS +
-                               '/public_html/Allergy/allergy.html', context)
+                               '/public_html/Allergies/allergies.html', context)
     else:
         return HttpResponseRedirect('/login')
     # topping_allergies = HasTopping.objects.filter(pizza_name="Sausage") \
@@ -183,7 +183,7 @@ def calorie(request):
             topping_list = Topping.objects.all()
             topping_str = []
             for topping in topping_list:
-                if (str(topping) in request.session):
+                if str(topping) in request.session:
                     topping_str.append(topping)
             crust_calorie = crust.calorie
             sauce_calorie = sauce.calorie
