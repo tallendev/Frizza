@@ -90,9 +90,9 @@
                 {% endif %}
                 {% if user_list %}
                     {% for pizza in user_list %}
-                    <form action="" method="post">{% csrf_token %}
-                        <input type="submit" class="btn btn-lg btn-primary" name="pizza" value="{{ pizza.pizza_name }}">
-                    </form>
+                        <form action="" method="post">{% csrf_token %}
+                            <input type="submit" class="btn btn-lg btn-primary" name="pizza" value="{{ pizza.pizza_name }}">
+                        </form>
                     {% endfor %}
                 {% endif %}
                     <form action="" method="post">{% csrf_token %}
