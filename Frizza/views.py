@@ -55,7 +55,7 @@ def toppings(request):
                             if str(i) in request.POST:
                                 print("Whee!")
                                 request.session[str(i)] = str(i)
-                        print(request.session)
+                        print(str(request.session))
                         return HttpResponseRedirect('/confirmation')
                     else:
                         context = {'topping_list': topping_list}
