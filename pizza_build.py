@@ -14,9 +14,10 @@ Topping('Pepperoni', 100).save()
 Topping('Olives', 100).save()
 from Frizza.models import Pizza
 Pizza(1, 'Pepperoni', 1, 'Alfredo', 'Thin').save()
-Pizza(2, 'Cheese', 1, 'Alfredo', 'Thin').save()
+Pizza(2, 'Cheese', 2, 'Alfredo', 'Thin').save()
 from Frizza.models import HasTopping
 from Frizza.models import User
 User('admin', 'admin').save()
 from Frizza.models import Orders
 Orders(1, 'admin', 1).save()
+Orders(2, 'admin', 2).save()
