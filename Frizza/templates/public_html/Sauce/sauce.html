@@ -74,48 +74,47 @@
         <h1>What sauce would you like?</h1>
     </div>
 
-    <div class="list_container">
+    <form action="" class="form-signin" method="post">{% csrf_token %}
         <div class="row">
             <div class= "column">
-                <div class="list-group">
-                    {% if sauce_list %}
-                    <form>
-                        {% for sauce in sauce_list %}
-                        <input type="radio" name="sauce" value="{{ sauce.sauce_name }}">{{ sauce.sauce_name }}
-                        {% endfor %}
-                    </form>
-                    {% else %}
-                    <p> No sauce </p>
-                    {% endif %}
-                </div>
+                {% if sauce_list %}
+                {% for sauce in sauce_list %}
+                <input type="radio" name="sauce" value="{{ sauce.sauce_name }}">{{ sauce.sauce_name }}
+                {% endfor %}
+                {% else %}
+                <p> No sauce </p>
+                {% endif %}
             </div><!-- /.col-sm-4 -->
         </div>
 
-        <div class="page-header">
-        </div>
+        <div class="page-header"></div>
+
+        {% block content %}
 
         <div class="row">
             <div class="column">
                 <div class="button_container">
                     <p>
-                        <a href="/toppings" class="btn btn-lg btn-primary" type="submit">Proceed to Toppings</a>
+                        <input type="submit" class="btn btn-lg btn-primary" value="Proceed to Toppings">
                         <a href="/crust" class="btn btn-lg btn-default">Back</a>
                     </p>
                 </div>
             </div>
         </div>
 
-        <div class="alert alert-success">
-            <strong>Choice: </strong><a >{{ sauce.sauce_name }}</a>
-        </div>
+        <input type="hidden" name="next" value="/toppings" />
+    </form>
 
-        {% if form.errors %}
-        <div class="alert alert-danger">
-            <strong>Oops!</strong> Please choose at least one sauce.
-        </div>
-        {% endif %}
-
+    <div class="alert alert-success">
+        <strong>Choice: </strong><a >{{ sauce.sauce_name }}</a>
     </div>
+
+    {% if form.errors %}
+    <div class="alert alert-danger">
+        <strong>Oops!</strong> Please choose at least one sauce.
+    </div>
+    {% endif %}
+
 </div>
 
 

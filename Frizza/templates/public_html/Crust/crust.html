@@ -73,16 +73,16 @@
     <div class="page-header">
         <h1>What crust would you like?</h1>
     </div>
-        <form action="" class="form-signin" method="post">{% csrf_token %}
+    <form action="" class="form-signin" method="post">{% csrf_token %}
         <div class="row">
             <div class="column">
-                    {% if crust_list %}
-                        {% for crust in crust_list %}
-                        <input type="radio" name="crust" value="{{ crust.crust_name }}">{{ crust.crust_name }}<br>
-                        {% endfor %}
-                    {% else %}
-                    <p>No crust</p>
-                    {% endif %}
+                {% if crust_list %}
+                {% for crust in crust_list %}
+                <input type="radio" name="crust" value="{{ crust.crust_name }}">{{ crust.crust_name }}<br>
+                {% endfor %}
+                {% else %}
+                <p>No crust</p>
+                {% endif %}
             </div><!-- /.col-sm-4 -->
         </div>
 
@@ -91,31 +91,31 @@
         {% block content %}
 
 
-            <div class="row">
-                <div class="column">
-                    <div class="button_container">
-                        <p>
-                            <input type="submit" class="btn btn-lg btn-primary" value="Proceed to Sauce">
-                            <a href="/pizza" class="btn btn-lg btn-default">Back</a>
-                        </p>
-                    </div>
+        <div class="row">
+            <div class="column">
+                <div class="button_container">
+                    <p>
+                        <input type="submit" class="btn btn-lg btn-primary" value="Proceed to Sauce">
+                        <a href="/pizza" class="btn btn-lg btn-default">Back</a>
+                    </p>
                 </div>
             </div>
-
-            <input type="hidden" name="next" value="/sauce" />
-        </form>
-
-        <div class="alert alert-success">
-            <strong>Choice: </strong><a >{{ crust.crust_name }}</a>
         </div>
 
-        {% if form.errors %}
-        <div class="alert alert-danger">
-            <strong>Please choose a crust.</strong>
-        </div>
-        {% endif %}
+        <input type="hidden" name="next" value="/sauce" />
+    </form>
 
-        {% endblock %}
+    <div class="alert alert-success">
+        <strong>Choice: </strong><a >{{ crust.crust_name }}</a>
+    </div>
+
+    {% if form.errors %}
+    <div class="alert alert-danger">
+        <strong>Please choose a crust.</strong>
+    </div>
+    {% endif %}
+
+    {% endblock %}
 
 </div>
 
