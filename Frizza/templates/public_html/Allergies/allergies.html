@@ -83,10 +83,12 @@
                     {% endif %}
                     </div>
                 </div>
-                <p class="lead">
-                    <a href="/goodbye" class="btn btn-lg btn-primary">I Understand</a>
+
+                <form action="" class="form-signin" method="post">{% csrf_token %}
+                    <input class="btn btn-lg btn-primary" type="submit" value="I Understand">
                     <a href="/pizza" class="btn btn-lg btn-default" type="submit">Back to Pizza</a>
-                </p>
+                </form>
+
             </div>
 
         </div>
