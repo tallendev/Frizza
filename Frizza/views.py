@@ -45,10 +45,24 @@ def pizza(request):
 # page.
 def toppings(request):
     if request.user.is_authenticated():
-        topping_list = Topping.objects.all()
-        context = {'topping_list': topping_list}
-        return render(request, settings.TEMPLATE_DIRS +
+        if 'pizza' in request.session:
+            if 'crust' in request.session:
+                if 'sauce' in request.session:
+                    topping_list = Topping.objects.all()
+                    if request.method == 'POST':
+                        for i in topping_list:
+                            if i in request.POST:
+                                request.session[i] = i
+                    else:
+                        context = {'topping_list': topping_list}
+                        return render(request, settings.TEMPLATE_DIRS +
                                '/public_html/Toppings/toppings.html', context)
+                else:
+                    return HttpResponseRedirect('/sauce')
+            else:
+                return HttpResponseRedirect('/crust')
+        else:
+            return HttpResponseRedirect('/pizza')
     else:
         return HttpResponseRedirect('/login')
 
