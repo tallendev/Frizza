@@ -71,7 +71,9 @@
             {% block content %}
 
             <form action="" class="form-signin" method="post">{% csrf_token %}
+                {% if pizza %}
                 <input type="text" name="pizza_name" id="pizza_name" class="form-control" placeholder="Pizza Name" required autofocus><br>
+                {% endif %}
                 <input class="btn btn-lg btn-primary" name="confirm" type="submit" value="Confirm">
             </form>
 
