@@ -168,13 +168,13 @@ def calorie(request):
             pizza_id = 0
             if request.session['pizza'] == '':
                 pizza_id = 1
-                Pizza(current_id, str(request.POST['pizza_name']), pizza_id,
+                pizza = Pizza(current_id, str(request.POST['pizza_name']), pizza_id,
                       request.session['sauce'], request.session['crust']).save()
             #else
             topping_list = Topping.objects.all()
             for topping in topping_list:
                 if str(topping) in request.session:
-                    HasTopping(pizza_id=pizza_id, topping_name=str(topping)).save()
+                    HasTopping(pizza_id=pizza, topping_name=str(topping)).save()
             Orders(str(request.user), pizza_id).save()
             return HttpResponseRedirect('/goodbye')
         else:
