@@ -154,22 +154,37 @@ def allergies(request):
 
 def calorie(request):
     if request.user.is_authenticated():
-        pizza = Pizza.objects.get(pizza_name=request.session['pizza'])
-        crust = Crust.objects.get(crust_name=pizza.crust_name)
-        crust_calorie = crust.calorie
-    
-        sauce = Sauce.objects.get(sauce_name=pizza.sauce_name)
-        sauce_calorie = sauce.calorie
-
-        hasToppings = HasTopping.objects.filter(pizza_id=pizza.pizza_id)
-    
+        pizza = None
+        crust = None
+        sauce = None
+        crust_calorie = 0
+        sauce_calorie = 0
         top_cal_sum = 0
         toppings = []
-        for ht in hasToppings:
-            topping = Topping.objects.get(topping_name=ht.topping_name)
-            toppings.append(topping)
-            top_cal_sum = top_cal_sum + topping.calorie
+        pizza_name = request.session['pizza']
+        if pizza_name == '':
+            pizza = Pizza.objects.get(pizza_name=request.session['pizza'])
+            crust = Crust.objects.get(crust_name=pizza.crust_name)
+            crust_calorie = crust.calorie
     
+            sauce = Sauce.objects.get(sauce_name=pizza.sauce_name)
+            sauce_calorie = sauce.calorie
+
+            hasToppings = HasTopping.objects.filter(pizza_id=pizza.pizza_id)
+
+            for ht in hasToppings:
+                topping = Topping.objects.get(topping_name=ht.topping_name)
+                toppings.append(topping)
+                top_cal_sum = top_cal_sum + topping.calorie
+        else:
+            crust = request.session['crust']
+            sauce = sauce.session['sauce']
+            toppings = request.session['toppings']
+            crust_calorie = crust.calorie
+            sauce_calorie = sauce.calorie
+            for topping in toppings:
+                top_cal_sum += topping.calorie
+
         cal_total = top_cal_sum + sauce_calorie + crust_calorie
     
         context = {'crust': crust,
