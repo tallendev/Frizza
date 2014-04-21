@@ -183,7 +183,7 @@ def calorie(request):
             topping_list = Topping.objects.all()
             topping_str = []
             for topping in topping_list:
-                if (topping in request.session):
+                if (str(topping) in request.session):
                     topping_str.append(topping)
             crust_calorie = crust.calorie
             sauce_calorie = sauce.calorie
