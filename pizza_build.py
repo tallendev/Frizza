@@ -32,9 +32,9 @@ Pizza(5, 'Vegetarian', 5, 'Tomato', 'Classic').save()
 #Allergy('Gluten', 'Thin')
 #Allergy('Gluten', 'Classic')
 from Frizza.models import HasTopping
-from Frizza.models import User
-User('admin', 'admin').save()
-User('trevor', 'trevor').save()
 from Frizza.models import Orders
 Orders(1, 'admin', 1).save()
 Orders(2, 'admin', 2).save()
+Orders(3, 'admin', 3).save()
+Orders(4, 'admin', 4).save()
+Orders(5, 'admin', 4).save()

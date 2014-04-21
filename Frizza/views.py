@@ -7,7 +7,6 @@ from django.contrib.auth.forms import UserCreationForm
 from django.http import HttpResponseRedirect
 import logging
 from django.db.models import Max
-from pizza import PizzaOrder
 
 logger = logging.getLogger('registration')
 
