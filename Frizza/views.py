@@ -255,7 +255,14 @@ def calorie(request):
 # This function provides an appropriate response to a request for the
 # returns/waste page.
 def waste(request):
+
     if request.user.is_authenticated():
+
+        user = User.objects.filter(user_name=str(request.user))[:1].get()
+        orders = Orders.objects.filter(user_name = user.user_name)
+
+
+        #This section of the code determines the wasted ingredients and is incomplete.
         pizza = Pizza.objects.get(pizza_name="Pepperoni")
         wasted_toppings = HasTopping.objects.filter(pizza_id=pizza.pizza_id).\
                                      select_related('orders__pizza_name')
@@ -268,10 +275,11 @@ def waste(request):
 
         context = {'wasted_toppings': wasted_toppings,
                    'wasted_sauce': wasted_sauce,
-                   'wasted_crust': wasted_crust}
+                   'wasted_crust': wasted_crust,
+                   'orders': orders}
 
         return render(request, settings.TEMPLATE_DIRS +
-                               '/public_html/Return/return.html', context)
+                           '/public_html/Return/return.html', context)
     else:
         return HttpResponseRedirect('/login')
 
