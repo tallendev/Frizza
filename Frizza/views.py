@@ -57,7 +57,7 @@ def toppings(request):
                                 print("Whee!")
                                 request.session[str(i)] = str(i)
                         print(str(request.session))
-                        return HttpResponseRedirect('/confirmation')
+                        return HttpResponseRedirect('/allergies')
                     else:
                         context = {'topping_list': topping_list}
                         return render(request, settings.TEMPLATE_DIRS +
@@ -117,7 +117,6 @@ def sauce(request):
 
 #This function does not work, but we would like to revisit it in the future.
 def allergies(request):
-
 #=======
     # Sausage is a placeholder for the actual, variable pizza name.
 #    pizza = Pizza.objects.get(pizza_name="Sausage")
@@ -147,9 +146,12 @@ def allergies(request):
 
 #=======
     if request.user.is_authenticated():
-        allergies_list = Allergy.objects.all()
-        context = {'allergy_list': allergies_list}
-        return render(request, settings.TEMPLATE_DIRS +
+        if (request.method == 'POST'):
+            return HttpResponseRedirect('/confirmation')
+        else:
+            allergies_list = Allergy.objects.all()
+            context = {'allergy_list': allergies_list}
+            return render(request, settings.TEMPLATE_DIRS +
                                '/public_html/Allergies/allergies.html', context)
     else:
         return HttpResponseRedirect('/login')
