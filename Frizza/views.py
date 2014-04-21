@@ -51,7 +51,9 @@ def toppings(request):
                     topping_list = Topping.objects.all()
                     if request.method == 'POST':
                         for i in topping_list:
+                            print(str(i))
                             if str(i) in request.POST:
+                                print("Whee!")
                                 request.session[str(i)] = str(i)
                         print(request.session)
                         return HttpResponseRedirect('/confirmation')
