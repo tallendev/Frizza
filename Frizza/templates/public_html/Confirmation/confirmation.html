@@ -60,12 +60,16 @@
                         </ul>
                     </div>
                 </div>
-                <form action="" class="form-signin" method="post">{% csrf_token %}
-                    <input type="text" name="pizza_name"  id="Pizza_name" class="form-control" placeholder="Pizza Name" required autofocus><br>
-                </form>
-                    <input class="btn btn-lg btn-primary" type="submit" value="Confirm">
-                    <a href="/pizza" class="btn btn-lg btn-default" type="submit">Back to Pizza</a>
+
             </div>
+
+            {% block content %}
+
+            <form action="" class="form-signin" method="post">{% csrf_token %}
+                <input type="text" name="pizza_name"  id="Pizza_name" class="form-control" placeholder="Pizza Name" required autofocus><br>
+            </form>
+            <input class="btn btn-lg btn-primary" type="submit" value="Confirm">
+            <a href="/pizza" class="btn btn-lg btn-default" type="submit">Back to Pizza</a>
 
             {% if form.errors %}
             <div class="alert alert-danger">
