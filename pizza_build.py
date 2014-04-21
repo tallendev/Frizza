@@ -13,7 +13,8 @@ Crust('Thin', 75).save()
 Crust('Classic', 115).save()
 
 from Frizza.models import Topping
-Topping('Cheese', 200).save()
+cheese = Topping('Cheese', 200)
+cheese.save()
 Topping('Pepperoni', 200).save()
 Topping('Sausage', 200).save()
 Topping('Ham', 200).save()
@@ -45,7 +46,7 @@ Allergy(8, 'Soybean', 'Bacon').save()
 
 from Frizza.models import HasTopping
 ##### 1 #####
-HasTopping(1, "Cheese").save()
+HasTopping(1, cheese).save()
 ##### 2 #####
 HasTopping(2, "Cheese").save()
 HasTopping(2, "Pepperoni").save()
