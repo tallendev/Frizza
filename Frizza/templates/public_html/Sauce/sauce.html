@@ -78,6 +78,7 @@
         <div class="row">
             <div class= "column">
                 <div class="list-group">
+                    {% if sauce_list %}
                     <form>
                         {% for sauce in sauce_list %}
                         <input type="radio" name="sauce" value="{{ sauce.sauce_name }}">{{ sauce.sauce_name }}
