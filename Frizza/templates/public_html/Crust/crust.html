@@ -77,7 +77,7 @@
         <div class="row">
             <div class="column">
                     {% if crust_list %}
-                    <form>
+                    <form action="" method="post">
                         {% for crust in crust_list %}
                         <input type="radio" name="crust" value="{{ crust.crust_name }}">{{ crust.crust_name }}<br>
                         {% endfor %}
