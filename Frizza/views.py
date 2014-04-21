@@ -162,7 +162,7 @@ def calorie(request):
         top_cal_sum = 0
         toppings = []
         pizza_name = request.session['pizza']
-        if pizza_name == '':
+        if pizza_name != '':
             pizza = Pizza.objects.get(pizza_name=request.session['pizza'])
             crust = Crust.objects.get(crust_name=pizza.crust_name)
             crust_calorie = crust.calorie
