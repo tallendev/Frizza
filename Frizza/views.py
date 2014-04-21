@@ -154,7 +154,7 @@ def allergies(request):
 
 def calorie(request):
     if request.user.is_authenticated():
-        pizza = Pizza.objects.get(pizza_name="Pepperoni")
+        pizza = Pizza.objects.get(pizza_name=request.session['pizza'])
         crust = Crust.objects.get(crust_name=pizza.crust_name)
         crust_calorie = crust.calorie
     
@@ -164,13 +164,18 @@ def calorie(request):
         hasToppings = HasTopping.objects.filter(pizza_id=pizza.pizza_id)
     
         top_cal_sum = 0
+        toppings = []
         for ht in hasToppings:
             topping = Topping.objects.get(topping_name=ht.topping_name)
+            toppings.append(topping)
             top_cal_sum = top_cal_sum + topping.calorie
     
         cal_total = top_cal_sum + sauce_calorie + crust_calorie
     
-        context = {'cal_total': cal_total}
+        context = {'crust': crust,
+                    'sauce': sauce,
+                    'toppings': toppings,
+                    'cal_total': cal_total}
         return render(request, settings.TEMPLATE_DIRS +
                       '/public_html/Confirmation/confirmation.html', context)
     else:
