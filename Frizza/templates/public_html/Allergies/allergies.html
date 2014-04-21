@@ -55,7 +55,7 @@
                             <li>{{ allergy.topping_name  }}</li>
                         {% endfor %}
                     {% else %}
-                        <p>No allergies are available.</p>
+                        <p>There are no topping allergies.</p>
                     {% endif %}                       </ul> <!-- added close -->
                      {% if crust_allergies %}
                         <ul>
@@ -63,15 +63,15 @@
                             <li>{{ crust.topping_name  }}</li>
                         {% endfor %}
                     {% else %}
-                        <p>No allergies are available.</p>
+                        <p>There are no crust allergies.</p>
                     {% endif %}                       </ul>
                       {% if sauce_allergies %}
                         <ul>
                         {% for allergy in sauce_allergies %}
-                            <li>{{ allergy.sauce_name  }}</li>
+                            <li>{{ allergy.sauce_name }}</li>
                         {% endfor %}
                     {% else %}
-                        <p>No allergies are available.</p>
+                        <p>There are no sauce allergies.</p>
                     {% endif %}                       </ul> <!-- added close -->
                     </div>
                 </div>
