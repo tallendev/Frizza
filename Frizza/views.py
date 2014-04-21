@@ -164,6 +164,7 @@ def calorie(request):
     if request.user.is_authenticated():
         #TODO: Validate appropriate fields are filled out
         if request.method == 'POST':
+            # FIXME the behavior of this stuff is undefined, need to investigate
             current_id = Pizza.objects.all().\
                          aggregate(Max('pizza_id'))['pizza_id__max'] + 1
             pizza_id = 0
