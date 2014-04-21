@@ -181,15 +181,13 @@ def calorie(request):
                 current_id = Pizza.objects.all().\
                              aggregate(Max('pizza_id'))['pizza_id__max'] + 1
                 if request.session['pizza'] == '':
-                    pizza_id = 1
-                    pizza = Pizza(current_id, str(request.POST['pizza_name']), pizza_id,
-                                    request.session['sauce'], request.session['crust'])
+                    order_id = 1
+                    pizza = Pizza(current_id, str(request.POST['pizza_name']), order_id, request.session['sauce'], request.session['crust'])
                     pizza.save()
-
-                # TODO else
                     del request.session['pizza']
                     del request.session['sauce']
                     del request.session['crust']
+                #TODO: else
                 topping_list = Topping.objects.all()
                 for topping in topping_list:
                     if str(topping) in request.session:
@@ -200,6 +198,7 @@ def calorie(request):
                             aggregate(Max('id'))['id__max'] + 1
                 Orders(id=order_id, user_name=user, pizza_id=pizza).save()
                 return HttpResponseRedirect('/goodbye')
+
             else:
                 if request.session['pizza'] == '':
                     del request.session['pizza']
@@ -263,26 +262,40 @@ def calorie(request):
          return HttpResponseRedirect('/login')
 
 
+def return(request):
+    
+    if request.user.is_authenticated():
+        uorder_list = Orders.objects.filter(user_name=str(request.user))
+        orders = Pizza.objects.filter(pizza_id__in=uorder_list).select_related()
+       
+        if request.method == 'POST' and 'return_pizza' in request.POST:
+            request.session['return_pizza'] = request.POST['return_pizza']
+            return HttpResponseRedirect('/waste')
+
+            context = {'orders': orders}
+
+            return render(request, settings.TEMPLATE_DIRS +
+                          '/public_html/Return/return.html', context)
+
+    else:
+
+        return HttpResponseRedirect('/login')
+            
+
 # This function provides an appropriate response to a request for the
 # returns/waste page.
 def waste(request):
 
     if request.user.is_authenticated():
-        uorder_list = Orders.objects.filter(user_name=str(request.user))
-        orders = Pizza.objects.filter(pizza_id__in=uorder_list).select_related()
-        #user = User.objects.filter(user_name=str(request.user))[:1].get()
-        #orders = Orders.objects.filter(user_name = user.user_name)
 
-
-        #This section of the code determines the wasted ingredients and is incomplete.
-        pizza = Pizza.objects.get(pizza_name="Pepperoni")
+        pizza = Pizza.objects.get(pizza_name=str(request.return_pizza))
         wasted_toppings = HasTopping.objects.filter(pizza_id=pizza.pizza_id).\
                                      select_related('orders__pizza_name')
 
-        wasted_sauce = Pizza.objects.filter(pizza_name="Pepperoni").\
+        wasted_sauce = Pizza.objects.filter(pizza_name=str(request.return_pizza)).\
                              select_related('orders__pizza_name')
 
-        wasted_crust = Pizza.objects.filter(pizza_name="Pepperoni").\
+        wasted_crust = Pizza.objects.filter(pizza_name=str(request.return_pizza)).\
                              select_related('orders__pizza_name')
 
         context = {'wasted_toppings': wasted_toppings,
