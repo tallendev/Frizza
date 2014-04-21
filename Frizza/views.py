@@ -178,7 +178,7 @@ def calorie(request):
                 top_cal_sum = top_cal_sum + topping.calorie
         else:
             crust = request.session['crust']
-            sauce = sauce.session['sauce']
+            sauce = request.session['sauce']
             toppings = request.session['toppings']
             crust_calorie = crust.calorie
             sauce_calorie = sauce.calorie
