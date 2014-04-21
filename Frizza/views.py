@@ -31,7 +31,7 @@ def pizza(request):
             if pizza == 'Make Your Own!':
                 return HttpResponseRedirect('/crust')
             else:
-                request.session['pizza'] = request.OOST['pizza']
+                request.session['pizza'] = request.POST['pizza']
                 return HttpResponseRedirect('/allergies')
 
             # need else here to dynamically rebuild prebuilt pizzas
