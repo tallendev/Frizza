@@ -80,7 +80,7 @@
                 {% if crust_list %}
                     <form>
                     {% for crust in crust_list %}
-                    <input class="radio" name="crust" value="{{ crust.crust_name }}">
+                    <input class="radio" name="crust" value="{{ crust.crust_name }}">{{ crust.crust_name }}
                     {% endfor %}
                     </form>
                 {% else %}
