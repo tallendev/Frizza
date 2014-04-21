@@ -54,7 +54,7 @@ def toppings(request):
                         print ("\n\nPOST: " + str(request.POST) + "\n\n")
                         for i in topping_list:
                             print ("If " + str(i) + " in " + str(request.POST))
-                            if i in request.POST:
+                            if str(i) in request.POST:
                                 #request.session[i] = i
                                 print ("Wheeeeeeeeeee!")
                                 request.session['toppings'].append(i)
