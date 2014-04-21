@@ -255,7 +255,7 @@ def calorie(request):
                         'sauce': sauce,
                         'toppings': toppings,
                         'cal_total': cal_total}
-            if request.session['pizza'] != '':
+            if request.session['pizza'] == '':
                 context['pizza'] = request.session['pizza']
             return render(request, settings.TEMPLATE_DIRS +
                          '/public_html/Confirmation/confirmation.html', context)
