@@ -263,9 +263,10 @@ def calorie(request):
 def waste(request):
 
     if request.user.is_authenticated():
-
-        user = User.objects.filter(user_name=str(request.user))[:1].get()
-        orders = Orders.objects.filter(user_name = user.user_name)
+        uorder_list = Orders.objects.filter(user_name=str(request.user))
+        orders = Pizza.objects.filter(pizza_id__in=uorder_list).select_related()
+        #user = User.objects.filter(user_name=str(request.user))[:1].get()
+        #orders = Orders.objects.filter(user_name = user.user_name)
 
 
         #This section of the code determines the wasted ingredients and is incomplete.
