@@ -22,12 +22,11 @@ def pizza(request):
             print(request.POST)
             request.session['pizza'] = ''
             post = request.POST
+            pizza = request.POST['pizza']
             #FIXME are these conditions right?
-            if 'Make Your Own' in post:
+            if pizza == 'Make Your Own':
                 return HttpResponseRedirect('/crust')
-            for i in admin_list:
-                if str(i) in post:
-                    break
+
             # need else here to dynamically rebuild prebuilt pizzas
             context = {'admin_list': admin_list}
             print ("Context: " + str(admin_list) + "\n")
@@ -60,9 +59,12 @@ def crust(request):
     if request.user.is_authenticated():
         if 'pizza' in request.session:
             #TODO Check for 'POST'
-            crust_list = Crust.objects.all()
-            context = {'crust_list': crust_list}
-            return render(request, settings.TEMPLATE_DIRS +
+            if request.method == 'POST':
+                request.session['crust'] = request.POST['crust']
+            else:
+                crust_list = Crust.objects.all()
+                context = {'crust_list': crust_list}
+                return render(request, settings.TEMPLATE_DIRS +
                                    '/public_html/Crust/crust.html', context)
         else:
             return HttpResponseRedirect('/pizza')
@@ -74,9 +76,8 @@ def crust(request):
 # page.
 def sauce(request):
     if request.user.is_authenticated():
-        sessionPizza = request.session.getitem('pizza')
-        if sessionPizza is not None:
-            if sessionPizza.crust is not None:
+        if 'pizza' in request.session:
+            if 'crust' in request.session:
                 sauce_list = Sauce.objects.all()
                 context = {'sauce_list': sauce_list}
                 # TODO Check for Post
