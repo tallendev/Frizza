@@ -50,9 +50,11 @@ def toppings(request):
                 if 'sauce' in request.session:
                     topping_list = Topping.objects.all()
                     if request.method == 'POST':
+                        request.session['toppings'] = []
                         for i in topping_list:
                             if i in request.POST:
-                                request.session[i] = i
+                                #request.session[i] = i
+                                request.session['toppings'].append(i)
                     else:
                         context = {'topping_list': topping_list}
                         return render(request, settings.TEMPLATE_DIRS +
