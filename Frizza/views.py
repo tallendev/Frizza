@@ -149,7 +149,7 @@ def allergies(request):
 #=======
     if request.user.is_authenticated():
         if request.method == 'POST':
-            if request.POST == 'confirm':
+            if 'confirm' in request.POST:
                 return HttpResponseRedirect('/confirmation')
             else:
                 toppings = Topping.objects.all()
