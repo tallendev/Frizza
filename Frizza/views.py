@@ -179,7 +179,7 @@ def calorie(request):
                 #else
                 del request.session['pizza']
                 del request.session['sauce']
-                del request.session['crust]']
+                del request.session['crust']
             topping_list = Topping.objects.all()
             for topping in topping_list:
                 if str(topping) in request.session:
