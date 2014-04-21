@@ -73,22 +73,22 @@
     <div class="page-header">
         <h1>What toppings would you like?</h1>
     </div>
-    <div class="list_container">
+    <form action="" class="form-signin" method="post">{% csrf_token %}
         <div class="row">
             <div class="column">
-                <div class="list-group">
-                {% if topping_list %}
+                {% if sauce_list %}
                     {% for topping in topping_list %}
-                    <a class="list-group-item">{{ topping.topping_name }}</a>
+                    <input type="checkbox" name="{{ toppings.topping_name }}" value="{{ toppings.topping_name }}">{{ toppings.topping_name }}<br>
                     {% endfor %}
                 {% else %}
-                    <p>No toppings</p>
+                    <p> No sauce </p>
                 {% endif %}
-                </div>
             </div><!-- /.col-sm-4 -->
         </div>
 
         <div class="page-header"></div>
+
+        {% block content %}
 
         <div class="row">
             <div class="column">
@@ -101,11 +101,15 @@
             </div>
         </div>
 
+        <input type="hidden" name="next" value="/sauce" />
+    </form>
+
         <div class="alert alert-success">
             <strong>Choice: </strong><a >{{ toppings.toppings_name }}</a>
         </div>
 
-    </div>
+    {% endblock %}
+
 </div>
 
 
