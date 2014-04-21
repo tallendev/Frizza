@@ -68,18 +68,19 @@
                         <p>There are no crust allergies.</p>
                     {% endif %}                       </ul>
                     <h2 class="cover-heading">Sauce Allergies:</h2>
-                      {% if sauce_allergies %}
+                    {% if sauce_allergies %}
                         <ul>
                         {% for allergy in sauce_allergies %}
-<<<<<<< HEAD
+
                             <li>{{ allergy.allergy_name  }}</li>
-=======
+
                             <li>{{ allergy.sauce_name }}</li>
->>>>>>> 03b41864a076002852b0822c0dbc3ff30b89545e
+
                         {% endfor %}
+                        </ul> <!-- added close -->
                     {% else %}
                         <p>There are no sauce allergies.</p>
-                    {% endif %}                       </ul> <!-- added close -->
+                    {% endif %}
                     </div>
                 </div>
                 <p class="lead">
