@@ -163,7 +163,8 @@ def calorie(request):
     if request.user.is_authenticated():
         #TODO: Validate appropriate fields are filled out
         if request.method == 'POST':
-            current_id = Pizza.objects.all().aggregate(Max('pizza_id'))
+            current_id = Pizza.objects.all().\
+                         aggregate(Max('pizza_id'))['pizza_id__max']
             pizza_id = 0
             if request.session['pizza'] == '':
                 pizza_id = 1
