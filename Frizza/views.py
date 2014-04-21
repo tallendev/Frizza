@@ -148,7 +148,7 @@ def allergies(request):
                 allergies_list = Allergy.objects.all()
             else:
                 # Sausage is a placeholder for the actual, variable pizza name.
-                pizza = Pizza.objects.get(pizza_name="Sausage")
+                pizza = Pizza.objects.get(pizza_name=request.session['pizza'])
                 crust = Crust.objects.get(crust_name=pizza.crust_name)
                 sauce = Sauce.objects.get(sauce_name=pizza.sauce_name)
 
@@ -162,7 +162,7 @@ def allergies(request):
 
                 sauce_allergies = Allergy.objects.filter(ingredient_name=sauce.sauce_name)
                 crust_allergies = Allergy.objects.filter(ingredient_name=crust.crust_name)
-            context =  {'topping_allergies': topping_allergies,
+            context = {'topping_allergies': topping_allergies,
                         'sauce_allergies': sauce_allergies,
                         'crust_allergies': crust_allergies,
                         }
