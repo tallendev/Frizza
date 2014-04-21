@@ -50,15 +50,9 @@ def toppings(request):
                 if 'sauce' in request.session:
                     topping_list = Topping.objects.all()
                     if request.method == 'POST':
-                        request.session['toppings'] = []
-                        print ("\n\nPOST: " + str(request.POST) + "\n\n")
                         for i in topping_list:
-                            print ("If " + str(i) + " in " + str(request.POST))
                             if str(i) in request.POST:
-                                #request.session[i] = i
-                                print ("Wheeeeeeeeeee!")
-                                request.session['toppings'].append(i)
-                        print(request.session['toppings'])
+                                request.session[str(i)] = i
                         return HttpResponseRedirect('/confirmation')
                     else:
                         context = {'topping_list': topping_list}
@@ -183,12 +177,10 @@ def calorie(request):
         else:
             crust = Crust.objects.get(crust_name=request.session['crust'])
             sauce = Sauce.objects.get(sauce_name=request.session['sauce'])
-            toppings_str = request.session['toppings']
+            toppings = request.session['toppings']
             crust_calorie = crust.calorie
             sauce_calorie = sauce.calorie
-            for topping in toppings_str:
-                topping = Topping.objects.get(topping_name=topping)
-                toppings.append(topping)
+            for topping in toppings:
                 top_cal_sum += topping.calorie
 
         cal_total = top_cal_sum + sauce_calorie + crust_calorie
