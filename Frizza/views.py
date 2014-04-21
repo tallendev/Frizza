@@ -24,7 +24,7 @@ def pizza(request):
             post = request.POST
             pizza = request.POST['pizza']
             #FIXME are these conditions right?
-            if pizza == 'Make Your Own':
+            if pizza == 'Make Your Own!':
                 return HttpResponseRedirect('/crust')
 
             # need else here to dynamically rebuild prebuilt pizzas
