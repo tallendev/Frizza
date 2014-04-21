@@ -61,6 +61,7 @@ def crust(request):
             #TODO Check for 'POST'
             if request.method == 'POST':
                 request.session['crust'] = request.POST['crust']
+                HttpResponseRedirect('/sauce')
             else:
                 crust_list = Crust.objects.all()
                 context = {'crust_list': crust_list}
@@ -84,9 +85,9 @@ def sauce(request):
                 return render(request, settings.TEMPLATE_DIRS +
                                    '/public_html/Sauce/sauce.html', context)
             else:
-                HttpResponseRedirect('/crust')
+                return HttpResponseRedirect('/crust')
         else:
-            HttpResponseRedirect('/pizza')
+            return HttpResponseRedirect('/pizza')
     else:
         return HttpResponseRedirect('/login')
 
