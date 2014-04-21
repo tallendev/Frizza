@@ -165,7 +165,7 @@ def calorie(request):
         #TODO: Validate appropriate fields are filled out
         if request.method == 'POST':
             current_id = Pizza.objects.all().\
-                         aggregate(Max('pizza_id'))['pizza_id__max']
+                         aggregate(Max('pizza_id'))['pizza_id__max'] + 1
             pizza_id = 0
             if request.session['pizza'] == '':
                 pizza_id = 1
@@ -178,7 +178,9 @@ def calorie(request):
                 if str(topping) in request.session:
                     HasTopping(pizza_id=pizza, topping_name=topping).save()
             user = User.objects.filter(user_name=str(request.user))[:1].get()
-            Orders(user_name=user, pizza_id=pizza).save()
+            order_id = Orders.objects.all(). \
+                      aggregate(Max('pkey'))['pkeyy__max']
+            Orders(pkey=order_id, user_name=user, pizza_id=pizza).save()
             return HttpResponseRedirect('/goodbye')
         else:
             pizza = None
