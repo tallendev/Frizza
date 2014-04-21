@@ -168,7 +168,8 @@ def allergies(request):
                           '/public_html/Allergies/allergies.html', context)
     else:
         return HttpResponseRedirect('/login')
-     
+
+
 # This function provides an appropriate response to a request for the calorie
 # page.
 
@@ -185,7 +186,7 @@ def calorie(request):
                                     request.session['sauce'], request.session['crust'])
                     pizza.save()
 
-                #else
+                # TODO else
                     del request.session['pizza']
                     del request.session['sauce']
                     del request.session['crust']
