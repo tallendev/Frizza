@@ -94,6 +94,7 @@ class Orders(models.Model):
 # the name of the allergy
 # the name of the ingredient
 class Allergy(models.Model):
+    allergy_id = models.IntegerField(primary_key=True)
     allergy_name = models.CharField(max_length=20)
     ingredient_name = models.CharField(max_length=20)
 
