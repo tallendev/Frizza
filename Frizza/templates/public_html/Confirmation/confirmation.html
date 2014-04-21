@@ -49,11 +49,11 @@
                 <div class="row">
                     <div class="column">
                         <ul>
-                            <li>{{ crust }} Crust   {{ crust.calories }} Calories</li>
-                            <li>{{ sauce }} Sauce   {{ sauce.calories }} Calories</li>
+                            <li>{{ crust }} Crust: {{ crust.calorie }} Calories</li>
+                            <li>{{ sauce }} Sauce: {{ sauce.calorie }} Calories</li>
                             {% if toppings %}
                                 {% for topping in toppings %}
-                                    <li>{{ topping }} {{ topping.calories }} Calories</li>
+                                    <li>{{ topping }}: {{ topping.calorie }} Calories</li>
                                 {% endfor %}
                             {% endif %}
                             <li> Total Calories: {{ cal_total }}</li>
