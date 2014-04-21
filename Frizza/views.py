@@ -58,8 +58,8 @@ def toppings(request):
 def crust(request):
     if request.user.is_authenticated():
         if 'pizza' in request.session:
-            #TODO Check for 'POST'
-            if request.method == 'POST':
+            #TODO maybe change for redirect?
+            if request.method == 'POST' and 'crust' in request.POST:
                 request.session['crust'] = request.POST['crust']
                 return HttpResponseRedirect('/sauce')
             else:
@@ -79,10 +79,14 @@ def sauce(request):
     if request.user.is_authenticated():
         if 'pizza' in request.session:
             if 'crust' in request.session:
-                sauce_list = Sauce.objects.all()
-                context = {'sauce_list': sauce_list}
+                if request.method == 'POST' and 'sauce' in request.POST:
+                    request.session['sauce'] = request.POST['sauce']
+                    return HttpResponseRedirect('/toppings')
+                else:
+                    sauce_list = Sauce.objects.all()
+                    context = {'sauce_list': sauce_list}
                 # TODO Check for Post
-                return render(request, settings.TEMPLATE_DIRS +
+                    return render(request, settings.TEMPLATE_DIRS +
                                    '/public_html/Sauce/sauce.html', context)
             else:
                 return HttpResponseRedirect('/crust')
