@@ -25,8 +25,8 @@ from Frizza.models import Pizza
 Pizza(1, 'Cheese', 1, 'Tomato', 'Classic').save()
 Pizza(2, 'Pepperoni', 2, 'Tomato', 'Classic').save()
 Pizza(3, 'Sausage', 3, 'Tomato', 'Classic').save()
-Pizza(3, 'Hawaiian', 3, 'Tomato', 'Classic').save()
-Pizza(4, 'Vegetarian', 4, 'Tomato', 'Classic').save()
+Pizza(4, 'Hawaiian', 4, 'Tomato', 'Classic').save()
+Pizza(5, 'Vegetarian', 5, 'Tomato', 'Classic').save()
 #from Frizza.models import Allergy
 #Allergy('Gluten', 'Thick')
 #Allergy('Gluten', 'Thin')
@@ -34,6 +34,7 @@ Pizza(4, 'Vegetarian', 4, 'Tomato', 'Classic').save()
 from Frizza.models import HasTopping
 from Frizza.models import User
 User('admin', 'admin').save()
+User('trevor', 'trevor').save()
 from Frizza.models import Orders
 Orders(1, 'admin', 1).save()
 Orders(2, 'admin', 2).save()
