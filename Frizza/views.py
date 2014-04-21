@@ -57,7 +57,7 @@ def toppings(request):
                                 print("Whee!")
                                 request.session[str(i)] = str(i)
                         print(str(request.session))
-                        return HttpResponseRedirect('/calories')
+                        return HttpResponseRedirect('/confirmation')
                     else:
                         context = {'topping_list': topping_list}
                         return render(request, settings.TEMPLATE_DIRS +
