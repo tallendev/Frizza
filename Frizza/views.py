@@ -20,6 +20,8 @@ def pizza(request):
         admin_list = Pizza.objects.filter(pizza_id=order_list).select_related()
         uorder_list = Orders.objects.filter(user_name=str(request.user))
         user_list = Pizza.objects.filter(pizza_id=uorder_list).select_related()
+        context = {'admin_list': admin_list,
+                   'user_list': user_list}
         #TODO add user stufft
         if request.method == 'POST':
             print(request.POST)
@@ -31,13 +33,11 @@ def pizza(request):
                 return HttpResponseRedirect('/crust')
 
             # need else here to dynamically rebuild prebuilt pizzas
-            context = {'admin_list': admin_list,
-                       'user_list': user_list}
+            #TODO this return needs to be replaced by other stuff
             print ("Context: " + str(admin_list) + "\n")
             return render(request, settings.TEMPLATE_DIRS +
                                '/public_html/Pizza/pizza.html', context)
         else:
-            context = {'admin_list': admin_list}
             print ("Context: " + str(admin_list) + "\n")
             return render(request, settings.TEMPLATE_DIRS +
                                    '/public_html/Pizza/pizza.html', context)
