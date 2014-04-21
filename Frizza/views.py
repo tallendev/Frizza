@@ -174,7 +174,7 @@ def calorie(request):
             topping_list = Topping.objects.all()
             for topping in topping_list:
                 if str(topping) in request.session:
-                    HasTopping(pizza_id, str(topping)).save()
+                    HasTopping(pizza_id=pizza_id, topping_name=str(topping)).save()
             Orders(str(request.user), pizza_id).save()
             return HttpResponseRedirect('/goodbye')
         else:
