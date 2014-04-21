@@ -34,11 +34,11 @@ def pizza(request):
 
             # need else here to dynamically rebuild prebuilt pizzas
             #TODO this return needs to be replaced by other stuff
-            print ("Context: " + str(admin_list) + "\n")
+            #print ("Context: " + str(admin_list) + "\n")
             return render(request, settings.TEMPLATE_DIRS +
                                '/public_html/Pizza/pizza.html', context)
         else:
-            print ("Context: " + str(admin_list) + "\n")
+            #print ("Context: " + str(admin_list) + "\n")
             return render(request, settings.TEMPLATE_DIRS +
                                    '/public_html/Pizza/pizza.html', context)
     else:
