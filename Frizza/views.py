@@ -150,7 +150,7 @@ def allergies(request):
                 crust = Crust.objects.get(crust_name=pizza.crust_name)
                 sauce = Sauce.objects.get(sauce_name=pizza.sauce_name)
 
-                pizzaToppings = HasTopping.objects.filter(pizza_name=pizza.pizza_name)
+                pizzaToppings = HasTopping.objects.filter(pizza_id=pizza)
 
                 for topping in pizzaToppings:
                     allergies = Allergy.objects.filter(ingredient_name=topping.topping_name)
