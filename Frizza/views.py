@@ -61,7 +61,7 @@ def crust(request):
             #TODO Check for 'POST'
             if request.method == 'POST':
                 request.session['crust'] = request.POST['crust']
-                HttpResponseRedirect('/sauce')
+                return HttpResponseRedirect('/sauce')
             else:
                 crust_list = Crust.objects.all()
                 context = {'crust_list': crust_list}
