@@ -18,6 +18,8 @@ def pizza(request):
     if request.user.is_authenticated():
         order_list = Orders.objects.filter(user_name="admin")
         admin_list = Pizza.objects.filter(pizza_id=order_list).select_related()
+        uorder_list = Orders.objects.filter(user_name="user")
+        user_list = Pizza.objects.filter(pizza_id=uorder_list).select_related()
         #TODO add user stuff
         if request.method == 'POST':
             print(request.POST)
@@ -29,7 +31,8 @@ def pizza(request):
                 return HttpResponseRedirect('/crust')
 
             # need else here to dynamically rebuild prebuilt pizzas
-            context = {'admin_list': admin_list}
+            context = {'admin_list': admin_list,
+                       'user_list': user_list}
             print ("Context: " + str(admin_list) + "\n")
             return render(request, settings.TEMPLATE_DIRS +
                                '/public_html/Pizza/pizza.html', context)
