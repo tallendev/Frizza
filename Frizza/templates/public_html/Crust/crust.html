@@ -77,15 +77,17 @@
     <div class="list_container">
         <div class="row">
             <div class="column">
-                {% if crust_list %}
+                <div class="list-group">
+                    {% if crust_list %}
                     <form>
-                    {% for crust in crust_list %}
-                    <input type="radio" name="crust" value="{{ crust.crust_name }}">{{ crust.crust_name }}
-                    {% endfor %}
+                        {% for crust in crust_list %}
+                        <input type="radio" name="crust" value="{{ crust.crust_name }}">{{ crust.crust_name }}
+                        {% endfor %}
                     </form>
-                {% else %}
+                    {% else %}
                     <p>No crust</p>
-                {% endif %}
+                    {% endif %}
+                </div>
             </div><!-- /.col-sm-4 -->
         </div>
 
