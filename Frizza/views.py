@@ -215,6 +215,7 @@ def calorie(request):
                 sauce_calorie = sauce.calorie
                 topping_list = Topping.objects.all()
                 topping_str = []
+                # TODO check here for exploding toppings
                 for topping in topping_list:
                     if str(topping) in request.session:
                         topping_str.append(topping)
