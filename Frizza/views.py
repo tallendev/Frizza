@@ -179,7 +179,7 @@ def calorie(request):
                     HasTopping(pizza_id=pizza, topping_name=topping).save()
             user = User.objects.filter(user_name=str(request.user))[:1].get()
             order_id = Orders.objects.all(). \
-                      aggregate(Max('id'))['id__max']
+                      aggregate(Max('id'))['id__max'] + 1
             Orders(id=order_id, user_name=user, pizza_id=pizza).save()
             return HttpResponseRedirect('/goodbye')
         else:
