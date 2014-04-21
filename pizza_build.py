@@ -25,13 +25,44 @@ from Frizza.models import Pizza
 Pizza(1, 'Cheese', 1, 'Tomato', 'Classic').save()
 Pizza(2, 'Pepperoni', 2, 'Tomato', 'Classic').save()
 Pizza(3, 'Sausage', 3, 'Tomato', 'Classic').save()
-Pizza(4, 'Hawaiian', 4, 'Tomato', 'Classic').save()
-Pizza(5, 'Vegetarian', 5, 'Tomato', 'Classic').save()
-#from Frizza.models import Allergy
-#Allergy('Gluten', 'Thick')
-#Allergy('Gluten', 'Thin')
-#Allergy('Gluten', 'Classic')
+Pizza(4, 'Meat Lovers', 4, 'Tomato', 'Classic').save()
+Pizza(5, 'Hawaiian', 5, 'Tomato', 'Classic').save()
+Pizza(6, 'Vegetarian', 6, 'Tomato', 'Classic').save()
+from Frizza.models import Allergy
+Allergy(1, 'Gluten', 'Thick').save()
+Allergy(2, 'Dairy', 'Thick').save()
+Allergy(3, 'Gluten', 'Thin').save()
+Allergy(4, 'Gluten', 'Classic').save()
+Allergy(5, 'Dairy', 'Classic').save()
+Allergy(6, 'Dairy', 'Alfredo').save()
+Allergy(7, 'Dairy', 'Cheese').save()
+Allergy(8, 'Soybean', 'Bacon').save()
 from Frizza.models import HasTopping
+##### 1 #####
+HasTopping(1, "Cheese").save()
+##### 2 #####
+HasTopping(2, "Cheese").save()
+HasTopping(2, "Pepperoni").save()
+##### 3 #####
+HasTopping(3, "Cheese").save()
+HasTopping(3, "Sausage").save()
+##### 4 #####
+HasTopping(4, "Cheese").save()
+HasTopping(4, "Pineapple").save()
+HasTopping(4, "Bacon").save()
+##### 5 #####
+HasTopping(5, "Cheese").save()
+HasTopping(5, "Pepperoni").save()
+HasTopping(5, "Sausage").save()
+HasTopping(5, "Bacon").save()
+HasTopping(5, "Ham").save()
+##### 6 #####
+HasTopping(6, "Cheese").save()
+HasTopping(6, "Mushrooms").save()
+HasTopping(6, "Spinach").save()
+HasTopping(6, "Green Peppers").save()
+HasTopping(6, "Onions").save()
+HasTopping(6, "Black Olives").save()
 from Frizza.models import User
 User(user_name='admin', password='admin')
 from Frizza.models import Orders
