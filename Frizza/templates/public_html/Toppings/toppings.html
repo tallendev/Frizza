@@ -81,7 +81,7 @@
                     <input type="checkbox" name="{{ topping.topping_name }}" value="{{ topping.topping_name }}">{{ topping.topping_name }}<br>
                     {% endfor %}
                 {% else %}
-                    <p> No sauce </p>
+                    <p> No toppings </p>
                 {% endif %}
             </div><!-- /.col-sm-4 -->
         </div>
@@ -94,14 +94,14 @@
             <div class="column">
                 <div class="button_container">
                     <p>
-                        <a href="/confirmation" class="btn btn-lg btn-primary" type="submit">Dispense</a>
+                        <input type="submit" class="btn btn-lg btn-primary" value="Dispense">
                         <a href="/sauce" class="btn btn-lg btn-default">Back</a>
                     </p>
                 </div>
             </div>
         </div>
 
-        <input type="hidden" name="next" value="/sauce" />
+        <input type="hidden" name="next" value="/confirmation" />
     </form>
 
         <div class="alert alert-success">
