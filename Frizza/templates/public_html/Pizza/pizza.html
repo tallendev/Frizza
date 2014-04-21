@@ -76,7 +76,6 @@
             <div class="column">
                 <div class="list-group">
 
-                <!--{% if admin_list %}-->
                     {% for pizza in admin_list %}
                     <form action="" method="post">{% csrf_token %}
                         <input type="submit" class="btn btn-lg btn-default" name="pizza" value="{{ pizza.pizza_name }}">
