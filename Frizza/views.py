@@ -200,13 +200,14 @@ def calorie(request):
                 Orders(id=order_id, user_name=user, pizza_id=pizza).save()
                 return HttpResponseRedirect('/goodbye')
             else:
-                del request.session['pizza']
-                del request.session['sauce']
-                del request.session['crust']
-                topping_list = Topping.objects.all()
-                for topping in topping_list:
-                    if str(topping) in request.session:
-                        del request.session[str(topping)]
+                if request.session['pizza'] == '':
+                    del request.session['pizza']
+                    del request.session['sauce']
+                    del request.session['crust']
+                    topping_list = Topping.objects.all()
+                    for topping in topping_list:
+                        if str(topping) in request.session:
+                            del request.session[str(topping)]
                 return HttpResponseRedirect('/pizza')
         else:
             pizza = None
