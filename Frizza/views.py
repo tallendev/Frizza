@@ -30,12 +30,14 @@ def pizza(request):
             #FIXME are these conditions right?
             if pizza == 'Make Your Own!':
                 return HttpResponseRedirect('/crust')
+            else:
+                return HttpResponseRedirect('/allergies')
 
             # need else here to dynamically rebuild prebuilt pizzas
             #TODO this return needs to be replaced by other stuff
             #print ("Context: " + str(admin_list) + "\n")
-            return render(request, settings.TEMPLATE_DIRS +
-                               '/public_html/Pizza/pizza.html', context)
+            #return render(request, settings.TEMPLATE_DIRS +
+             #                  '/public_html/Pizza/pizza.html', context)
         else:
             #print ("Context: " + str(admin_list) + "\n")
             return render(request, settings.TEMPLATE_DIRS +
@@ -120,31 +122,9 @@ def sauce(request):
 #This function does not work, but we would like to revisit it in the future.
 def allergies(request):
 #=======
-    # Sausage is a placeholder for the actual, variable pizza name.
-#    pizza = Pizza.objects.get(pizza_name="Sausage")
-#    crust = Crust.objects.get(crust_name=pizza.crust_name);
-#    sauce = Sauce.objects.get(sauce_name=pizza.sauce_name);
 
-#    pizzaToppings = HasTopping.objects.filter(pizza_name=pizza.pizza_name)
 
-#    topping_allergies = []    
 
-#    for topping in pizzaToppings:
-#        allergies = Allergy.objects.filter(ingredient_name=topping.topping_name)        
-        
-#        for allergy in allergies:
-#            topping_allergies.append(allergy)
-
-#    sauce_allergies = Allergy.objects.filter(ingredient_name=sauce.sauce_name)
-#    crust_allergies = Allergy.objects.filter(ingredient_name=crust.crust_name)
-
-#    context =  {
-#        'topping_allergies': topping_allergies,
-#        'sauce_allergies': sauce_allergies,
-#        'crust_allergies': crust_allergies,
-#    }
-#    return render(request, settings.TEMPLATE_DIRS +
-#                  '/public_html/Allergies/allergies.html', context)
 
 #=======
     if request.user.is_authenticated():
@@ -159,10 +139,33 @@ def allergies(request):
                 return HttpResponseRedirect('/toppings')
         else:
             #FIXME lists all allergies
-            allergies_list = Allergy.objects.all()
-            context = {'allergy_list': allergies_list}
+            if request.session['pizza'] == '':
+                #TODO
+                allergies_list = Allergy.objects.all()
+            else:
+                # Sausage is a placeholder for the actual, variable pizza name.
+                pizza = Pizza.objects.get(pizza_name="Sausage")
+                crust = Crust.objects.get(crust_name=pizza.crust_name)
+                sauce = Sauce.objects.get(sauce_name=pizza.sauce_name)
+
+                pizzaToppings = HasTopping.objects.filter(pizza_name=pizza.pizza_name)
+
+                topping_allergies = []
+
+                for topping in pizzaToppings:
+                    allergies = Allergy.objects.filter(ingredient_name=topping.topping_name)
+
+                    for allergy in allergies:
+                        topping_allergies.append(allergy)
+
+                sauce_allergies = Allergy.objects.filter(ingredient_name=sauce.sauce_name)
+                crust_allergies = Allergy.objects.filter(ingredient_name=crust.crust_name)
+            context =  {'topping_allergies': topping_allergies,
+                        'sauce_allergies': sauce_allergies,
+                        'crust_allergies': crust_allergies,
+                        }
             return render(request, settings.TEMPLATE_DIRS +
-                               '/public_html/Allergies/allergies.html', context)
+                          '/public_html/Allergies/allergies.html', context)
     else:
         return HttpResponseRedirect('/login')
      
