@@ -47,7 +47,7 @@ Allergy(8, 'Soybean', 'Bacon').save()
 
 from Frizza.models import HasTopping
 ##### 1 #####
-HasTopping(pizza_id=cheese_p, topping_name='Cheese').save()
+HasTopping(pizza_id=cheese_p, topping_name=cheese).save()
 ##### 2 #####
 HasTopping(2, "Cheese").save()
 HasTopping(2, "Pepperoni").save()
