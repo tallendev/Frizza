@@ -148,8 +148,15 @@ def allergies(request):
 
 #=======
     if request.user.is_authenticated():
-        if (request.method == 'POST'):
-            return HttpResponseRedirect('/confirmation')
+        if request.method == 'POST':
+            if request.POST == 'confirm':
+                return HttpResponseRedirect('/confirmation')
+            else:
+                toppings = Topping.objects.all()
+                for i in toppings:
+                    if str(i) in request.session:
+                        del request.session[str(i)]
+                return HttpResponseRedirect('/toppings')
         else:
             #FIXME lists all allergies
             allergies_list = Allergy.objects.all()
