@@ -71,11 +71,9 @@
         <h1>What pizza would you like?</h1>
         <p class="lead">Default pizzas come with classic crust and tomato sauce.</p>
     </div>
-    <div class="list_container">
+
         <div class="row">
             <div class="column">
-                <div class="list-group">
-
                 {% if admin_list %}
                     {% for pizza in admin_list %}
                     <form action="" method="post">{% csrf_token %}
@@ -95,10 +93,8 @@
                     <form action="" method="post">{% csrf_token %}
                     <input type="submit" class="btn btn-lg btn-info" name="pizza" value="Make Your Own!">
                     </form>
-                </div>
             </div>
         </div>
-    </div>
 
     <div class="alert alert-success">
         <strong>Your order has been completed.</strong>
