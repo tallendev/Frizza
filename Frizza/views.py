@@ -141,7 +141,7 @@ def allergies(request):
             #FIXME lists all allergies
             topping_allergies = []
             sauce_allergies = []
-            crust_allergies
+            crust_allergies = []
 
             if request.session['pizza'] == '':
                 #TODO
