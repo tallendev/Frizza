@@ -167,7 +167,7 @@ def calorie(request):
             pizza_id = 0
             if request.session['pizza'] == '':
                 pizza_id = 1
-                Pizza(current_id, str(request.session['pizza_name']), pizza_id,
+                Pizza(current_id, str(request.POST['pizza_name']), pizza_id,
                       request.session['sauce'], request.session['crust']).save()
             #else
             topping_list = Topping.objects.all()
