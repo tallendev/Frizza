@@ -149,6 +149,7 @@ def allergies(request):
         if (request.method == 'POST'):
             return HttpResponseRedirect('/confirmation')
         else:
+            #FIXME lists all allergies
             allergies_list = Allergy.objects.all()
             context = {'allergy_list': allergies_list}
             return render(request, settings.TEMPLATE_DIRS +
@@ -169,7 +170,8 @@ def calorie(request):
             if request.session['pizza'] == '':
                 pizza_id = 1
                 pizza = Pizza(current_id, str(request.POST['pizza_name']), pizza_id,
-                      request.session['sauce'], request.session['crust']).save()
+                      request.session['sauce'], request.session['crust'])
+                pizza.save()
             #else
             topping_list = Topping.objects.all()
             for topping in topping_list:
