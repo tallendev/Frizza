@@ -103,13 +103,13 @@
         </div>
 
         <input type="hidden" name="next" value="/toppings" />
-    </form>
 
-    {% if form.errors %}
-    <div class="alert alert-danger">
-        <strong>Oops!</strong> Please choose at least one sauce.
-    </div>
-    {% endif %}
+        {% if form.errors %}
+        <div class="alert alert-danger">
+            <strong>Please choose a sauce.</strong>
+        </div>
+        {% endif %}
+    </form>
 
     {% endblock %}
 
