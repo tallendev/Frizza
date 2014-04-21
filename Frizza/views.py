@@ -56,11 +56,8 @@ def toppings(request):
                     topping_list = Topping.objects.all()
                     if request.method == 'POST':
                         for i in topping_list:
-                            print(str(i))
                             if str(i) in request.POST:
-                                print("Whee!")
                                 request.session[str(i)] = str(i)
-                        print(str(request.session))
                         return HttpResponseRedirect('/allergies')
                     else:
                         context = {'topping_list': topping_list}
@@ -121,12 +118,6 @@ def sauce(request):
 
 #This function does not work, but we would like to revisit it in the future.
 def allergies(request):
-#=======
-
-
-
-
-#=======
     if request.user.is_authenticated():
         if request.method == 'POST':
             if 'confirm' in request.POST:
@@ -184,29 +175,38 @@ def calorie(request):
     if request.user.is_authenticated():
         #TODO: Validate appropriate fields are filled out
         if request.method == 'POST':
-            current_id = Pizza.objects.all().\
-                         aggregate(Max('pizza_id'))['pizza_id__max'] + 1
-            pizza_id = 0
-            if request.session['pizza'] == '':
-                pizza_id = 1
-                pizza = Pizza(current_id, str(request.POST['pizza_name']), pizza_id,
-                      request.session['sauce'], request.session['crust'])
-                pizza.save()
+            if ('confirm' in request.POST):
+                current_id = Pizza.objects.all().\
+                             aggregate(Max('pizza_id'))['pizza_id__max'] + 1
+                if request.session['pizza'] == '':
+                    pizza_id = 1
+                    pizza = Pizza(current_id, str(request.POST['pizza_name']), pizza_id,
+                                    request.session['sauce'], request.session['crust'])
+                    pizza.save()
 
                 #else
+                    del request.session['pizza']
+                    del request.session['sauce']
+                    del request.session['crust']
+                topping_list = Topping.objects.all()
+                for topping in topping_list:
+                    if str(topping) in request.session:
+                        HasTopping(pizza_id=pizza, topping_name=topping).save()
+                        del request.session[str(topping)]
+                user = User.objects.filter(user_name=str(request.user))[:1].get()
+                order_id = Orders.objects.all(). \
+                            aggregate(Max('id'))['id__max'] + 1
+                Orders(id=order_id, user_name=user, pizza_id=pizza).save()
+                return HttpResponseRedirect('/goodbye')
+            else:
                 del request.session['pizza']
                 del request.session['sauce']
                 del request.session['crust']
-            topping_list = Topping.objects.all()
-            for topping in topping_list:
-                if str(topping) in request.session:
-                    HasTopping(pizza_id=pizza, topping_name=topping).save()
-                    del request.session[str(topping)]
-            user = User.objects.filter(user_name=str(request.user))[:1].get()
-            order_id = Orders.objects.all(). \
-                      aggregate(Max('id'))['id__max'] + 1
-            Orders(id=order_id, user_name=user, pizza_id=pizza).save()
-            return HttpResponseRedirect('/goodbye')
+                topping_list = Topping.objects.all()
+                for topping in topping_list:
+                    if str(topping) in request.session:
+                        del request.session[str(topping)]
+                return HttpResponseRedirect('/pizza')
         else:
             pizza = None
             crust = None
