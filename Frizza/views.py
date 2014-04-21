@@ -17,9 +17,9 @@ logger = logging.getLogger('registration')
 def pizza(request):
     if request.user.is_authenticated():
         order_list = Orders.objects.filter(user_name="admin")
-        admin_list = Pizza.objects.filter(pizza_id=order_list).select_related()
+        admin_list = list(Pizza.objects.filter(pizza_id=order_list).select_related())
         uorder_list = Orders.objects.filter(user_name=str(request.user))
-        user_list = Pizza.objects.filter(pizza_id=uorder_list).select_related()
+        user_list = list(Pizza.objects.filter(pizza_id=uorder_list).select_related())
         context = {'admin_list': admin_list,
                    'user_list': user_list}
         #TODO add user stufft
