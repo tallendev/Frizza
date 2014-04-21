@@ -55,6 +55,7 @@ def toppings(request):
                             if i in request.POST:
                                 #request.session[i] = i
                                 request.session['toppings'].append(i)
+                        return HttpResponseRedirect('/confirmation')
                     else:
                         context = {'topping_list': topping_list}
                         return render(request, settings.TEMPLATE_DIRS +
