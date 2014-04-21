@@ -51,6 +51,7 @@ def toppings(request):
                     topping_list = Topping.objects.all()
                     if request.method == 'POST':
                         request.session['toppings'] = []
+                        print ("\n\nPOST: " + str(request.POST) + "\n\n")
                         for i in topping_list:
                             if i in request.POST:
                                 #request.session[i] = i
