@@ -27,7 +27,8 @@ Topping('Onions', 50).save()
 Topping('Black Olives', 60).save()
 
 from Frizza.models import Pizza
-Pizza(1, 'Cheese', 1, 'Tomato', 'Classic').save()
+cheese_p = Pizza(1, 'Cheese', 1, 'Tomato', 'Classic')
+cheese_p.save()
 Pizza(2, 'Pepperoni', 2, 'Tomato', 'Classic').save()
 Pizza(3, 'Sausage', 3, 'Tomato', 'Classic').save()
 Pizza(4, 'Meat Lovers', 4, 'Tomato', 'Classic').save()
