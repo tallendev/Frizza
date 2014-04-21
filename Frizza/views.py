@@ -139,6 +139,10 @@ def allergies(request):
                 return HttpResponseRedirect('/toppings')
         else:
             #FIXME lists all allergies
+            topping_allergies = []
+            sauce_allergies = []
+            crust_allergies
+
             if request.session['pizza'] == '':
                 #TODO
                 allergies_list = Allergy.objects.all()
@@ -149,8 +153,6 @@ def allergies(request):
                 sauce = Sauce.objects.get(sauce_name=pizza.sauce_name)
 
                 pizzaToppings = HasTopping.objects.filter(pizza_name=pizza.pizza_name)
-
-                topping_allergies = []
 
                 for topping in pizzaToppings:
                     allergies = Allergy.objects.filter(ingredient_name=topping.topping_name)
