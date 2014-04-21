@@ -56,6 +56,7 @@ def toppings(request):
                             print ("If " + str(i) + " in " + str(request.POST))
                             if i in request.POST:
                                 #request.session[i] = i
+                                print ("Wheeeeeeeeeee!")
                                 request.session['toppings'].append(i)
                         print(request.session['toppings'])
                         return HttpResponseRedirect('/confirmation')
