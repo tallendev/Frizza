@@ -179,11 +179,12 @@ def calorie(request):
         else:
             crust = Crust.objects.get(crust_name=request.session['crust'])
             sauce = Sauce.objects.get(sauce_name=request.session['sauce'])
-            toppings = request.session['toppings']
+            toppings_str = request.session['toppings']
             crust_calorie = crust.calorie
             sauce_calorie = sauce.calorie
-            for topping in toppings:
+            for topping in toppings_str:
                 topping = Topping.objects.get(topping_name=topping)
+                toppings.append(topping)
                 top_cal_sum += topping.calorie
 
         cal_total = top_cal_sum + sauce_calorie + crust_calorie
