@@ -135,14 +135,8 @@ def allergies(request):
             crust_allergies = []
 
             if request.session['pizza'] == '':
-                crust = Crust.objects.get(crust_name=request.session['crust'])
-                sauce = Sauce.objects.get(sauce_name=request.session['sauce'])
-                all_toppings = Topping.objects.all()
-                for i in all_toppings:
-                    if str(i) in request.session:
-                        allergies = Allergy.objects.filter(ingredient_name=i.topping_name)
-                        for j in allergies:
-                            topping_allergies.append(j)
+                #TODO
+                allergies_list = Allergy.objects.all()
             else:
                 # Sausage is a placeholder for the actual, variable pizza name.
                 pizza = Pizza.objects.get(pizza_name=request.session['pizza'])
@@ -157,8 +151,8 @@ def allergies(request):
                     for allergy in allergies:
                         topping_allergies.append(allergy)
 
-            sauce_allergies = Allergy.objects.filter(ingredient_name=sauce.sauce_name)
-            crust_allergies = Allergy.objects.filter(ingredient_name=crust.crust_name)
+                sauce_allergies = Allergy.objects.filter(ingredient_name=sauce.sauce_name)
+                crust_allergies = Allergy.objects.filter(ingredient_name=crust.crust_name)
             context = {'topping_allergies': topping_allergies,
                         'sauce_allergies': sauce_allergies,
                         'crust_allergies': crust_allergies,
@@ -167,10 +161,10 @@ def allergies(request):
                           '/public_html/Allergies/allergies.html', context)
     else:
         return HttpResponseRedirect('/login')
+
      
 # This function provides an appropriate response to a request for the calorie
 # page.
-
 def calorie(request):
     if request.user.is_authenticated():
         #TODO: Validate appropriate fields are filled out
@@ -220,7 +214,7 @@ def calorie(request):
                 pizza = Pizza.objects.get(pizza_name=request.session['pizza'])
                 crust = Crust.objects.get(crust_name=pizza.crust_name)
                 crust_calorie = crust.calorie
-    
+
                 sauce = Sauce.objects.get(sauce_name=pizza.sauce_name)
                 sauce_calorie = sauce.calorie
 
@@ -247,7 +241,7 @@ def calorie(request):
                     top_cal_sum += topping.calorie
 
             cal_total = top_cal_sum + sauce_calorie + crust_calorie
-    
+
             context = {'crust': crust,
                         'sauce': sauce,
                         'toppings': toppings,
@@ -263,10 +257,9 @@ def calorie(request):
 def waste(request):
 
     if request.user.is_authenticated():
-        uorder_list = Orders.objects.filter(user_name=str(request.user))
-        orders = Pizza.objects.filter(pizza_id__in=uorder_list).select_related()
-        #user = User.objects.filter(user_name=str(request.user))[:1].get()
-        #orders = Orders.objects.filter(user_name = user.user_name)
+
+        user = User.objects.filter(user_name=str(request.user))[:1].get()
+        orders = Orders.objects.filter(user_name = user.user_name)
 
 
         #This section of the code determines the wasted ingredients and is incomplete.

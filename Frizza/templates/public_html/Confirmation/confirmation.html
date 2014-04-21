@@ -67,8 +67,8 @@
 
             <form action="" class="form-signin" method="post">{% csrf_token %}
                 <input type="text" name="pizza_name" id="pizza_name" class="form-control" placeholder="Pizza Name" required autofocus><br>
-                <input class="btn btn-lg btn-primary" type="submit" value="Confirm">
-                <a href="/pizza" class="btn btn-lg btn-default" type="submit">Back to Pizza</a>
+                <input class="btn btn-lg btn-primary" name="confirm" type="submit" value="Confirm">
+                <input class="btn btn-lg btn-default" type="submit" value="Back to Pizza">
             </form>
 
             {% if form.errors %}
