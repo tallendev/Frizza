@@ -17,7 +17,7 @@ def pizza(request):
         order_list = Orders.objects.filter(user_name="admin")
         admin_list = Pizza.objects.filter(pizza_id__in=order_list).select_related()
         uorder_list = Orders.objects.filter(user_name=str(request.user))
-        user_list = Pizza.objects.filter(pizza_id__in=uorder_list).select_related()
+        user_list = Pizza.objects.filter(pizza_name__in=uorder_list).select_related()
         if request.method == 'POST':
             request.session['pizza'] = ''
             pizza = request.POST['pizza']
@@ -282,7 +282,7 @@ def calorie(request):
 def return_pizza(request):
     if request.user.is_authenticated():
         uorder_list = Orders.objects.filter(user_name=str(request.user))
-        orders = Pizza.objects.filter(pizza_id__in=uorder_list).select_related()
+        orders = Pizza.objects.filter(pizza_name__in=uorder_list).select_related()
        
         if request.method == 'POST' and 'return_pizza' in request.POST:
             request.session['return_pizza'] = request.POST['return_pizza']
