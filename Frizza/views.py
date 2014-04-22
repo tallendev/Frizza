@@ -23,7 +23,7 @@ def pizza(request):
         uorder_list = Orders.objects.filter(user_name=str(request.user))
         user_list = []
         for uorder in uorder_list:
-            if uorder.pizza_id not in user_list:
+            if uorder.pizza_id not in user_list and uorder.pizza_id not in admin_list:
                 user_list.append(uorder.pizza_id)
 
         if request.method == 'POST':
