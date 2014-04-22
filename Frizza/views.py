@@ -114,7 +114,6 @@ def sauce(request):
                 else:
                     sauce_list = Sauce.objects.all()
                     context = {'sauce_list': sauce_list}
-                # TODO Check for Post
                     return render(request, settings.TEMPLATE_DIRS +
                                    '/public_html/Sauce/sauce.html', context)
             else:
@@ -326,8 +325,7 @@ def disclaimer(request):
                               '/public_html/Disclaimer/disclaimer.html')
             else:
                 return HttpResponseRedirect('/logout')
-    else:
-        return HttpResponseRedirect('/login')
+    return HttpResponseRedirect('/login')
 
 
 # This function provides the appropriate response to a request for the
@@ -344,8 +342,6 @@ def registration(request):
             u.save()
             form.save()
             return HttpResponseRedirect('/disclaimer')
-
-        #User.
     registration_list = User.objects.all()  # Registration?
     context = {'registration_list': registration_list}
     return render(request, settings.TEMPLATE_DIRS +
