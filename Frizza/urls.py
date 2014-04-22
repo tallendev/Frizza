@@ -22,7 +22,7 @@ urlpatterns = patterns('',
     # View for Pizza display page.
     url(r'^pizza/', 'Frizza.views.pizza', name='pizza'),
     # View for return page.
-    url(r'^return/', 'Frizza.views.return', name='return'),
+    url(r'^return/', 'Frizza.views.return_pizza', name='return'),
     # View for waste page.
     url(r'^waste/', 'Frizza.views.waste', name='waste'),
     # View for crust page.
