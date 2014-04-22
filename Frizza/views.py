@@ -15,9 +15,15 @@ logger = logging.getLogger('registration')
 def pizza(request):
     if request.user.is_authenticated():
         order_list = Orders.objects.filter(user_name="admin")
-        admin_list = Pizza.objects.filter(pizza_id__in=order_list).select_related()
+        admin_list = []
+        for order in order_list:
+            admin_list.append(Pizza.objects.get(pizza_id=order.pizza_id)
+
         uorder_list = Orders.objects.filter(user_name=str(request.user))
-        user_list = Pizza.objects.filter(pizza_name__in=uorder_list).select_related()
+        user_list = []
+        for uorder in uorder_list:
+            user_list.append(Pizza.objects.get(pizza_id=uorder.pizza_id)
+
         if request.method == 'POST':
             request.session['pizza'] = ''
             pizza = request.POST['pizza']
@@ -282,7 +288,10 @@ def calorie(request):
 def return_pizza(request):
     if request.user.is_authenticated():
         uorder_list = Orders.objects.filter(user_name=str(request.user))
-        orders = Pizza.objects.filter(pizza_name__in=uorder_list).select_related()
+        
+        orders = []
+        for uorder in uorder_list:
+            orders.append(Pizza.objects.get(pizza_id=uorder.pizza_id)
        
         if request.method == 'POST' and 'return_pizza' in request.POST:
             request.session['return_pizza'] = request.POST['return_pizza']
