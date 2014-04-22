@@ -2,7 +2,7 @@ from django.shortcuts import render
 import settings
 from django.contrib import auth
 from Frizza.models import User, Sauce, Crust, Pizza, Topping, HasTopping, \
-                           Allergy, Orders
+                            Allergy, Orders
 from django.contrib.auth.forms import UserCreationForm
 from django.http import HttpResponseRedirect
 import logging
