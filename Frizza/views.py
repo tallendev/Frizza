@@ -17,12 +17,12 @@ def pizza(request):
         order_list = Orders.objects.filter(user_name="admin")
         admin_list = []
         for order in order_list:
-            admin_list.append(Pizza.objects.get(pizza_id=order.pizza_id)
+            admin_list.append(Pizza.objects.get(pizza_id=order.pizza_id))
 
         uorder_list = Orders.objects.filter(user_name=str(request.user))
         user_list = []
         for uorder in uorder_list:
-            user_list.append(Pizza.objects.get(pizza_id=uorder.pizza_id)
+            user_list.append(Pizza.objects.get(pizza_id=uorder.pizza_id))
 
         if request.method == 'POST':
             request.session['pizza'] = ''
