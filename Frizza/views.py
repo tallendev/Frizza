@@ -321,7 +321,7 @@ def disclaimer(request):
     if request.user.is_authenticated():
         if request.method == 'POST':
             if 'confirm' in request.POST:
-                HttpResponseRedirect('/pizza')
+                return HttpResponseRedirect('/pizza')
             else:
                 return HttpResponseRedirect('/logout')
         else:
