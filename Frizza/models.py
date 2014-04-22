@@ -38,7 +38,8 @@ class Sauce(models.Model):
 
 # This is a table representation for Pizza types, containing four fields:
 # a name for the pizza, which will be specified per user
-# the user count
+# the pizza id
+# the pizza name
 # the name of the sauce on the pizza
 # the name of the crust on the pizza
 class Pizza(models.Model):
