@@ -188,6 +188,10 @@ def calorie(request):
                              aggregate(Max('pizza_id'))['pizza_id__max'] + 1
                 pizza = None
                 if request.session['pizza'] == '':
+                    if pizza.objects.filter(pizza.pizza_name == request.POST[\
+                            'pizza_name']):
+                        request.session['duplicate_name'] = True
+                        return HttpResponseRedirect('/confirmation')
                     order_count = 1
                     pizza = Pizza(current_id, str(request.POST['pizza_name']),
                                   order_count, request.session['sauce'],
@@ -264,7 +268,9 @@ def calorie(request):
             context = {'crust': crust,
                         'sauce': sauce,
                         'toppings': toppings,
-                        'cal_total': cal_total}
+                        'cal_total': cal_total,
+                        'duplicate_name': request.session['duplicate_name']}
+            request.session['duplicate_name'] = False
             if request.session['pizza'] == '':
                 context['pizza'] = True
             else:
@@ -309,6 +315,8 @@ def waste(request):
             wasted_crust = Pizza.objects.filter(pizza_name=str(request.session['return_pizza'])).\
                                  select_related('orders__pizza_name')
 
+            del request.session['return_pizza']
+
             context = {'wasted_toppings': wasted_toppings,
                        'wasted_sauce': wasted_sauce,
                        'wasted_crust': wasted_crust}#,
@@ -330,6 +338,7 @@ def disclaimer(request):
                 request.session['order_complete'] = False
                 request.session['return_success'] = False
                 request.session['order_cancelled'] = False
+                request.session['duplicate_name'] = False
                 return HttpResponseRedirect('/pizza')
             else:
                 return HttpResponseRedirect('/logout')
