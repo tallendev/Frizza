@@ -54,7 +54,7 @@ def toppings(request):
                                     request.session[str(i)] = str(i)
                             return HttpResponseRedirect('/allergies')
                         else:
-                            del request.method['sauce']
+                            del request.session['sauce']
                             return HttpResponseRedirect['sauce']
                     else:
                         context = {'topping_list': topping_list}
