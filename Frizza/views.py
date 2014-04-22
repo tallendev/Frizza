@@ -22,7 +22,7 @@ def pizza(request):
         uorder_list = Orders.objects.filter(user_name=str(request.user))
         user_list = []
         for uorder in uorder_list:
-            user_list.append(Pizza.objects.get(pizza_id=uorder.pizza_id))
+            user_list.append(Pizza.objects.get(pizza_id=uorder.pizza_id.id))
 
         if request.method == 'POST':
             request.session['pizza'] = ''
