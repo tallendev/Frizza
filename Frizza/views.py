@@ -17,12 +17,14 @@ def pizza(request):
         order_list = Orders.objects.filter(user_name="admin")
         admin_list = []
         for order in order_list:
-            admin_list.append(Pizza.objects.get(pizza_id=order.pizza_id))
+            if order.pizza_id not in admin_list:
+                admin_list.append(order.pizza_id)
 
         uorder_list = Orders.objects.filter(user_name=str(request.user))
         user_list = []
         for uorder in uorder_list:
-            user_list.append(Pizza.objects.get(pizza_id=uorder.pizza_id))
+            if uorder.pizza_id not in user_list and uorder.pizza_id not in admin_list:
+                user_list.append(uorder.pizza_id)
 
         if request.method == 'POST':
             request.session['pizza'] = ''
@@ -284,6 +286,7 @@ def calorie(request):
     else:
         return HttpResponseRedirect('/login')
 
+
 # This function handles a request to the returns page.
 def return_pizza(request):
     if request.user.is_authenticated():
@@ -291,7 +294,7 @@ def return_pizza(request):
         
         orders = []
         for uorder in uorder_list:
-            orders.append(Pizza.objects.get(pizza_id=uorder.pizza_id)
+            orders.append(uorder.pizza_id)
        
         if request.method == 'POST' and 'return_pizza' in request.POST:
             request.session['return_pizza'] = request.POST['return_pizza']
