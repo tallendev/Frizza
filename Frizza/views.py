@@ -29,8 +29,10 @@ def pizza(request):
         else:
             context = {'admin_list': admin_list,
                        'user_list': user_list,
-                       'order_complete': request.session['order_complete']}
+                       'order_complete': request.session['order_complete'],
+                       'order_cancelled': request.session['order_cancelled']}
             request.session['order_complete'] = False
+            request.session['order_cancelled'] = False
             return render(request, settings.TEMPLATE_DIRS +
                                    '/public_html/Pizza/pizza.html', context)
     else:
@@ -73,7 +75,6 @@ def toppings(request):
 def crust(request):
     if request.user.is_authenticated():
         if 'pizza' in request.session:
-            #TODO maybe change for redirect?
             if request.method == 'POST':
                 if 'confirm' in request.POST:
                     if 'crust' in request.POST:
@@ -217,6 +218,7 @@ def calorie(request):
                     for topping in topping_list:
                         if str(topping) in request.session:
                             del request.session[str(topping)]
+                request.session['order_cancelled'] = True
                 return HttpResponseRedirect('/pizza')
         else:
             pizza = None
