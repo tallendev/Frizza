@@ -21,26 +21,17 @@ def pizza(request):
         user_list = Pizza.objects.filter(pizza_id__in=uorder_list).select_related()
         context = {'admin_list': admin_list,
                    'user_list': user_list}
-        #TODO add user stufft
         if request.method == 'POST':
             print(request.POST)
             request.session['pizza'] = ''
             post = request.POST
             pizza = request.POST['pizza']
-            #FIXME are these conditions right?
             if pizza == 'Make Your Own!':
                 return HttpResponseRedirect('/crust')
             else:
                 request.session['pizza'] = request.POST['pizza']
                 return HttpResponseRedirect('/allergies')
-
-            # need else here to dynamically rebuild prebuilt pizzas
-            #TODO this return needs to be replaced by other stuff
-            #print ("Context: " + str(admin_list) + "\n")
-            #return render(request, settings.TEMPLATE_DIRS +
-             #                  '/public_html/Pizza/pizza.html', context)
         else:
-            #print ("Context: " + str(admin_list) + "\n")
             return render(request, settings.TEMPLATE_DIRS +
                                    '/public_html/Pizza/pizza.html', context)
     else:
@@ -183,7 +174,9 @@ def calorie(request):
                 pizza = None
                 if request.session['pizza'] == '':
                     order_id = 1
-                    pizza = Pizza(current_id, str(request.POST['pizza_name']), order_id, request.session['sauce'], request.session['crust'])
+                    pizza = Pizza(current_id, str(request.POST['pizza_name']),
+                                  order_id, request.session['sauce'],
+                                  request.session['crust'])
                     pizza.save()
                     del request.session['pizza']
                     del request.session['sauce']
@@ -266,7 +259,7 @@ def calorie(request):
         return HttpResponseRedirect('/login')
 
 
-'''def return_pizza(request):
+def return_pizza(request):
     if request.user.is_authenticated():
         uorder_list = Orders.objects.filter(user_name=str(request.user))
         orders = Pizza.objects.filter(pizza_id__in=uorder_list).select_related()
@@ -282,7 +275,7 @@ def calorie(request):
 
     else:
 
-        return HttpResponseRedirect('/login')'''
+        return HttpResponseRedirect('/login')
             
 
 # This function provides an appropriate response to a request for the
@@ -290,7 +283,6 @@ def calorie(request):
 def waste(request):
 
     if request.user.is_authenticated():
-
         pizza = Pizza.objects.get(pizza_name=str(request.return_pizza))
         wasted_toppings = HasTopping.objects.filter(pizza_id=pizza.pizza_id).\
                                      select_related('orders__pizza_name')
@@ -353,7 +345,7 @@ def registration(request):
                 '/public_html/Registration/registration.html', context)
 
 
-def login(request):
+'''def login(request):
     user_list = User.objects.all()
     context = {'user_list': user_list}
 
@@ -368,7 +360,7 @@ def login(request):
     #else:
         # Show an error page
     return render(request, settings.TEMPLATE_DIRS +
-                  '/public_html/login.html', context)
+                  '/public_html/login.html', context)'''
 
 
 def goodbye(request):
@@ -377,8 +369,8 @@ def goodbye(request):
                   "/public_html/Goodbye/goodbye.html")
 
 
-def logout(request):
+'''def logout(request):
     auth.logout(request)
     # Redirect to a success page.
 #    return render(request, settings.TEMPLATE_DIRS + "/public_html/login/")
-    return render(request, settings.TEMPLATE_DIRS + "/public_html/logout/")
+    return render(request, settings.TEMPLATE_DIRS + "/public_html/logout/")'''
