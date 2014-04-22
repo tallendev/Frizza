@@ -1,7 +1,6 @@
 from django.conf.urls import patterns, url
 from django.contrib.auth.views import login, logout
 import settings
-import views
 from django.conf.urls.static import static
 from django.template import loader
 # Uncomment the next two lines to enable the admin:
