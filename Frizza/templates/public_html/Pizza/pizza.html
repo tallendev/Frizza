@@ -106,14 +106,15 @@
     </div>
     {% endif %}
 
+
     <!--<div class="alert alert-success">
         <strong>Your pizza has been returned successfully.</strong>
-    </div>
-
+    </div>-->
+    {% if order_cancelled %}
     <div class="alert alert-danger">
         <strong>Your order has been canceled.</strong>
-    </div>-->
-
+    </div>
+    {% endif %}
 </div> <!-- /container -->
 
 
