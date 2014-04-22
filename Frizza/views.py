@@ -278,7 +278,7 @@ def calorie(request):
     else:
         return HttpResponseRedirect('/login')
 
-
+# This function handles a request to the returns page.
 def return_pizza(request):
     if request.user.is_authenticated():
         uorder_list = Orders.objects.filter(user_name=str(request.user))
