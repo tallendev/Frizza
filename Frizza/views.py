@@ -180,6 +180,7 @@ def calorie(request):
             if ('confirm' in request.POST):
                 current_id = Pizza.objects.all().\
                              aggregate(Max('pizza_id'))['pizza_id__max'] + 1
+                pizza = None
                 if request.session['pizza'] == '':
                     order_id = 1
                     pizza = Pizza(current_id, str(request.POST['pizza_name']), order_id, request.session['sauce'], request.session['crust'])
