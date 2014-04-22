@@ -125,9 +125,9 @@ def allergies(request):
                 for i in toppings:
                     if str(i) in request.session:
                         del request.session[str(i)]
+                request.session['pizza'] = ''
                 return HttpResponseRedirect('/toppings')
         else:
-            #FIXME lists all allergies
             topping_allergies = []
             sauce_allergies = []
             crust_allergies = []
