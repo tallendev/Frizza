@@ -15,15 +15,16 @@ logger = logging.getLogger('registration')
 def pizza(request):
     if request.user.is_authenticated():
         order_list = Orders.objects.filter(user_name="admin")
-        total_list = []
+        admin_list = []
         for order in order_list:
-            if order.pizza_id not in total_list:
-                total_list.append(order.pizza_id)
+            if order not in admin_list:
+                admin_list.append(order.pizza_id)
 
         uorder_list = Orders.objects.filter(user_name=str(request.user))
+        user_list = []
         for uorder in uorder_list:
-            if order.pizza_id not in total_list:
-                total_list.append(uorder.pizza_id)
+            if uorder not in user_list:
+                user_list.append(uorder.pizza_id)
 
         if request.method == 'POST':
             request.session['pizza'] = ''
