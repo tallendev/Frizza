@@ -49,9 +49,9 @@
 
           <form class="form-signin" role="form" method="post">{% csrf_token %}
               <h3 class="form-signin-heading">Please Register</h3>
-              <input type="text" maxlength="20" name="username" class="form-control" placeholder="New User Name" required autofocus>
-              <input type="Password" maxlength="30" name="password1" class="form-control" placeholder="New Password" required>
-              <input type="password" maxlength="30" name="password2" class="form-control" placeholder="Confirm Password" required>
+              <input type="text" maxlength="20" pattern="^[a-zA-Z0-9]{1,20}$" name="username" class="form-control" placeholder="New User Name" required autofocus>
+              <input type="Password" maxlength="30" pattern="^[a-zA-Z0-9]{1,30}$" name="password1" class="form-control" placeholder="New Password" required>
+              <input type="password" maxlength="30" pattern="^[a-zA-Z0-9]{1,30}$" name="password2" class="form-control" placeholder="Confirm Password" required>
               <input class="btn btn-lg btn-primary btn-block" type="submit" value="Register">
 	      <a href="/login" class="btn btn-lg btn-default btn-block">Cancel</a>
           </form>
