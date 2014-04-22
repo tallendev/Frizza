@@ -79,7 +79,7 @@
             <div class="column">
                 {% if orders %}
                 {% for order in orders %}
-                <input type="radio" name="return_pizza" value="{{ order.pizza_name }}">{{ order.pizza_name }}<br>
+                <input type="radio" name="return_pizza" value="{{ order.id }}">{{ order.pizza_name }}<br>
                 {% endfor %}
                 {% else %}
                 <p>No orders to return</p>
