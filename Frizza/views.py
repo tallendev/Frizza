@@ -317,7 +317,7 @@ def waste(request):
             return HttpResponseRedirect('/return')
 
         return render(request, settings.TEMPLATE_DIRS +
-                           '/public_html/Return/return.html', context)
+                           '/public_html/Return/waste.html', context)
     else:
         return HttpResponseRedirect('/login')
 
