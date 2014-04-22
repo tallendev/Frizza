@@ -262,7 +262,7 @@ def calorie(request):
          return HttpResponseRedirect('/login')
 
 
-def return(request):
+def returns(request):
     
     if request.user.is_authenticated():
         uorder_list = Orders.objects.filter(user_name=str(request.user))
@@ -300,8 +300,8 @@ def waste(request):
 
         context = {'wasted_toppings': wasted_toppings,
                    'wasted_sauce': wasted_sauce,
-                   'wasted_crust': wasted_crust,
-                   'orders': orders}
+                   'wasted_crust': wasted_crust}#,
+                   #'orders': orders}
 
         return render(request, settings.TEMPLATE_DIRS +
                            '/public_html/Return/return.html', context)
