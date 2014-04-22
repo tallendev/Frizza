@@ -327,7 +327,8 @@ def disclaimer(request):
         else:
             return render(request, settings.TEMPLATE_DIRS +
                                    '/public_html/Disclaimer/disclaimer.html')
-    return HttpResponseRedirect('/login')
+    else:
+        return HttpResponseRedirect('/login')
 
 
 # This function provides the appropriate response to a request for the
