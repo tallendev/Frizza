@@ -17,7 +17,7 @@ def pizza(request):
         order_list = Orders.objects.filter(user_name="admin")
         admin_list = []
         for order in order_list:
-            admin_list.append(Pizza.objects.get(pizza_id=order.pizza_id))
+            admin_list.append(order.pizza_id)
 
         uorder_list = Orders.objects.filter(user_name=str(request.user))
         user_list = []
@@ -283,6 +283,7 @@ def calorie(request):
                          '/public_html/Confirmation/confirmation.html', context)
     else:
         return HttpResponseRedirect('/login')
+
 
 # This function handles a request to the returns page.
 def return_pizza(request):
