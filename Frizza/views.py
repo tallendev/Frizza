@@ -272,7 +272,7 @@ def calorie(request):
         return HttpResponseRedirect('/login')
 
 
-def return(request):
+def return_pizza(request):
     if request.user.is_authenticated():
         uorder_list = Orders.objects.filter(user_name=str(request.user))
         orders = Pizza.objects.filter(pizza_id__in=uorder_list).select_related()
@@ -295,20 +295,24 @@ def return(request):
 def waste(request):
 
     if request.user.is_authenticated():
-        pizza = Pizza.objects.get(pizza_name=str(request.return_pizza))
-        wasted_toppings = HasTopping.objects.filter(pizza_id=pizza.pizza_id).\
-                                     select_related('orders__pizza_name')
+        if 'return_pizza' in request.session:
+            pizza = Pizza.objects.get(pizza_name=str(request.return_pizza))
+            wasted_toppings = HasTopping.objects.filter(pizza_id=pizza.pizza_id).\
+                                         select_related('orders__pizza_name')
 
-        wasted_sauce = Pizza.objects.filter(pizza_name=str(request.return_pizza)).\
-                             select_related('orders__pizza_name')
+            wasted_sauce = Pizza.objects.filter(pizza_name=str(request.return_pizza)).\
+                                 select_related('orders__pizza_name')
 
-        wasted_crust = Pizza.objects.filter(pizza_name=str(request.return_pizza)).\
-                             select_related('orders__pizza_name')
+            wasted_crust = Pizza.objects.filter(pizza_name=str(request.return_pizza)).\
+                                 select_related('orders__pizza_name')
 
-        context = {'wasted_toppings': wasted_toppings,
-                   'wasted_sauce': wasted_sauce,
-                   'wasted_crust': wasted_crust}#,
-                   #'orders': orders}
+            context = {'wasted_toppings': wasted_toppings,
+                       'wasted_sauce': wasted_sauce,
+                       'wasted_crust': wasted_crust}#,
+                       #'orders': orders}
+
+        else:
+            return HttpResponseRedirect('/return')
 
         return render(request, settings.TEMPLATE_DIRS +
                            '/public_html/Return/return.html', context)
