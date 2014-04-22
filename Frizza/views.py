@@ -105,6 +105,7 @@ def sauce(request):
                         else:
                             HttpResponseRedirect('/toppings')
                     else:
+                        del request.session['crust']
                         return HttpResponseRedirect('/crust')
                 else:
                     sauce_list = Sauce.objects.all()
