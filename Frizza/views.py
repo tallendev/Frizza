@@ -320,8 +320,12 @@ def waste(request):
 
 def disclaimer(request):
     if request.user.is_authenticated():
-        return render(request, settings.TEMPLATE_DIRS +
-                      '/public_html/Disclaimer/disclaimer.html')
+        if request.method == 'POST':
+            if 'confirm' in request.POST:
+                return render(request, settings.TEMPLATE_DIRS +
+                              '/public_html/Disclaimer/disclaimer.html')
+            else:
+                return HttpResponseRedirect('/logout')
     else:
         return HttpResponseRedirect('/login')
 
