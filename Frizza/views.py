@@ -282,8 +282,8 @@ def return_pizza(request):
         if request.method == 'POST' and 'return_pizza' in request.POST:
             request.session['return_pizza'] = request.POST['return_pizza']
             return HttpResponseRedirect('/waste')
+        else:
             context = {'orders': orders}
-
             return render(request, settings.TEMPLATE_DIRS +
                           '/public_html/Return/return.html', context)
 
