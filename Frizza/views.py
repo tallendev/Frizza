@@ -309,6 +309,8 @@ def waste(request):
             wasted_crust = Pizza.objects.filter(pizza_name=str(request.session['return_pizza'])).\
                                  select_related('orders__pizza_name')
 
+            del request.session['return_pizza']
+
             context = {'wasted_toppings': wasted_toppings,
                        'wasted_sauce': wasted_sauce,
                        'wasted_crust': wasted_crust}#,
