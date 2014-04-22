@@ -45,31 +45,31 @@
         <div class="cover-container">
 
             <div class="inner cover">
-                <h1 class="cover-heading"><u>ALLERGY NOTICE</u>!</h1>
+                <h1 class="cover-heading"><u>ALLERGY NOTICE!</u></h1>
                 <p class="lead">This pizza may be dangerous if you have any of the following allergies:</p>
                 <div class="row">
                     <div class="column">
-                        <h2 class="cover-heading"><u>Topping Allergies</u>:</h2>
+                        <h2 class="cover-heading">Topping Allergies:</h2>
                         <ul>
                             {% if topping_allergies %}
                                 {% for allergy in topping_allergies %}
                                     <li>{{ allergy.allergy_name }}</li>
                                 {% endfor %}
                             {% else %}
-                                <p>There are no topping allergies.</p>
+                                <li>There are no topping allergies.</li>
                             {% endif %}
                         </ul>
-                        <h2 class="cover-heading"><u>Crust Allergies</u>:</h2>
+                        <h2 class="cover-heading">Crust Allergies:</h2>
                         <ul>
                             {% if crust_allergies %}
                                 {% for allergy in crust_allergies %}
                                     <li>{{ allergy.allergy_name  }}</li>
                                 {% endfor %}
                             {% else %}
-                                <p>There are no crust allergies.</p>
+                                <li>There are no crust allergies.</li>
                             {% endif %}
                         </ul>
-                        <h2 class="cover-heading"><u>Sauce Allergies</u>:</h2>
+                        <h2 class="cover-heading">Sauce Allergies:</h2>
                         <ul>
                             {% if sauce_allergies %}
                                 {% for allergy in sauce_allergies %}
@@ -77,7 +77,7 @@
                                     <li>{{ allergy.sauce_name }}</li>
                                 {% endfor %}
                             {% else %}
-                                <p>There are no sauce allergies.</p>
+                                <li>There are no sauce allergies.</li>
                             {% endif %}
                         </ul>
                     </div>
