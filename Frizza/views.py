@@ -91,9 +91,15 @@ def sauce(request):
     if request.user.is_authenticated():
         if 'pizza' in request.session:
             if 'crust' in request.session:
-                if request.method == 'POST' and 'sauce' in request.POST:
-                    request.session['sauce'] = request.POST['sauce']
-                    return HttpResponseRedirect('/toppings')
+                if request.method == 'POST':
+                    if 'confirm' in request.POST:
+                        if 'sauce' in request.POST:
+                            request.session['sauce'] = request.POST['sauce']
+                            return HttpResponseRedirect('/toppings')
+                        else:
+                            HttpResponseRedirect('/toppings')
+                    else:
+                        return HttpResponseRedirect('/crust')
                 else:
                     sauce_list = Sauce.objects.all()
                     context = {'sauce_list': sauce_list}
@@ -119,9 +125,9 @@ def allergies(request):
                 for i in toppings:
                     if str(i) in request.session:
                         del request.session[str(i)]
+                request.session['pizza'] = ''
                 return HttpResponseRedirect('/toppings')
         else:
-            #FIXME lists all allergies
             topping_allergies = []
             sauce_allergies = []
             crust_allergies = []
@@ -136,7 +142,6 @@ def allergies(request):
                         for j in allergies:
                             topping_allergies.append(j)
             else:
-                # Sausage is a placeholder for the actual, variable pizza name.
                 pizza = Pizza.objects.get(pizza_name=request.session['pizza'])
                 crust = Crust.objects.get(crust_name=pizza.crust_name)
                 sauce = Sauce.objects.get(sauce_name=pizza.sauce_name)
@@ -154,7 +159,7 @@ def allergies(request):
             context = {'topping_allergies': topping_allergies,
                         'sauce_allergies': sauce_allergies,
                         'crust_allergies': crust_allergies,
-                        }
+                      }
             return render(request, settings.TEMPLATE_DIRS +
                           '/public_html/Allergies/allergies.html', context)
     else:
@@ -234,7 +239,6 @@ def calorie(request):
                 sauce_calorie = sauce.calorie
                 topping_list = Topping.objects.all()
                 topping_str = []
-                # TODO check here for exploding toppings
                 for topping in topping_list:
                     if str(topping) in request.session:
                         topping_str.append(topping)
@@ -315,28 +319,17 @@ def disclaimer(request):
 # This function provides the appropriate response to a request for the
 # registration page.
 def registration(request):
-    logger.debug('In registration')
     if request.method == 'POST':
-        logger.debug('Successful post from registration')
         post = request.POST
         form = UserCreationForm(post, request)
-
-        print('Post: ' + str(request.POST))
-        #print('Errors: ' + str(form.error_messages))
-        print('Is Valid: ' + str(form.is_valid()))
-        print('More Errors: ' + str(form.errors) + "\n\n")
         if form.is_valid():
             username = post.get('username', '')
-            #email = post.get('Email', '')
             password = post.get('password1', '')
             logger.debug('Is_Valid from registration')
             u = User(user_name=username, password=password)
             u.save()
-            new_user = form.save()
-            registration_list = User.objects.all()  # Registration?
-            context = {'registration_list': registration_list}
+            form.save()
             return HttpResponseRedirect('/disclaimer')
-            #return HttpResponseRedirect("/disclaimer")
 
         #User.
     registration_list = User.objects.all()  # Registration?
@@ -344,33 +337,7 @@ def registration(request):
     return render(request, settings.TEMPLATE_DIRS +
                 '/public_html/Registration/registration.html', context)
 
-
-'''def login(request):
-    user_list = User.objects.all()
-    context = {'user_list': user_list}
-
-    #username = request.POST.get('username', '')
-    #password = request.POST.get('password', '')
-    #user = auth.authenticate(username=username, password=password)
-    #if user is not None and user.is_active:
-        # Correct password, and the user is marked "active"
-     #   auth.login(request, user)
-        # Redirect to a success page.
-      #  return HttpResponseRedirect(settings.TEMPLATE_DIRS + "/public_html/Disclaimer/disclaimer.html")
-    #else:
-        # Show an error page
-    return render(request, settings.TEMPLATE_DIRS +
-                  '/public_html/login.html', context)'''
-
-
 def goodbye(request):
     # Redirect to a success page.
     return render(request, settings.TEMPLATE_DIRS +
                   "/public_html/Goodbye/goodbye.html")
-
-
-'''def logout(request):
-    auth.logout(request)
-    # Redirect to a success page.
-#    return render(request, settings.TEMPLATE_DIRS + "/public_html/login/")
-    return render(request, settings.TEMPLATE_DIRS + "/public_html/logout/")'''
