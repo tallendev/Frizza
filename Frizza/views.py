@@ -188,9 +188,9 @@ def calorie(request):
                              aggregate(Max('pizza_id'))['pizza_id__max'] + 1
                 pizza = None
                 if request.session['pizza'] == '':
-                    order_id = 1
+                    order_count = 1
                     pizza = Pizza(current_id, str(request.POST['pizza_name']),
-                                  order_id, request.session['sauce'],
+                                  order_count, request.session['sauce'],
                                   request.session['crust'])
                     pizza.save()
                     del request.session['pizza']
@@ -203,6 +203,7 @@ def calorie(request):
                             del request.session[str(topping)]
                 else:
                     pizza = Pizza.objects.get(pizza_name=request.session['pizza'])
+                    pizza.order_count += 1
                 user = User.objects.filter(user_name=str(request.user))[:1].get()
                 order_id = Orders.objects.all(). \
                             aggregate(Max('id'))['id__max'] + 1
