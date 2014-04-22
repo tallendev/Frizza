@@ -262,7 +262,7 @@ def calorie(request):
         return HttpResponseRedirect('/login')
 
 
-def return_pizza(request):
+'''def return_pizza(request):
     if request.user.is_authenticated():
         uorder_list = Orders.objects.filter(user_name=str(request.user))
         orders = Pizza.objects.filter(pizza_id__in=uorder_list).select_related()
@@ -278,7 +278,7 @@ def return_pizza(request):
 
     else:
 
-        return HttpResponseRedirect('/login')
+        return HttpResponseRedirect('/login')'''
             
 
 # This function provides an appropriate response to a request for the
