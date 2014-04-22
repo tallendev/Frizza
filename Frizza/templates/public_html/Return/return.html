@@ -101,13 +101,14 @@
             </div>
         </div>
 
-        {% if form.errors %}
-        <div class="alert alert-danger">
-            <strong>Oops!</strong> Please choose a pizza to return.
-        </div>
-        {% endif %}
+    </form>
 
+    {% if form.errors %}
+    <div class="alert alert-danger">
+        <strong>Please choose a pizza to return.</strong>
     </div>
+    {% endif %}
+
 </div>
 
 
