@@ -37,17 +37,17 @@ black_olives = Topping('Black Olives', 60)
 black_olives.save()
 
 from Frizza.models import Pizza
-cheese_p = Pizza(1, 'Cheese', 1, 'Tomato', 'Classic')
+cheese_p = Pizza(1, 'Cheese', 'Tomato', 'Classic')
 cheese_p.save()
-pepperoni_p = Pizza(2, 'Pepperoni', 2, 'Tomato', 'Classic')
+pepperoni_p = Pizza(2, 'Pepperoni', 'Tomato', 'Classic')
 pepperoni_p.save()
-sausage_p = Pizza(3, 'Sausage', 3, 'Tomato', 'Classic')
+sausage_p = Pizza(3, 'Sausage', 'Tomato', 'Classic')
 sausage_p.save()
-meat_lovers = Pizza(4, 'Meat Lovers', 4, 'Tomato', 'Classic')
+meat_lovers = Pizza(4, 'Meat Lovers', 'Tomato', 'Classic')
 meat_lovers.save()
-hawaiian = Pizza(5, 'Hawaiian', 5, 'Tomato', 'Classic')
+hawaiian = Pizza(5, 'Hawaiian', 'Tomato', 'Classic')
 hawaiian.save()
-vegetarian = Pizza(6, 'Vegetarian', 6, 'Tomato', 'Classic')
+vegetarian = Pizza(6, 'Vegetarian', 'Tomato', 'Classic')
 vegetarian.save()
 
 from Frizza.models import HasTopping
