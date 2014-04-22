@@ -71,9 +71,15 @@ def crust(request):
     if request.user.is_authenticated():
         if 'pizza' in request.session:
             #TODO maybe change for redirect?
-            if request.method == 'POST' and 'crust' in request.POST:
-                request.session['crust'] = request.POST['crust']
-                return HttpResponseRedirect('/sauce')
+            if request.method == 'POST':
+                if 'confirm' in request.POST:
+                    if 'crust' in request.POST:
+                        request.session['crust'] = request.POST['crust']
+                        return HttpResponseRedirect('/sauce')
+                    else:
+                        return HttpResponseRedirect('/crust')
+                else:
+                    return HttpResponseRedirect('/pizza')
             else:
                 crust_list = Crust.objects.all()
                 context = {'crust_list': crust_list}
@@ -271,7 +277,6 @@ def return_pizza(request):
         if request.method == 'POST' and 'return_pizza' in request.POST:
             request.session['return_pizza'] = request.POST['return_pizza']
             return HttpResponseRedirect('/waste')
-
             context = {'orders': orders}
 
             return render(request, settings.TEMPLATE_DIRS +
