@@ -1,26 +1,17 @@
 from django.db import models
 
 
-# This is a table representation for Sauces types, containing two fields:
-# a name for the sauce and
-# a calorie count
-class Sauce(models.Model):
-    sauce_name = models.CharField(max_length=20, primary_key=True)
-    calorie = models.IntegerField()
+# Table for a user, containing:
+# their user name
+# the password
+class User(models.Model):
+    user_name = models.CharField(max_length=20, primary_key=True)
+    #email = models.EmailField(max_length=100)
+    password = models.CharField(max_length=30)
 
+    # returns the user name as a to string
     def __unicode__(self):
-        return self.sauce_name
-
-
-# This is a table representation for Crust types, containing two fields:
-# a name for the crust and
-# a calorie count
-class Crust(models.Model):
-    crust_name = models.CharField(max_length=20, primary_key=True)
-    calorie = models.IntegerField()
-
-    def __unicode__(self):
-        return self.crust_name
+        return self.user_name
 
 
 # This is a table representation for Pizza types, containing four fields:
@@ -40,6 +31,28 @@ class Pizza(models.Model):
         return self.pizza_name
 
 
+# This is a table representation for Crust types, containing two fields:
+# a name for the crust and
+# a calorie count
+class Crust(models.Model):
+    crust_name = models.CharField(max_length=20, primary_key=True)
+    calorie = models.IntegerField()
+
+    def __unicode__(self):
+        return self.crust_name
+
+
+# This is a table representation for Sauces types, containing two fields:
+# a name for the sauce and
+# a calorie count
+class Sauce(models.Model):
+    sauce_name = models.CharField(max_length=20, primary_key=True)
+    calorie = models.IntegerField()
+
+    def __unicode__(self):
+        return self.sauce_name
+
+
 # This is a table representation for topping types, containing two fields:
 # a name for the topping
 # a calorie count
@@ -50,19 +63,6 @@ class Topping(models.Model):
      # to string returning topping name
     def __unicode__(self):
         return self.topping_name
-
-
-# Table for a user, containing: 
-# their user name
-# the password
-class User(models.Model):
-    user_name = models.CharField(max_length=20, primary_key=True)
-    #email = models.EmailField(max_length=100)
-    password = models.CharField(max_length=30)
-
-    # returns the user name as a to string
-    def __unicode__(self):
-        return self.user_name
 
 
 # Relationship for toppings on pizzas, containing two fields:

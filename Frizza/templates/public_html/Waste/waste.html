@@ -57,7 +57,7 @@
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                <li class="active"><a >Return</a></li>
+                <li class="active"><a >Waste</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li><a >{{ user.username }}</a> </li>
@@ -69,44 +69,55 @@
 
 
 <div class="container theme-showcase" role="main">
-
-    <div class="page-header">
-        <h1>Which pizza are you returning?</h1>
-    </div>
-
-    <form action="" class="form-signin" method="post">{% csrf_token %}
-        <div class="row">
-            <div class="column">
-                {% if orders %}
-                {% for order in orders %}
-                <input type="radio" name="return_pizza" value="{{ order.pizza_name }}">{{ order.pizza_name }}<br>
-                {% endfor %}
-                {% else %}
-                <p>No orders to return</p>
-                {% endif %}
-            </div>
-        </div>
-
         <div class="page-header">
         </div>
+
+
+        <p class="lead">Wasted Toppings:</p>
+
+        {% if wasted_toppings %}
+            <ul>
+            {% for topping in wasted_toppings %}
+                <li>{{ topping.topping_name }}</li>
+            {% endfor %}
+            </ul>
+        {% else %}
+        <p> No toppings wasted </p>
+        {% endif %}
+
+        <p class="lead">Wasted Sauce:</p>
+
+        {% if wasted_sauce %}
+            <ul>
+            {% for sauce in wasted_sauce %}
+                 <li>{{ sauce.sauce_name }}</li>
+            {% endfor %}
+            </ul>
+        {% else %}
+        <p> No sauce wasted </p>
+        {% endif %}
+
+        <p class="lead">Wasted Crust:</p>
+
+        {% if wasted_crust %}
+            <ul>
+            {% for crust in wasted_crust %}
+                <li>{{ crust.crust_name }}</li>
+            {% endfor %}
+            </ul>
+        {% else %}
+        <p> No crust wasted </p>
+        {% endif %}
 
         <div class="row">
             <div class="column">
                 <div class="button_container">
                     <p>
-                        <input type="submit" class="btn btn-lg btn-primary" value="Proceed to Waste">
-                        <a href="/pizza" class="btn btn-lg btn-default">Back</a>
+                        <a href="/pizza" class="btn btn-lg btn-primary" type="submit">Ok</a>
                     </p>
                 </div>
             </div>
         </div>
-
-        {% if form.errors %}
-        <div class="alert alert-danger">
-            <strong>Oops!</strong> Please choose a pizza to return.
-        </div>
-        {% endif %}
-
     </div>
 </div>
 

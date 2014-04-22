@@ -50,16 +50,6 @@ hawaiian.save()
 vegetarian = Pizza(6, 'Vegetarian', 6, 'Tomato', 'Classic')
 vegetarian.save()
 
-from Frizza.models import Allergy
-Allergy(1, 'Gluten', 'Thick').save()
-Allergy(2, 'Dairy', 'Thick').save()
-Allergy(3, 'Gluten', 'Thin').save()
-Allergy(4, 'Gluten', 'Classic').save()
-Allergy(5, 'Dairy', 'Classic').save()
-Allergy(6, 'Dairy', 'Alfredo').save()
-Allergy(7, 'Dairy', 'Cheese').save()
-Allergy(8, 'Soybean', 'Bacon').save()
-
 from Frizza.models import HasTopping
 ##### 1 #####
 HasTopping(pizza_id=cheese_p, topping_name=cheese).save()
@@ -86,6 +76,16 @@ HasTopping(pizza_id=vegetarian, topping_name=spinach).save()
 HasTopping(pizza_id=vegetarian, topping_name=green_peppers).save()
 HasTopping(pizza_id=vegetarian, topping_name=onions).save()
 HasTopping(pizza_id=vegetarian, topping_name=black_olives).save()
+
+from Frizza.models import Allergy
+Allergy(1, 'Gluten', 'Thick').save()
+Allergy(2, 'Dairy', 'Thick').save()
+Allergy(3, 'Gluten', 'Thin').save()
+Allergy(4, 'Gluten', 'Classic').save()
+Allergy(5, 'Dairy', 'Classic').save()
+Allergy(6, 'Dairy', 'Alfredo').save()
+Allergy(7, 'Dairy', 'Cheese').save()
+Allergy(8, 'Soybean', 'Bacon').save()
 
 from Frizza.models import User
 User(user_name='admin', password='admin').save()
