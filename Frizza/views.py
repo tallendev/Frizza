@@ -298,14 +298,14 @@ def waste(request):
 
     if request.user.is_authenticated():
         if 'return_pizza' in request.session:
-            pizza = Pizza.objects.get(pizza_name=str(request.return_pizza))
+            pizza = Pizza.objects.get(pizza_name=str(request.session['return_pizza']))
             wasted_toppings = HasTopping.objects.filter(pizza_id=pizza.pizza_id).\
                                          select_related('orders__pizza_name')
 
-            wasted_sauce = Pizza.objects.filter(pizza_name=str(request.return_pizza)).\
+            wasted_sauce = Pizza.objects.filter(pizza_name=str(request.session['return_pizza'])).\
                                  select_related('orders__pizza_name')
 
-            wasted_crust = Pizza.objects.filter(pizza_name=str(request.return_pizza)).\
+            wasted_crust = Pizza.objects.filter(pizza_name=str(request.['return_pizza'])).\
                                  select_related('orders__pizza_name')
 
             context = {'wasted_toppings': wasted_toppings,
@@ -317,7 +317,7 @@ def waste(request):
             return HttpResponseRedirect('/return')
 
         return render(request, settings.TEMPLATE_DIRS +
-                           '/public_html/Return/return.html', context)
+                           '/public_html/Return/waste.html', context)
     else:
         return HttpResponseRedirect('/login')
 
