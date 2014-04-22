@@ -14,23 +14,6 @@ class User(models.Model):
         return self.user_name
 
 
-# This is a table representation for Pizza types, containing four fields:
-# a name for the pizza, which will be specified per user
-# the user count
-# the name of the sauce on the pizza
-# the name of the crust on the pizza
-class Pizza(models.Model):
-    pizza_id = models.IntegerField(primary_key=True)
-    pizza_name = models.CharField(max_length=20)
-    order_count = models.IntegerField()
-    sauce_name = models.ForeignKey(Sauce)
-    crust_name = models.ForeignKey(Crust)
-
-    # to string returns pizza name
-    def __unicode__(self):
-        return self.pizza_name
-
-
 # This is a table representation for Crust types, containing two fields:
 # a name for the crust and
 # a calorie count
@@ -51,6 +34,23 @@ class Sauce(models.Model):
 
     def __unicode__(self):
         return self.sauce_name
+
+
+# This is a table representation for Pizza types, containing four fields:
+# a name for the pizza, which will be specified per user
+# the user count
+# the name of the sauce on the pizza
+# the name of the crust on the pizza
+class Pizza(models.Model):
+    pizza_id = models.IntegerField(primary_key=True)
+    pizza_name = models.CharField(max_length=20)
+    order_count = models.IntegerField()
+    crust_name = models.ForeignKey(Crust)
+    sauce_name = models.ForeignKey(Sauce)
+
+    # to string returns pizza name
+    def __unicode__(self):
+        return self.pizza_name
 
 
 # This is a table representation for topping types, containing two fields:
