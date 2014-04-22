@@ -321,10 +321,12 @@ def disclaimer(request):
     if request.user.is_authenticated():
         if request.method == 'POST':
             if 'confirm' in request.POST:
-                return render(request, settings.TEMPLATE_DIRS +
-                              '/public_html/Disclaimer/disclaimer.html')
+                HttpResponseRedirect('/pizza')
             else:
                 return HttpResponseRedirect('/logout')
+        else:
+            return render(request, settings.TEMPLATE_DIRS +
+                                   '/public_html/Disclaimer/disclaimer.html')
     return HttpResponseRedirect('/login')
 
 
