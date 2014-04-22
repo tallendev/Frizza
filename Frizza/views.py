@@ -1,6 +1,5 @@
 from django.shortcuts import render
 import settings
-from django.contrib import auth
 from Frizza.models import User, Sauce, Crust, Pizza, Topping, HasTopping, \
                             Allergy, Orders
 from django.contrib.auth.forms import UserCreationForm
@@ -19,12 +18,8 @@ def pizza(request):
         admin_list = Pizza.objects.filter(pizza_id__in=order_list).select_related()
         uorder_list = Orders.objects.filter(user_name=str(request.user))
         user_list = Pizza.objects.filter(pizza_id__in=uorder_list).select_related()
-        context = {'admin_list': admin_list,
-                   'user_list': user_list}
         if request.method == 'POST':
-            print(request.POST)
             request.session['pizza'] = ''
-            post = request.POST
             pizza = request.POST['pizza']
             if pizza == 'Make Your Own!':
                 return HttpResponseRedirect('/crust')
@@ -32,6 +27,10 @@ def pizza(request):
                 request.session['pizza'] = request.POST['pizza']
                 return HttpResponseRedirect('/allergies')
         else:
+            context = {'admin_list': admin_list,
+                       'user_list': user_list,
+                       'order_complete': request.session['order_complete']}
+            request.session['order_complete'] = False
             return render(request, settings.TEMPLATE_DIRS +
                                    '/public_html/Pizza/pizza.html', context)
     else:
@@ -321,6 +320,9 @@ def disclaimer(request):
     if request.user.is_authenticated():
         if request.method == 'POST':
             if 'confirm' in request.POST:
+                request.session['order_complete'] = False
+                request.session['return_success'] = False
+                request.session['order_cancelled'] = False
                 return HttpResponseRedirect('/pizza')
             else:
                 return HttpResponseRedirect('/logout')
@@ -352,5 +354,6 @@ def registration(request):
 
 def goodbye(request):
     # Redirect to a success page.
+    request.session['order_complete'] = True
     return render(request, settings.TEMPLATE_DIRS +
                   "/public_html/Goodbye/goodbye.html")
