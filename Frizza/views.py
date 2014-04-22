@@ -47,10 +47,14 @@ def toppings(request):
                 if 'sauce' in request.session:
                     topping_list = Topping.objects.all()
                     if request.method == 'POST':
-                        for i in topping_list:
-                            if str(i) in request.POST:
-                                request.session[str(i)] = str(i)
-                        return HttpResponseRedirect('/allergies')
+                        if 'confirm' in request.POST:
+                            for i in topping_list:
+                                if str(i) in request.POST:
+                                    request.session[str(i)] = str(i)
+                            return HttpResponseRedirect('/allergies')
+                        else:
+                            del request.method['sauce']
+                            return HttpResponseRedirect['sauce']
                     else:
                         context = {'topping_list': topping_list}
                         return render(request, settings.TEMPLATE_DIRS +
@@ -316,8 +320,12 @@ def waste(request):
 
 def disclaimer(request):
     if request.user.is_authenticated():
-        return render(request, settings.TEMPLATE_DIRS +
-                      '/public_html/Disclaimer/disclaimer.html')
+        if request.method == 'POST':
+            if 'confirm' in request.POST:
+                return render(request, settings.TEMPLATE_DIRS +
+                              '/public_html/Disclaimer/disclaimer.html')
+            else:
+                return HttpResponseRedirect('/logout')
     else:
         return HttpResponseRedirect('/login')
 

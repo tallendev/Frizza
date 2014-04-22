@@ -9,7 +9,7 @@ from django.template import loader
 
 urlpatterns = patterns('',
     # View for login page.
-    url(r'^accounts/login/$',  'django.contrib.auth.views.login', {'template_name': settings.TEMPLATE_DIRS + '/public_html/login.html'}, name='login'),
+    #url(r'^accounts/login/$',  'django.contrib.auth.views.login', {'template_name': settings.TEMPLATE_DIRS + '/public_html/login.html'}, name='login'),
     #(r'^accounts/logout$', logout, loader.get_template(settings.TEMPLATE_DIRS + '/public_html/Goodbye/goodbye.html')),
     url(r'^login/', 'django.contrib.auth.views.login', {'template_name': settings.TEMPLATE_DIRS + '/public_html/login.html'}, name='login'),
     #url(r'^login/', 'Frizza.views.login'), #views.LoginView.as_view()),
