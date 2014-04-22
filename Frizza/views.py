@@ -259,11 +259,10 @@ def calorie(request):
             return render(request, settings.TEMPLATE_DIRS +
                          '/public_html/Confirmation/confirmation.html', context)
     else:
-         return HttpResponseRedirect('/login')
+        return HttpResponseRedirect('/login')
 
 
 def returns(request):
-    
     if request.user.is_authenticated():
         uorder_list = Orders.objects.filter(user_name=str(request.user))
         orders = Pizza.objects.filter(pizza_id__in=uorder_list).select_related()
