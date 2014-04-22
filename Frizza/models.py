@@ -44,7 +44,6 @@ class Sauce(models.Model):
 class Pizza(models.Model):
     pizza_id = models.IntegerField(primary_key=True)
     pizza_name = models.CharField(max_length=20)
-    order_count = models.IntegerField()
     sauce_name = models.ForeignKey(Sauce)
     crust_name = models.ForeignKey(Crust)
 
