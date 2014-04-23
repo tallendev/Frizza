@@ -329,9 +329,9 @@ def confirmation(request):
     Param: request - the request object that contains information about how
                      the page was accessed and session information.'''
 def return_pizza(request):
+    if 'disclaimer_conf' in request.session:
+        return HttpResponseRedirect('/logout')
     if request.user.is_authenticated():
-        if 'pizza' in request.session and (('crust' in request.session and
-            'sauce' in request.session) or request.session['pizza'] != ''):
             uorder_list = Orders.objects.filter(user_name=str(request.user))
             orders = []
             for uorder in uorder_list:
@@ -350,9 +350,7 @@ def return_pizza(request):
                 context = {'pizza_counts' : pizza_counts}
                 return render(request, settings.TEMPLATE_DIRS +
                           '/public_html/Return/return.html', context)
-        return HttpResponseRedirect('/pizza')
     else:
-
         return HttpResponseRedirect('/login')
             
 
