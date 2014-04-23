@@ -184,9 +184,17 @@ def allergies(request):
         return HttpResponseRedirect('/login')
 
 
+def clear_session(request):
+    del request.session['pizza']
+    del request.session['sauce']
+    del request.session['crust']
+    topping_list = Topping.objects.all()
+    for topping in topping_list:
+        if str(topping) in request.session:
+            del request.session[str(topping)]
+
 # This function provides an appropriate response to a request for the calorie
 # page.
-
 def calorie(request):
     if request.user.is_authenticated():
         #TODO: Validate appropriate fields are filled out
@@ -204,14 +212,11 @@ def calorie(request):
                                   request.session['sauce'],
                                   request.session['crust'])
                     pizza.save()
-                    del request.session['pizza']
-                    del request.session['sauce']
-                    del request.session['crust']
                     topping_list = Topping.objects.all()
                     for topping in topping_list:
                         if str(topping) in request.session:
                             HasTopping(pizza_id=pizza, topping_name=topping).save()
-                            del request.session[str(topping)]
+                    clear_session(request)
                 else:
                     pizza = Pizza.objects.get(pizza_name=request.session['pizza'])
                 user = User.objects.filter(user_name=str(request.user))[:1].get()
@@ -222,13 +227,7 @@ def calorie(request):
 
             else:
                 if request.session['pizza'] == '':
-                    del request.session['pizza']
-                    del request.session['sauce']
-                    del request.session['crust']
-                    topping_list = Topping.objects.all()
-                    for topping in topping_list:
-                        if str(topping) in request.session:
-                            del request.session[str(topping)]
+                    clear_session(request)
                 request.session['order_cancelled'] = True
                 return HttpResponseRedirect('/pizza')
         else:
@@ -286,7 +285,7 @@ def calorie(request):
     else:
         return HttpResponseRedirect('/login')
 
-
+    #
 # This function handles a request to the returns page.
 def return_pizza(request):
     if request.user.is_authenticated():
@@ -353,6 +352,7 @@ def waste(request):
 
 def disclaimer(request):
     if request.user.is_authenticated():
+        request.session['pizza'] = ''
         if request.method == 'POST':
             if 'confirm' in request.POST:
                 request.session['order_complete'] = False
