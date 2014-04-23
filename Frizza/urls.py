@@ -31,7 +31,7 @@ urlpatterns = patterns('',
     # View for allergies page.
     url(r'^allergies/', 'Frizza.views.allergies', name='allergies'),
     # View for confirmation page. Currently being displayed by calorie.
-    url(r'^confirmation/', 'Frizza.views.calorie', name='confirmation'),
+    url(r'^confirmation/', 'Frizza.views.confirmation', name='confirmation'),
     # View for thank page.
     url(r'^thank/', 'Frizza.views.thank', name='thank'),
     # View for logout page.
