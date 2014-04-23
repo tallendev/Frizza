@@ -359,7 +359,7 @@ def waste(request):
                        'wasted_sauce': wasted_sauce,
                        'wasted_crust': wasted_crust}
         else:
-            return HttpResponseRedirect('/return')
+            return HttpResponseRedirect('/pizza')
 
         return render(request, settings.TEMPLATE_DIRS +
                            '/public_html/Waste/waste.html', context)
