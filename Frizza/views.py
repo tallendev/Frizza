@@ -51,7 +51,7 @@ def pizza(request):
 def toppings(request):
     if request.user.is_authenticated():
         if 'pizza' in request.session and 'crust' in request.session and \
-                        'sauce' in request.session:
+            'sauce' in request.session:
             topping_list = Topping.objects.all()
             if request.method == 'POST':
                 if 'confirm' in request.POST:
@@ -300,7 +300,7 @@ def calorie(request):
 def return_pizza(request):
     if request.user.is_authenticated():
         if 'pizza' in request.session and 'crust' in request.session and \
-                        'sauce' in request.session:
+            'sauce' in request.session:
             uorder_list = Orders.objects.filter(user_name=str(request.user))
             orders = []
             for uorder in uorder_list:
@@ -330,7 +330,7 @@ def return_pizza(request):
 def waste(request):
     if request.user.is_authenticated():
         if 'pizza' in request.session and 'crust' in request.session and \
-                        'sauce' in request.session:
+            'sauce' in request.session:
             if 'return_pizza' in request.session:
                 pizza = Pizza.objects.get(pizza_name=request.session['return_pizza'])
                 wasted_toppings = HasTopping.objects.filter(pizza_id=pizza.pizza_id). \
@@ -411,8 +411,8 @@ def registration(request):
 
 
 def goodbye(request):
-    if 'pizza' in request.session and 'crust' in request.session and \
-                    'sauce' in request.session:
+    if 'pizza' in request.session and (('crust' in request.session and
+        'sauce' in request.session) or request.session['pizza'] != ''):
         # Redirect to a success page.
         request.session['order_complete'] = True
         return render(request, settings.TEMPLATE_DIRS +
