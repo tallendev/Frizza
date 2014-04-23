@@ -131,8 +131,7 @@ def sauce(request):
 def allergies(request):
     if request.user.is_authenticated():
         if 'pizza' in request.session and (('crust' in request.session and
-            'sauce' in request.session) or request.session[
-            'pizza'] != ''):
+            'sauce' in request.session) or request.session['pizza'] != ''):
             if request.method == 'POST':
                 if 'confirm' in request.POST:
                     return HttpResponseRedirect('/confirmation')
@@ -285,8 +284,8 @@ def calorie_render(request):
 # page.
 def calorie(request):
     if request.user.is_authenticated():
-        if 'pizza' in request.session and 'crust' in request.session \
-                and 'sauce' in request.session:
+        if 'pizza' in request.session and (('crust' in request.session and
+            'sauce' in request.session) or request.session['pizza'] != ''):
             #TODO: Validate appropriate fields are filled out
             if request.method == 'POST':
                 return calorie_post(request)
