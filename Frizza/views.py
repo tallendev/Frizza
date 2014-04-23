@@ -316,13 +316,13 @@ def waste(request):
     if request.user.is_authenticated():
         if 'return_pizza' in request.session:
             pizza = Pizza.objects.get(pizza_name=request.session['return_pizza'])
-            wasted_toppings = HasTopping.objects.filter(pizza_name=pizza.pizza_name).\
+            wasted_toppings = HasTopping.objects.filter(pizza_id=pizza.pizza_id).\
                                          select_related('orders__pizza_name')
 
-            wasted_sauce = Pizza.objects.filter(pizza_name=pizza.pizza_name).\
+            wasted_sauce = Pizza.objects.filter(pizza_id=pizza.pizza_id).\
                                  select_related('orders__pizza_name')
 
-            wasted_crust = Pizza.objects.filter(pizza_name=pizza.pizza_name).\
+            wasted_crust = Pizza.objects.filter(pizza_id=pizza.pizza_id).\
                                  select_related('orders__pizza_name')
 
             del request.session['return_pizza']
