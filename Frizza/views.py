@@ -127,52 +127,53 @@ def allergies(request):
     if request.user.is_authenticated():
         if request.session['pizza'] != '' or \
                 ('crust' in request.session and 'sauce' in request.session):
-            return HttpResponseRedirect('/pizza')
-        if request.method == 'POST':
-            if 'confirm' in request.POST:
-                return HttpResponseRedirect('/confirmation')
+            if request.method == 'POST':
+                if 'confirm' in request.POST:
+                    return HttpResponseRedirect('/confirmation')
+                else:
+                    toppings = Topping.objects.all()
+                    for i in toppings:
+                        if str(i) in request.session:
+                            del request.session[str(i)]
+                    request.session['pizza'] = ''
+                    return HttpResponseRedirect('/toppings')
             else:
-                toppings = Topping.objects.all()
-                for i in toppings:
-                    if str(i) in request.session:
-                        del request.session[str(i)]
-                request.session['pizza'] = ''
-                return HttpResponseRedirect('/toppings')
+                topping_allergies = []
+                sauce_allergies = []
+                crust_allergies = []
+
+                if request.session['pizza'] == '':
+                    crust = Crust.objects.get(crust_name=request.session['crust'])
+                    sauce = Sauce.objects.get(sauce_name=request.session['sauce'])
+                    all_toppings = Topping.objects.all()
+                    for i in all_toppings:
+                        if str(i) in request.session:
+                            allergies = Allergy.objects.filter(ingredient_name=i.topping_name)
+                            for j in allergies:
+                                topping_allergies.append(j)
+                else:
+                    pizza = Pizza.objects.get(pizza_name=request.session['pizza'])
+                    crust = Crust.objects.get(crust_name=pizza.crust_name)
+                    sauce = Sauce.objects.get(sauce_name=pizza.sauce_name)
+
+                    pizzaToppings = HasTopping.objects.filter(pizza_id=pizza)
+
+                    for topping in pizzaToppings:
+                        allergies = Allergy.objects.filter(ingredient_name=topping.topping_name)
+
+                        for allergy in allergies:
+                            topping_allergies.append(allergy)
+
+                sauce_allergies = Allergy.objects.filter(ingredient_name=sauce.sauce_name)
+                crust_allergies = Allergy.objects.filter(ingredient_name=crust.crust_name)
+                context = {'topping_allergies': topping_allergies,
+                           'sauce_allergies': sauce_allergies,
+                           'crust_allergies': crust_allergies,
+                           }
+                return render(request, settings.TEMPLATE_DIRS +
+                                       '/public_html/Allergies/allergies.html', context)
         else:
-            topping_allergies = []
-            sauce_allergies = []
-            crust_allergies = []
-
-            if request.session['pizza'] == '':
-                crust = Crust.objects.get(crust_name=request.session['crust'])
-                sauce = Sauce.objects.get(sauce_name=request.session['sauce'])
-                all_toppings = Topping.objects.all()
-                for i in all_toppings:
-                    if str(i) in request.session:
-                        allergies = Allergy.objects.filter(ingredient_name=i.topping_name)
-                        for j in allergies:
-                            topping_allergies.append(j)
-            else:
-                pizza = Pizza.objects.get(pizza_name=request.session['pizza'])
-                crust = Crust.objects.get(crust_name=pizza.crust_name)
-                sauce = Sauce.objects.get(sauce_name=pizza.sauce_name)
-
-                pizzaToppings = HasTopping.objects.filter(pizza_id=pizza)
-
-                for topping in pizzaToppings:
-                    allergies = Allergy.objects.filter(ingredient_name=topping.topping_name)
-
-                    for allergy in allergies:
-                        topping_allergies.append(allergy)
-
-            sauce_allergies = Allergy.objects.filter(ingredient_name=sauce.sauce_name)
-            crust_allergies = Allergy.objects.filter(ingredient_name=crust.crust_name)
-            context = {'topping_allergies': topping_allergies,
-                        'sauce_allergies': sauce_allergies,
-                        'crust_allergies': crust_allergies,
-                      }
-            return render(request, settings.TEMPLATE_DIRS +
-                          '/public_html/Allergies/allergies.html', context)
+            HttpResponseRedirect('/pizza')
     else:
         return HttpResponseRedirect('/login')
 
