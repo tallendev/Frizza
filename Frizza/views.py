@@ -14,9 +14,9 @@ from django.db.models import Max
     Param: request - the request object that contains information about how
                      the page was accessed and session information.'''
 def pizza(request):
-    if 'disclaimer_conf' not in request.session:
-        return HttpResponseRedirect('/logout')
     if request.user.is_authenticated():
+        if not request.session['disclaimer_conf']:
+            return HttpResponseRedirect('/logout')
         clear_session(request)
         order_list = Orders.objects.filter(user_name="admin")
         admin_list = []
@@ -329,9 +329,9 @@ def confirmation(request):
     Param: request - the request object that contains information about how
                      the page was accessed and session information.'''
 def return_pizza(request):
-    if 'disclaimer_conf' in request.session:
-        return HttpResponseRedirect('/logout')
     if request.user.is_authenticated():
+            if not request.session['disclaimer_conf']:
+                return HttpResponseRedirect('/logout')
             uorder_list = Orders.objects.filter(user_name=str(request.user))
             orders = []
             for uorder in uorder_list:
