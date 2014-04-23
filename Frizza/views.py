@@ -296,7 +296,7 @@ def return_pizza(request):
         used_ids = []
         pizza_counts = {}
         for o in orders:
-            if o.pizza_id not in pizza_counts:
+            if o.pizza_name not in pizza_counts:
                 pizza_counts[o.pizza_name] = 1
             else:
                 pizza_counts[o.pizza_name] += 1
