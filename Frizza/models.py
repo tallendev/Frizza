@@ -6,7 +6,6 @@ from django.db import models
 # the password
 class User(models.Model):
     user_name = models.CharField(max_length=20, primary_key=True)
-    #email = models.EmailField(max_length=100)
     password = models.CharField(max_length=30)
 
     # returns the user name as a to string
@@ -38,8 +37,7 @@ class Sauce(models.Model):
 
 # This is a table representation for Pizza types, containing four fields:
 # a name for the pizza, which will be specified per user
-# the pizza id
-# the pizza name
+# the user count
 # the name of the sauce on the pizza
 # the name of the crust on the pizza
 class Pizza(models.Model):

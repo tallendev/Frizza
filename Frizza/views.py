@@ -294,7 +294,7 @@ def return_pizza(request):
         
         orders = []
         for uorder in uorder_list:
-            orders.append(Pizza.objects.get(pizza_id=uorder.pizza_id))
+            orders.append(uorder.pizza_id)
        
         if request.method == 'POST' and 'return_pizza' in request.POST:
             request.session['return_pizza'] = request.POST['return_pizza']
