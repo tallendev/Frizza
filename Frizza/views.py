@@ -325,13 +325,16 @@ def waste(request):
             wasted_crust = Pizza.objects.filter(pizza_id=pizza.pizza_id).\
                                  select_related('orders__pizza_name')
 
+            order = Orders.objects.filter(user_name=str(request.user), \
+                    pizza_id=pizza.pizza_id).aggregate(Max('id'))
+ 
+            order.delete()
+
             del request.session['return_pizza']
 
             context = {'wasted_toppings': wasted_toppings,
                        'wasted_sauce': wasted_sauce,
-                       'wasted_crust': wasted_crust}#,
-                       #'orders': orders}
-
+                       'wasted_crust': wasted_crust}
         else:
             return HttpResponseRedirect('/return')
 
