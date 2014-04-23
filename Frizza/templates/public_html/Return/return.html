@@ -86,8 +86,7 @@
             <div class="column">
                 {% if pizza_counts %}
                 {% for key, value in pizza_counts.items %}
-                <input type="radio" name="return_pizza" value="{{ key }}">{{ key
-                }}: {{ value }}<br>
+                <input type="radio" name="return_pizza" value="{{ key }}">{{ key }}: {{ value }}<br>
                 {% endfor %}
                 {% else %}
                 <p>No orders to return</p>
