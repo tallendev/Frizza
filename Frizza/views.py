@@ -8,7 +8,6 @@ import logging
 from django.db.models import Max
 
 
-
 # This function provides an appropriate response to a request for the pizza
 # page.
 def pizza(request):
@@ -219,6 +218,7 @@ def calorie_post(request):
         request.session['order_cancelled'] = True
         return HttpResponseRedirect('/pizza')
 
+
 def calorie_render(request):
     pizza = None
     crust = None
@@ -272,6 +272,7 @@ def calorie_render(request):
     return render(request, settings.TEMPLATE_DIRS +
                        '/public_html/Confirmation/confirmation.html', context)
 
+
 # This function provides an appropriate response to a request for the calorie
 # page.
 def calorie(request):
@@ -287,7 +288,7 @@ def calorie(request):
     else:
         return HttpResponseRedirect('/login')
 
-    #
+
 # This function handles a request to the returns page.
 def return_pizza(request):
     if request.user.is_authenticated():
@@ -396,6 +397,7 @@ def registration(request):
     context = {'registration_list': registration_list}
     return render(request, settings.TEMPLATE_DIRS +
                 '/public_html/Registration/registration.html', context)
+
 
 def goodbye(request):
     # Redirect to a success page.
