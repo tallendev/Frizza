@@ -129,8 +129,9 @@
         <div class="column">
             <div class="button_container">
                 <p>
-                    <a href="/pizza" class="btn btn-lg btn-primary"
-                       type="submit">Ok</a>
+                <form action="" class="form-signin" method="post">{% csrf_token %}
+                    <input type="submit" class="btn btn-lg btn-primary" value="Ok">
+                </form>
                 </p>
             </div>
         </div>
