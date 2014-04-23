@@ -358,7 +358,7 @@ def confirmation(request):
 
 
 """ This function handles a request to the returns page. This page allows
-    you to return your pizza.
+    you to return your pizza.trev
     Param: request - the request object that contains information about how
                      the page was accessed and session information."""
 
