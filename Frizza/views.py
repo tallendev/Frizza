@@ -363,7 +363,6 @@ def confirmation(request):
     Param: request - the request object that contains information about how
                      the page was accessed and session information."""
 
-
 def return_pizza(request):
     if request.user.is_authenticated():
         if not request.session['disclaimer_conf']:

@@ -3,7 +3,6 @@ from django.conf.urls.static import static
 
 import settings
 
-
 # Uncomment the next two lines to enable the admin:
 # from django.contrib import admin
 # admin.autodiscover()
@@ -11,11 +10,11 @@ import settings
 urlpatterns = patterns('',
                        # Login is the default page.
                        url(r'^$', 'django.contrib.auth.views.login', {
-                           'template_name': settings.TEMPLATE_DIRS + '/public_html/login.html'},
+                       'template_name': settings.TEMPLATE_DIRS + '/public_html/login.html'},
                            name='login'),
                        # View for login page.
                        url(r'^login/', 'django.contrib.auth.views.login', {
-                           'template_name': settings.TEMPLATE_DIRS + '/public_html/login.html'},
+                       'template_name': settings.TEMPLATE_DIRS + '/public_html/login.html'},
                            name='login'),
                        # View for registration page.
                        url(r'^registration/', 'Frizza.views.registration',
@@ -47,7 +46,7 @@ urlpatterns = patterns('',
                        url(r'^thank/', 'Frizza.views.thank', name='thank'),
                        # View for logout page.
                        url(r'^logout/', 'django.contrib.auth.views.logout', {
-                           'template_name': settings.TEMPLATE_DIRS + '/public_html/logout.html'},
+                       'template_name': settings.TEMPLATE_DIRS + '/public_html/logout.html'},
                            name='logout'),
                        # This sets up the static section properly so that static content
                        # is distributed properly in production.
