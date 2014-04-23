@@ -217,7 +217,7 @@ def calorie_post(request):
         order_id = Orders.objects.all(). \
                        aggregate(Max('id'))['id__max'] + 1
         Orders(id=order_id, user_name=user, pizza_id=pizza).save()
-        return HttpResponseRedirect('/goodbye')
+        return HttpResponseRedirect('/thank')
 
     else:
         if request.session['pizza'] == '':
@@ -410,11 +410,11 @@ def registration(request):
                   '/public_html/Registration/registration.html', context)
 
 
-def goodbye(request):
+def thank(request):
     if 'pizza' in request.session and (('crust' in request.session and
         'sauce' in request.session) or request.session['pizza'] != ''):
         # Redirect to a success page.
         request.session['order_complete'] = True
         return render(request, settings.TEMPLATE_DIRS +
-                  "/public_html/Goodbye/goodbye.html")
+                  "/public_html/Thank/thank.html")
     return HttpResponseRedirect('/pizza')
