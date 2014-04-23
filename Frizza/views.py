@@ -287,7 +287,7 @@ def calorie(request):
 # This function handles a request to the returns page.
 def return_pizza(request):
     if request.user.is_authenticated():
-        uorder = Orders.objects.filter(user_name=str(request.user))
+        uorder_list = Orders.objects.filter(user_name=str(request.user))
         
         orders = []
         for uorder in uorder_list:
@@ -305,7 +305,8 @@ def return_pizza(request):
             request.session['return_pizza'] = request.POST['return_pizza']
             return HttpResponseRedirect('/waste')
         else:
-            context = {'orders': orders}
+            context = {'orders': orders
+                       'pizza_counts' : pizza_counts}
             return render(request, settings.TEMPLATE_DIRS +
                           '/public_html/Return/return.html', context)
 
