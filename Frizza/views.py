@@ -13,6 +13,7 @@ from django.db.models import Max
 # page.
 def pizza(request):
     if request.user.is_authenticated():
+        clear_session(request)
         order_list = Orders.objects.filter(user_name="admin")
         admin_list = []
         for order in order_list:
@@ -118,7 +119,7 @@ def sauce(request):
                     context = {'sauce_list': sauce_list}
                     return render(request, settings.TEMPLATE_DIRS +
                                    '/public_html/Sauce/sauce.html', context)
-        return HttpResponseRedirect('/pizza')
+            return HttpResponseRedirect('/pizza')
     else:
         return HttpResponseRedirect('/login')
 
@@ -176,9 +177,9 @@ def allergies(request):
 
 
 def clear_session(request):
-    del request.session['pizza']
-    del request.session['sauce']
-    del request.session['crust']
+    if 'pizza' in request.session: del request.session['pizza']
+    if 'sauce' in request.session: del request.session['sauce']
+    if 'crust' in request.session: del request.session['crust']
     topping_list = Topping.objects.all()
     for topping in topping_list:
         if str(topping) in request.session:
@@ -286,12 +287,20 @@ def calorie(request):
 # This function handles a request to the returns page.
 def return_pizza(request):
     if request.user.is_authenticated():
-        uorder_list = Orders.objects.filter(user_name=str(request.user))
+        uorder = Orders.objects.filter(user_name=str(request.user))
         
         orders = []
         for uorder in uorder_list:
             orders.append(uorder.pizza_id)
-       
+
+        used_ids = []
+        pizza_counts = {}
+        for o in orders:
+            if o.pizza_id not in pizza_counts:
+                pizza_counts[o.pizza_name] = 1
+            else:
+                pizza_counts[o.pizza_name] += 1
+
         if request.method == 'POST' and 'return_pizza' in request.POST:
             request.session['return_pizza'] = request.POST['return_pizza']
             return HttpResponseRedirect('/waste')
@@ -308,7 +317,6 @@ def return_pizza(request):
 # This function provides an appropriate response to a request for the
 # returns/waste page.
 def waste(request):
-
     if request.user.is_authenticated():
         if 'return_pizza' in request.session:
             pizza = Pizza.objects.get(pizza_name=request.session['return_pizza'])
@@ -349,6 +357,7 @@ def waste(request):
 
 def disclaimer(request):
     if request.user.is_authenticated():
+        clear_session(request)
         request.session['pizza'] = ''
         if request.method == 'POST':
             if 'confirm' in request.POST:
