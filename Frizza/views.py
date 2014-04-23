@@ -299,8 +299,8 @@ def calorie(request):
 # This function handles a request to the returns page.
 def return_pizza(request):
     if request.user.is_authenticated():
-        if 'pizza' in request.session and 'crust' in request.session and \
-            'sauce' in request.session:
+        if 'pizza' in request.session and (('crust' in request.session and
+            'sauce' in request.session) or request.session['pizza'] != ''):
             uorder_list = Orders.objects.filter(user_name=str(request.user))
             orders = []
             for uorder in uorder_list:
