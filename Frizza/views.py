@@ -411,7 +411,10 @@ def registration(request):
 
 
 def goodbye(request):
-    # Redirect to a success page.
-    request.session['order_complete'] = True
-    return render(request, settings.TEMPLATE_DIRS +
+    if 'pizza' in request.session and 'crust' in request.session and \
+                    'sauce' in request.session:
+        # Redirect to a success page.
+        request.session['order_complete'] = True
+        return render(request, settings.TEMPLATE_DIRS +
                   "/public_html/Goodbye/goodbye.html")
+    return HttpResponseRedirect('/pizza')
