@@ -43,3 +43,9 @@ body {
   text-align: center;
   border-bottom: 1px solid #e5e5e5;
 }
+
+
+p {
+  width: 75%;
+  font-size:14px;
+}
