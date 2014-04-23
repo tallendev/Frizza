@@ -14,7 +14,7 @@ from django.db.models import Max
     Param: request - the request object that contains information about how
                      the page was accessed and session information.'''
 def pizza(request):
-    if 'disclaimer_conf' in request.session:
+    if 'disclaimer_conf' not in request.session:
         return HttpResponseRedirect('/logout')
     if request.user.is_authenticated():
         clear_session(request)
@@ -215,7 +215,7 @@ def clear_session(request):
     saving to the database and redirecting to the next page.
     Param: request - the request object that contains information about how
                      the page was accessed and session information.'''
-def calorie_post(request):
+def confirmation_post(request):
     if ('confirm' in request.POST):
         current_id = Pizza.objects.all(). \
                          aggregate(Max('pizza_id'))['pizza_id__max'] + 1
@@ -247,11 +247,11 @@ def calorie_post(request):
         request.session['order_cancelled'] = True
         return HttpResponseRedirect('/pizza')
 
-''' Handles building the calorie page and displaying the user-selected
+''' Handles building the confirmation page and displaying the user-selected
     information.
     Param: request - the request object that contains information about how
                      the page was accessed and session information.'''
-def calorie_render(request):
+def confirmation_render(request):
     pizza = None
     crust = None
     sauce = None
@@ -310,15 +310,15 @@ def calorie_render(request):
     helper functions.
    Param: request - the request object that contains information about how
                      the page was accessed and session information.'''
-def calorie(request):
+def confirmation(request):
     if request.user.is_authenticated():
         if 'pizza' in request.session and (('crust' in request.session and
             'sauce' in request.session) or request.session['pizza'] != ''):
             #TODO: Validate appropriate fields are filled out
             if request.method == 'POST':
-                return calorie_post(request)
+                return confirmation_post(request)
             else:
-                return calorie_render(request)
+                return confirmation_render(request)
         return HttpResponseRedirect('/pizza')
     else:
         return HttpResponseRedirect('/login')
