@@ -111,7 +111,7 @@ def sauce(request):
                         return HttpResponseRedirect('/toppings')
                     else:
                         request.session['sauce_error'] = True
-                        HttpResponseRedirect('/toppings')
+                        HttpResponseRedirect('/sauce')
                 else:
                     del request.session['crust']
                     return HttpResponseRedirect('/crust')
