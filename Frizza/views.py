@@ -299,28 +299,27 @@ def calorie(request):
 # This function handles a request to the returns page.
 def return_pizza(request):
     if request.user.is_authenticated():
-        uorder_list = Orders.objects.filter(user_name=str(request.user))
-        
-        orders = []
-        for uorder in uorder_list:
-            orders.append(uorder.pizza_id)
-
-        used_ids = []
-        pizza_counts = {}
-        for o in orders:
-            if o.pizza_name not in pizza_counts:
-                pizza_counts[o.pizza_name] = 1
+        if 'pizza' in request.session and 'crust' in request.session and \
+                        'sauce' in request.session:
+            uorder_list = Orders.objects.filter(user_name=str(request.user))
+            orders = []
+            for uorder in uorder_list:
+                orders.append(uorder.pizza_id)
+            used_ids = []
+            pizza_counts = {}
+            for o in orders:
+                if o.pizza_name not in pizza_counts:
+                    pizza_counts[o.pizza_name] = 1
+                else:
+                    pizza_counts[o.pizza_name] += 1
+            if request.method == 'POST' and 'return_pizza' in request.POST:
+                request.session['return_pizza'] = request.POST['return_pizza']
+                return HttpResponseRedirect('/waste')
             else:
-                pizza_counts[o.pizza_name] += 1
-
-        if request.method == 'POST' and 'return_pizza' in request.POST:
-            request.session['return_pizza'] = request.POST['return_pizza']
-            return HttpResponseRedirect('/waste')
-        else:
-            context = {'pizza_counts' : pizza_counts}
-            return render(request, settings.TEMPLATE_DIRS +
+                context = {'pizza_counts' : pizza_counts}
+                return render(request, settings.TEMPLATE_DIRS +
                           '/public_html/Return/return.html', context)
-
+        return HttpResponseRedirect('/pizza')
     else:
 
         return HttpResponseRedirect('/login')
@@ -330,39 +329,42 @@ def return_pizza(request):
 # returns/waste page.
 def waste(request):
     if request.user.is_authenticated():
-        if 'return_pizza' in request.session:
-            pizza = Pizza.objects.get(pizza_name=request.session['return_pizza'])
-            wasted_toppings = HasTopping.objects.filter(pizza_id=pizza.pizza_id).\
-                                         select_related('orders__pizza_name')
+        if 'pizza' in request.session and 'crust' in request.session and \
+                        'sauce' in request.session:
+            if 'return_pizza' in request.session:
+                pizza = Pizza.objects.get(pizza_name=request.session['return_pizza'])
+                wasted_toppings = HasTopping.objects.filter(pizza_id=pizza.pizza_id). \
+                    select_related('orders__pizza_name')
 
-            wasted_sauce = Pizza.objects.filter(pizza_id=pizza.pizza_id).\
-                                 select_related('orders__pizza_name')
+                wasted_sauce = Pizza.objects.filter(pizza_id=pizza.pizza_id). \
+                    select_related('orders__pizza_name')
 
-            wasted_crust = Pizza.objects.filter(pizza_id=pizza.pizza_id).\
-                                 select_related('orders__pizza_name')
+                wasted_crust = Pizza.objects.filter(pizza_id=pizza.pizza_id). \
+                    select_related('orders__pizza_name')
 
-            order_id = Orders.objects.filter(user_name=str(request.user), \
-                    pizza_id=pizza.pizza_id).aggregate(Max('id'))['id__max']
- 
-            order = Orders.objects.get(id=order_id)
-            order.delete()
-            
-            pizza_ordered = Orders.objects.filter(pizza_id=pizza.pizza_id).exists()
+                order_id = Orders.objects.filter(user_name=str(request.user), \
+                                                 pizza_id=pizza.pizza_id).aggregate(Max('id'))['id__max']
 
-            if not pizza_ordered:
-                HasTopping.objects.filter(pizza_id=pizza.pizza_id).delete()
-                Pizza.objects.get(pizza_id=pizza.pizza_id).delete()
+                order = Orders.objects.get(id=order_id)
+                order.delete()
 
-            del request.session['return_pizza']
+                pizza_ordered = Orders.objects.filter(pizza_id=pizza.pizza_id).exists()
 
-            context = {'wasted_toppings': wasted_toppings,
-                       'wasted_sauce': wasted_sauce,
-                       'wasted_crust': wasted_crust}
-        else:
-            return HttpResponseRedirect('/pizza')
+                if not pizza_ordered:
+                    HasTopping.objects.filter(pizza_id=pizza.pizza_id).delete()
+                    Pizza.objects.get(pizza_id=pizza.pizza_id).delete()
 
-        return render(request, settings.TEMPLATE_DIRS +
-                           '/public_html/Waste/waste.html', context)
+                del request.session['return_pizza']
+
+                context = {'wasted_toppings': wasted_toppings,
+                           'wasted_sauce': wasted_sauce,
+                           'wasted_crust': wasted_crust}
+            else:
+                return HttpResponseRedirect('/return')
+
+            return render(request, settings.TEMPLATE_DIRS +
+                      '/public_html/Waste/waste.html', context)
+        return HttpResponseRedirect('/pizza')
     else:
         return HttpResponseRedirect('/login')
 
@@ -384,7 +386,7 @@ def disclaimer(request):
                 return HttpResponseRedirect('/logout')
         else:
             return render(request, settings.TEMPLATE_DIRS +
-                                   '/public_html/Disclaimer/disclaimer.html')
+                          '/public_html/Disclaimer/disclaimer.html')
     else:
         return HttpResponseRedirect('/login')
 
@@ -405,7 +407,7 @@ def registration(request):
     registration_list = User.objects.all()  # Registration?
     context = {'registration_list': registration_list}
     return render(request, settings.TEMPLATE_DIRS +
-                '/public_html/Registration/registration.html', context)
+                  '/public_html/Registration/registration.html', context)
 
 
 def goodbye(request):
