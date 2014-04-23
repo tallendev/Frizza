@@ -278,14 +278,14 @@ def calorie_render(request):
 # page.
 def calorie(request):
     if request.user.is_authenticated():
-        if request.session['pizza'] != '' or \
+        if request.session['pizza'] == '' or \
                 ('crust' in request.session and 'sauce' in request.session):
-            return HttpResponseRedirect('/pizza')
-        #TODO: Validate appropriate fields are filled out
-        if request.method == 'POST':
-            return calorie_post(request)
-        else:
-            return calorie_render(request)
+            #TODO: Validate appropriate fields are filled out
+            if request.method == 'POST':
+                return calorie_post(request)
+            else:
+                return calorie_render(request)
+        return HttpResponseRedirect('/pizza')
     else:
         return HttpResponseRedirect('/login')
 
