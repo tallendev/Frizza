@@ -82,12 +82,15 @@ def crust(request):
                         request.session['crust'] = request.POST['crust']
                         return HttpResponseRedirect('/sauce')
                     else:
+                        request.session['crust_error'] = True
                         return HttpResponseRedirect('/crust')
                 else:
                     return HttpResponseRedirect('/pizza')
             else:
                 crust_list = Crust.objects.all()
-                context = {'crust_list': crust_list}
+                context = {'crust_list': crust_list,
+                           'crust_error': request.session['crust_error']}
+                request.session['crust_error'] = False
                 return render(request, settings.TEMPLATE_DIRS +
                                    '/public_html/Crust/crust.html', context)
         else:
@@ -107,13 +110,16 @@ def sauce(request):
                         request.session['sauce'] = request.POST['sauce']
                         return HttpResponseRedirect('/toppings')
                     else:
+                        request.session['sauce_error'] = True
                         HttpResponseRedirect('/toppings')
                 else:
                     del request.session['crust']
                     return HttpResponseRedirect('/crust')
             else:
                 sauce_list = Sauce.objects.all()
-                context = {'sauce_list': sauce_list}
+                context = {'sauce_list': sauce_list,
+                           'sauce_error': request.session['sauce_error']}
+                request.session['sauce_error'] = False
                 return render(request, settings.TEMPLATE_DIRS +
                                        '/public_html/Sauce/sauce.html', context)
         return HttpResponseRedirect('/pizza')
@@ -171,8 +177,7 @@ def allergies(request):
                            }
                 return render(request, settings.TEMPLATE_DIRS +
                                        '/public_html/Allergies/allergies.html', context)
-        else:
-            HttpResponseRedirect('/pizza')
+        HttpResponseRedirect('/pizza')
     else:
         return HttpResponseRedirect('/login')
 
@@ -369,6 +374,8 @@ def disclaimer(request):
         request.session['return_success'] = False
         request.session['order_cancelled'] = False
         request.session['duplicate_name'] = False
+        request.session['sauce_error'] = False
+        request.session['crust_error'] = False
         if request.method == 'POST':
             if 'confirm' in request.POST:
                 return HttpResponseRedirect('/pizza')
