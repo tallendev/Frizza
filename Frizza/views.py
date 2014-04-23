@@ -385,7 +385,6 @@ def registration(request):
         if form.is_valid():
             username = post.get('username', '')
             password = post.get('password1', '')
-            logger.debug('Is_Valid from registration')
             u = User(user_name=username, password=password)
             u.save()
             form.save()
