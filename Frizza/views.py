@@ -405,45 +405,40 @@ def return_pizza(request):
 
 def waste(request):
     if request.user.is_authenticated():
-        if 'pizza' in request.session:
-            if 'return_pizza' in request.session:
-                pizza = Pizza.objects.get(
-                    pizza_name=request.session['return_pizza'])
-                wasted_toppings = HasTopping.objects.filter(
-                    pizza_id=pizza.pizza_id). \
-                    select_related('orders__pizza_name')
+        if 'return_pizza' in request.session:
+            pizza = Pizza.objects.get(pizza_name=request.session['return_pizza'])
+            wasted_toppings = HasTopping.objects.filter(
+            pizza_id=pizza.pizza_id). \
+            select_related('orders__pizza_name')
+            wasted_sauce = Pizza.objects.filter(pizza_id=pizza.pizza_id). \
+                                            select_related('orders__pizza_name')
 
-                wasted_sauce = Pizza.objects.filter(pizza_id=pizza.pizza_id). \
-                    select_related('orders__pizza_name')
+            wasted_crust = Pizza.objects.filter(pizza_id=pizza.pizza_id). \
+                                            select_related('orders__pizza_name')
 
-                wasted_crust = Pizza.objects.filter(pizza_id=pizza.pizza_id). \
-                    select_related('orders__pizza_name')
+            order_id = Orders.objects.filter(user_name=str(request.user), \
+                                            pizza_id=pizza.pizza_id).aggregate(
+                                            Max('id'))['id__max']
 
-                order_id = Orders.objects.filter(user_name=str(request.user), \
-                                                 pizza_id=pizza.pizza_id).aggregate(
-                    Max('id'))['id__max']
+            order = Orders.objects.get(id=order_id)
+            order.delete()
 
-                order = Orders.objects.get(id=order_id)
-                order.delete()
+            pizza_ordered = Orders.objects.filter( pizza_id=pizza.pizza_id).exists()
 
-                pizza_ordered = Orders.objects.filter(
-                    pizza_id=pizza.pizza_id).exists()
+            if not pizza_ordered:
+                HasTopping.objects.filter(pizza_id=pizza.pizza_id).delete()
+                Pizza.objects.get(pizza_id=pizza.pizza_id).delete()
 
-                if not pizza_ordered:
-                    HasTopping.objects.filter(pizza_id=pizza.pizza_id).delete()
-                    Pizza.objects.get(pizza_id=pizza.pizza_id).delete()
+            del request.session['return_pizza']
 
-                del request.session['return_pizza']
-
-                context = {'wasted_toppings': wasted_toppings,
-                           'wasted_sauce': wasted_sauce,
-                           'wasted_crust': wasted_crust}
-            else:
-                return HttpResponseRedirect('/return')
+            context = {'wasted_toppings': wasted_toppings,
+                        'wasted_sauce': wasted_sauce,
+                        'wasted_crust': wasted_crust}
 
             return render(request, settings.TEMPLATE_DIRS +
                                    '/public_html/Waste/waste.html', context)
-        return HttpResponseRedirect('/pizza')
+        else:
+            return HttpResponseRedirect('/return')
     else:
         return HttpResponseRedirect('/login')
 
