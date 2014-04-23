@@ -18,30 +18,34 @@
 
 <!DOCTYPE html>
 <!-- saved from url=(0039)http://getbootstrap.com/examples/theme/ -->
-<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <head>
-        <style>
-            form{display:inline;}
-        </style>
-    </head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link rel="shortcut icon" href="/static/favicon.ico">
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<head>
+    <style>
+        form{display:inline;}
+    </style>
+</head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="author" content="">
+<link rel="shortcut icon" href="/static/favicon.ico">
 
-    <title>Pizza</title>
+<title>Pizza</title>
 
-    <!-- Bootstrap core CSS -->
-    <link href="/static/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Bootstrap theme -->
-    <link href="/static/dist/css/bootstrap-theme.min.css" rel="stylesheet">
+<!-- Bootstrap core CSS -->
+<link href="/static/dist/css/bootstrap.min.css" rel="stylesheet">
+<!-- Bootstrap theme -->
+<link href="/static/dist/css/bootstrap-theme.min.css" rel="stylesheet">
 
-    <!-- Custom styles for this template -->
-    <link href="/static/pizza.css" rel="stylesheet">
+<!-- Custom styles for this template -->
+<link href="/static/pizza.css" rel="stylesheet">
 
-    <style type="text/css"></style><style id="holderjs-style" type="text/css"></style></head>
+<style type="text/css"></style>
+<style id="holderjs-style" type="text/css"></style>
+</head>
 
 <body role="document">
 
@@ -49,7 +53,8 @@
 <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
     <div class="container">
         <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <button type="button" class="navbar-toggle" data-toggle="collapse"
+                    data-target=".navbar-collapse">
                 <span class="sr-only">Toggle navigation</span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
@@ -59,14 +64,15 @@
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                <li class="active"><a >Pizza</a></li>
+                <li class="active"><a>Pizza</a></li>
                 <li><a href="/return">Return Pizza</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li><a >{{ user.username }}</a> </li>
+                <li><a>{{ user.username }}</a></li>
                 <li><a href="/logout">Sign Out</a></li>
             </ul>
-        </div><!--/.nav-collapse -->
+        </div>
+        <!--/.nav-collapse -->
     </div>
 </div>
 
@@ -74,32 +80,37 @@
 
     <div class="page-header">
         <h1>What pizza would you like?</h1>
-        <p class="lead">Default pizzas come with classic crust and tomato sauce.</p>
+
+        <p class="lead">Default pizzas come with classic crust and tomato
+            sauce.</p>
     </div>
 
-        <div class="row">
-            <div class="column">
-                {% if admin_list %}
-                    {% for pizza in admin_list %}
-                        <form action="" method="post">{% csrf_token %}
-                            <input type="submit" class="btn btn-lg btn-default" name="pizza" value="{{ pizza.pizza_name }}">
-                        </form>
-                    {% endfor %}
-                {% else %}
-                    <p> No default pizzas are available.</p>
-                {% endif %}
-                {% if user_list %}
-                    {% for pizza in user_list %}
-                        <form action="" method="post">{% csrf_token %}
-                            <input type="submit" class="btn btn-lg btn-primary" name="pizza" value="{{ pizza.pizza_name }}">
-                        </form>
-                    {% endfor %}
-                {% endif %}
-                    <form action="" method="post">{% csrf_token %}
-                        <input type="submit" class="btn btn-lg btn-info" name="pizza" value="Make Your Own!">
-                    </form>
-            </div>
+    <div class="row">
+        <div class="column">
+            {% if admin_list %}
+            {% for pizza in admin_list %}
+            <form action="" method="post">{% csrf_token %}
+                <input type="submit" class="btn btn-lg btn-default" name="pizza"
+                       value="{{ pizza.pizza_name }}">
+            </form>
+            {% endfor %}
+            {% else %}
+            <p> No default pizzas are available.</p>
+            {% endif %}
+            {% if user_list %}
+            {% for pizza in user_list %}
+            <form action="" method="post">{% csrf_token %}
+                <input type="submit" class="btn btn-lg btn-primary" name="pizza"
+                       value="{{ pizza.pizza_name }}">
+            </form>
+            {% endfor %}
+            {% endif %}
+            <form action="" method="post">{% csrf_token %}
+                <input type="submit" class="btn btn-lg btn-info" name="pizza"
+                       value="Make Your Own!">
+            </form>
         </div>
+    </div>
     {% if order_complete %}
     <div class="alert alert-success">
         <strong>Your order has been completed.</strong>
@@ -117,7 +128,8 @@
         <strong>Your order has been canceled.</strong>
     </div>
     {% endif %}
-</div> <!-- /container -->
+</div>
+<!-- /container -->
 
 </div>
 <!-- Bootstrap core JavaScript
@@ -126,7 +138,9 @@
 <script src="static/jquery.js"></script>
 <script src="static/dist/js/bootstrap.min.js"></script>
 <!-- Just for debugging purposes. Don't actually copy this line! -->
-<!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+<!--[if lt IE 9]>
+<script src="../../assets/js/ie8-responsive-file-warning.js"></script>
+<![endif]-->
 <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
 <!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
@@ -135,4 +149,5 @@
 <!-- <script src="./Theme Template for Bootstrap_files/docs.min.js"></script> -->
 
 
-</body></html>
+</body>
+</html>

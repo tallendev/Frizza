@@ -57,8 +57,8 @@ class Pizza(models.Model):
 class Topping(models.Model):
     topping_name = models.CharField(max_length=20, primary_key=True)
     calorie = models.IntegerField()
-   
-     # to string returning topping name
+
+    # to string returning topping name
     def __unicode__(self):
         return self.topping_name
 
@@ -71,7 +71,7 @@ class Topping(models.Model):
 class HasTopping(models.Model):
     pizza_id = models.ForeignKey(Pizza)
     topping_name = models.ForeignKey(Topping)
-    
+
     # returns ids
     def __unicode__(self):
         return str(self.id)

@@ -1,18 +1,20 @@
 from django.shortcuts import render
-import settings
-from Frizza.models import User, Sauce, Crust, Pizza, Topping, HasTopping, \
-                            Allergy, Orders
 from django.contrib.auth.forms import UserCreationForm
 from django.http import HttpResponseRedirect
-import logging
 from django.db.models import Max
 
+import settings
+from Frizza.models import User, Sauce, Crust, Pizza, Topping, HasTopping, \
+    Allergy, Orders
 
-''' This function provides an appropriate response to a request for the pizza
+
+""" This function provides an appropriate response to a request for the pizza
     page. It will generate the available pizza selections, as well as
     allowing for returns and the ability to make your own pizza.
     Param: request - the request object that contains information about how
-                     the page was accessed and session information.'''
+                     the page was accessed and session information."""
+
+
 def pizza(request):
     if request.user.is_authenticated():
         if not request.session['disclaimer_conf']:
@@ -51,15 +53,17 @@ def pizza(request):
         return HttpResponseRedirect('/login')
 
 
-'''This function provides an appropriate response to a request for the toppings
+"""This function provides an appropriate response to a request for the toppings
    page. It provides a list of checkboxes of available toppings. It is not
    required to select a topping.
    Param: request - the request object that contains information about how
-                     the page was accessed and session information.'''
+                     the page was accessed and session information."""
+
+
 def toppings(request):
     if request.user.is_authenticated():
         if 'pizza' in request.session and 'crust' in request.session and \
-            'sauce' in request.session:
+                        'sauce' in request.session:
             topping_list = Topping.objects.all()
             if request.method == 'POST':
                 if 'confirm' in request.POST:
@@ -73,17 +77,20 @@ def toppings(request):
             else:
                 context = {'topping_list': topping_list}
                 return render(request, settings.TEMPLATE_DIRS +
-                                       '/public_html/Toppings/toppings.html', context)
+                                       '/public_html/Toppings/toppings.html',
+                              context)
         return HttpResponseRedirect('/pizza')
     else:
         return HttpResponseRedirect('/login')
 
 
-''' This function provides an appropriate response to a request for the crust
+""" This function provides an appropriate response to a request for the crust
     page. There are radio buttons for crust selections. After this page
     you will be redirected to the sauce page.
     Param: request - the request object that contains information about how
-                     the page was accessed and session information. '''
+                     the page was accessed and session information. """
+
+
 def crust(request):
     if request.user.is_authenticated():
         if 'pizza' in request.session:
@@ -103,17 +110,19 @@ def crust(request):
                            'crust_error': request.session['crust_error']}
                 request.session['crust_error'] = False
                 return render(request, settings.TEMPLATE_DIRS +
-                                   '/public_html/Crust/crust.html', context)
+                                       '/public_html/Crust/crust.html', context)
         else:
             return HttpResponseRedirect('/pizza')
     else:
         return HttpResponseRedirect('/login')
 
 
-''' This function provides the appropriate response to a request for the sauce
+""" This function provides the appropriate response to a request for the sauce
     page. It redirects to the toppings page afterwards.
     Param: request - the request object that contains information about how
-                     the page was accessed and session information.'''
+                     the page was accessed and session information."""
+
+
 def sauce(request):
     if request.user.is_authenticated():
         if 'pizza' in request.session and 'crust' in request.session:
@@ -140,14 +149,18 @@ def sauce(request):
         return HttpResponseRedirect('/login')
 
 
-''' Displays allergy information for crust, toppings, and sauces. You may
+""" Displays allergy information for crust, toppings, and sauces. You may
     back up from here or start over on the next page.
     Param: request - the request object that contains information about how
-                     the page was accessed and session information.'''
+                     the page was accessed and session information."""
+
+
 def allergies(request):
     if request.user.is_authenticated():
         if 'pizza' in request.session and (('crust' in request.session and
-            'sauce' in request.session) or request.session['pizza'] != ''):
+                                                    'sauce' in request.session) or
+                                                   request.session[
+                                                       'pizza'] != ''):
             if request.method == 'POST':
                 if 'confirm' in request.POST:
                     return HttpResponseRedirect('/confirmation')
@@ -164,43 +177,54 @@ def allergies(request):
                 crust_allergies = []
 
                 if request.session['pizza'] == '':
-                    crust = Crust.objects.get(crust_name=request.session['crust'])
-                    sauce = Sauce.objects.get(sauce_name=request.session['sauce'])
+                    crust = Crust.objects.get(
+                        crust_name=request.session['crust'])
+                    sauce = Sauce.objects.get(
+                        sauce_name=request.session['sauce'])
                     all_toppings = Topping.objects.all()
                     for i in all_toppings:
                         if str(i) in request.session:
-                            allergies = Allergy.objects.filter(ingredient_name=i.topping_name)
+                            allergies = Allergy.objects.filter(
+                                ingredient_name=i.topping_name)
                             for j in allergies:
                                 topping_allergies.append(j)
                 else:
-                    pizza = Pizza.objects.get(pizza_name=request.session['pizza'])
+                    pizza = Pizza.objects.get(
+                        pizza_name=request.session['pizza'])
                     crust = Crust.objects.get(crust_name=pizza.crust_name)
                     sauce = Sauce.objects.get(sauce_name=pizza.sauce_name)
 
                     pizzaToppings = HasTopping.objects.filter(pizza_id=pizza)
 
                     for topping in pizzaToppings:
-                        allergies = Allergy.objects.filter(ingredient_name=topping.topping_name)
+                        allergies = Allergy.objects.filter(
+                            ingredient_name=topping.topping_name)
 
                         for allergy in allergies:
                             topping_allergies.append(allergy)
 
-                sauce_allergies = Allergy.objects.filter(ingredient_name=sauce.sauce_name)
-                crust_allergies = Allergy.objects.filter(ingredient_name=crust.crust_name)
+                sauce_allergies = Allergy.objects.filter(
+                    ingredient_name=sauce.sauce_name)
+                crust_allergies = Allergy.objects.filter(
+                    ingredient_name=crust.crust_name)
                 context = {'topping_allergies': topping_allergies,
                            'sauce_allergies': sauce_allergies,
                            'crust_allergies': crust_allergies,
-                           }
+                }
                 return render(request, settings.TEMPLATE_DIRS +
-                                       '/public_html/Allergies/allergies.html', context)
+                                       '/public_html/Allergies/allergies.html',
+                              context)
         else:
             return HttpResponseRedirect('/pizza')
     else:
         return HttpResponseRedirect('/login')
 
-''' Helper function for clearing the session information out.
+
+""" Helper function for clearing the session information out.
     Param: request - the request object that contains information about how
-                     the page was accessed and session information.'''
+                     the page was accessed and session information."""
+
+
 def clear_session(request):
     if 'pizza' in request.session: del request.session['pizza']
     if 'sauce' in request.session: del request.session['sauce']
@@ -211,10 +235,12 @@ def clear_session(request):
             del request.session[str(topping)]
 
 
-''' Helper function for post-actions on the confirmation page. Handles
+""" Helper function for post-actions on the confirmation page. Handles
     saving to the database and redirecting to the next page.
     Param: request - the request object that contains information about how
-                     the page was accessed and session information.'''
+                     the page was accessed and session information."""
+
+
 def confirmation_post(request):
     if ('confirm' in request.POST):
         current_id = Pizza.objects.all(). \
@@ -247,10 +273,13 @@ def confirmation_post(request):
         request.session['order_cancelled'] = True
         return HttpResponseRedirect('/pizza')
 
-''' Handles building the confirmation page and displaying the user-selected
+
+""" Handles building the confirmation page and displaying the user-selected
     information.
     Param: request - the request object that contains information about how
-                     the page was accessed and session information.'''
+                     the page was accessed and session information."""
+
+
 def confirmation_render(request):
     pizza = None
     crust = None
@@ -294,15 +323,16 @@ def confirmation_render(request):
     context = {'crust': crust,
                'sauce': sauce,
                'toppings': toppings,
-                'cal_total': cal_total,
-                'duplicate_name': request.session['duplicate_name']}
+               'cal_total': cal_total,
+               'duplicate_name': request.session['duplicate_name']}
     request.session['duplicate_name'] = False
     if request.session['pizza'] == '':
         context['pizza'] = True
     else:
         context['pizza'] = False
     return render(request, settings.TEMPLATE_DIRS +
-                       '/public_html/Confirmation/confirmation.html', context)
+                           '/public_html/Confirmation/confirmation.html',
+                  context)
 
 
 '''This function provides an appropriate response to a request for the
@@ -310,10 +340,14 @@ def confirmation_render(request):
     helper functions.
    Param: request - the request object that contains information about how
                      the page was accessed and session information.'''
+
+
 def confirmation(request):
     if request.user.is_authenticated():
         if 'pizza' in request.session and (('crust' in request.session and
-            'sauce' in request.session) or request.session['pizza'] != ''):
+                                                    'sauce' in request.session) or
+                                                   request.session[
+                                                       'pizza'] != ''):
             #TODO: Validate appropriate fields are filled out
             if request.method == 'POST':
                 return confirmation_post(request)
@@ -324,47 +358,53 @@ def confirmation(request):
         return HttpResponseRedirect('/login')
 
 
-''' This function handles a request to the returns page. This page allows
+""" This function handles a request to the returns page. This page allows
     you to return your pizza.
     Param: request - the request object that contains information about how
-                     the page was accessed and session information.'''
+                     the page was accessed and session information."""
+
+
 def return_pizza(request):
     if request.user.is_authenticated():
-            if not request.session['disclaimer_conf']:
-                return HttpResponseRedirect('/logout')
-            uorder_list = Orders.objects.filter(user_name=str(request.user))
-            orders = []
-            for uorder in uorder_list:
-                orders.append(uorder.pizza_id)
-            used_ids = []
-            pizza_counts = {}
-            for o in orders:
-                if o.pizza_name not in pizza_counts:
-                    pizza_counts[o.pizza_name] = 1
-                else:
-                    pizza_counts[o.pizza_name] += 1
-            if request.method == 'POST' and 'return_pizza' in request.POST:
-                request.session['return_pizza'] = request.POST['return_pizza']
-                return HttpResponseRedirect('/waste')
+        if not request.session['disclaimer_conf']:
+            return HttpResponseRedirect('/logout')
+        uorder_list = Orders.objects.filter(user_name=str(request.user))
+        orders = []
+        for uorder in uorder_list:
+            orders.append(uorder.pizza_id)
+        used_ids = []
+        pizza_counts = {}
+        for o in orders:
+            if o.pizza_name not in pizza_counts:
+                pizza_counts[o.pizza_name] = 1
             else:
-                context = {'pizza_counts' : pizza_counts}
-                return render(request, settings.TEMPLATE_DIRS +
-                          '/public_html/Return/return.html', context)
+                pizza_counts[o.pizza_name] += 1
+        if request.method == 'POST' and 'return_pizza' in request.POST:
+            request.session['return_pizza'] = request.POST['return_pizza']
+            return HttpResponseRedirect('/waste')
+        else:
+            context = {'pizza_counts': pizza_counts}
+            return render(request, settings.TEMPLATE_DIRS +
+                                   '/public_html/Return/return.html', context)
     else:
         return HttpResponseRedirect('/login')
-            
 
-''' This page is called after a return call and displays what toppings were
+
+""" This page is called after a return call and displays what toppings were
     lost.
     Param: request - the request object that contains information about how
-                     the page was accessed and session information.'''
+                     the page was accessed and session information."""
+
+
 def waste(request):
     if request.user.is_authenticated():
         if 'pizza' in request.session and 'crust' in request.session and \
-            'sauce' in request.session:
+                        'sauce' in request.session:
             if 'return_pizza' in request.session:
-                pizza = Pizza.objects.get(pizza_name=request.session['return_pizza'])
-                wasted_toppings = HasTopping.objects.filter(pizza_id=pizza.pizza_id). \
+                pizza = Pizza.objects.get(
+                    pizza_name=request.session['return_pizza'])
+                wasted_toppings = HasTopping.objects.filter(
+                    pizza_id=pizza.pizza_id). \
                     select_related('orders__pizza_name')
 
                 wasted_sauce = Pizza.objects.filter(pizza_id=pizza.pizza_id). \
@@ -374,12 +414,14 @@ def waste(request):
                     select_related('orders__pizza_name')
 
                 order_id = Orders.objects.filter(user_name=str(request.user), \
-                                                 pizza_id=pizza.pizza_id).aggregate(Max('id'))['id__max']
+                                                 pizza_id=pizza.pizza_id).aggregate(
+                    Max('id'))['id__max']
 
                 order = Orders.objects.get(id=order_id)
                 order.delete()
 
-                pizza_ordered = Orders.objects.filter(pizza_id=pizza.pizza_id).exists()
+                pizza_ordered = Orders.objects.filter(
+                    pizza_id=pizza.pizza_id).exists()
 
                 if not pizza_ordered:
                     HasTopping.objects.filter(pizza_id=pizza.pizza_id).delete()
@@ -394,15 +436,18 @@ def waste(request):
                 return HttpResponseRedirect('/return')
 
             return render(request, settings.TEMPLATE_DIRS +
-                      '/public_html/Waste/waste.html', context)
+                                   '/public_html/Waste/waste.html', context)
         return HttpResponseRedirect('/pizza')
     else:
         return HttpResponseRedirect('/login')
 
-''' Displays the disclaimer, but also sets up state for the rest of the
+
+""" Displays the disclaimer, but also sets up state for the rest of the
     session to check for error messages.
     Param: request - the request object that contains information about how
-                     the page was accessed and session information.'''
+                     the page was accessed and session information."""
+
+
 def disclaimer(request):
     if request.user.is_authenticated():
         request.session['disclaimer_conf'] = False
@@ -428,9 +473,11 @@ def disclaimer(request):
         return HttpResponseRedirect('/login')
 
 
-''' This function provides the appropriate response to a request for the
+""" This function provides the appropriate response to a request for the
  registration page. Handles the ability to register and updates appropriate
- tables.'''
+ tables."""
+
+
 def registration(request):
     if request.method == 'POST':
         post = request.POST
@@ -445,14 +492,19 @@ def registration(request):
     registration_list = User.objects.all()  # Registration?
     context = {'registration_list': registration_list}
     return render(request, settings.TEMPLATE_DIRS +
-                '/public_html/Registration/registration.html', context)
+                           '/public_html/Registration/registration.html',
+                  context)
 
-''' Displayed when you succesfully order.'''
+
+""" Displayed when you succesfully order."""
+
+
 def thank(request):
     if 'pizza' in request.session and (('crust' in request.session and
-        'sauce' in request.session) or request.session['pizza'] != ''):
+                                                'sauce' in request.session) or
+                                               request.session['pizza'] != ''):
         # Redirect to a success page.
         request.session['order_complete'] = True
         return render(request, settings.TEMPLATE_DIRS +
-                  "/public_html/Thank/thank.html")
+                               "/public_html/Thank/thank.html")
     return HttpResponseRedirect('/pizza')
