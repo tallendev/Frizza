@@ -326,7 +326,7 @@ def waste(request):
                                  select_related('orders__pizza_name')
 
             order_id = Orders.objects.filter(user_name=str(request.user), \
-                    pizza_id=pizza.pizza_id).aggregate(Max('id'))[id__max]
+                    pizza_id=pizza.pizza_id).aggregate(Max('id'))['id__max']
  
             order = Orders.objects.get(id=order_id)
             order.delete()
