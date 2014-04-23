@@ -200,8 +200,7 @@ def calorie_post(request):
                          aggregate(Max('pizza_id'))['pizza_id__max'] + 1
         pizza = None
         if request.session['pizza'] == '':
-            if Pizza.objects.filter(pizza_name=request.POST[
-                'pizza_name']):
+            if Pizza.objects.filter(pizza_name=request.POST['pizza_name']):
                 request.session['duplicate_name'] = True
                 return HttpResponseRedirect('/confirmation')
             pizza = Pizza(current_id, str(request.POST['pizza_name']),
@@ -288,7 +287,7 @@ def calorie(request):
         if request.method == 'POST':
             return calorie_post(request)
         else:
-            return calorie_render
+            return calorie_render(request)
     else:
         return HttpResponseRedirect('/login')
 
