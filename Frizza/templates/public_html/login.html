@@ -48,6 +48,10 @@
 
           <form action="" class="form-signin" method="post">{% csrf_token %}
               <h3 class="form-signin-heading">Please log in</h3>
+              <p>
+                  Username must consist of alphanumeric characters or '_'.<br>
+                  Password must consist of ONLY alphanumeric characters.
+              </p>
               <input type="text" maxlength="20" pattern="^[a-zA-Z0-9_]{1,20}$" name="username" id="Username" class="form-control" placeholder="User Name" required autofocus><br>
               <input type="password" maxlength="30" pattern="^[a-zA-Z0-9]{1,30}$" name="password" id="Password" class="form-control" placeholder="Password" required>
               <input class="btn btn-lg btn-primary btn-block" type="submit" value="Log in">
