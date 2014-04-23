@@ -7,7 +7,6 @@ from django.http import HttpResponseRedirect
 import logging
 from django.db.models import Max
 
-logger = logging.getLogger('registration')
 
 
 # This function provides an appropriate response to a request for the pizza
@@ -68,12 +67,7 @@ def toppings(request):
                         context = {'topping_list': topping_list}
                         return render(request, settings.TEMPLATE_DIRS +
                                '/public_html/Toppings/toppings.html', context)
-                else:
-                    return HttpResponseRedirect('/sauce')
-            else:
-                return HttpResponseRedirect('/crust')
-        else:
-            return HttpResponseRedirect('/pizza')
+        return HttpResponseRedirect('/pizza')
     else:
         return HttpResponseRedirect('/login')
 
@@ -124,10 +118,7 @@ def sauce(request):
                     context = {'sauce_list': sauce_list}
                     return render(request, settings.TEMPLATE_DIRS +
                                    '/public_html/Sauce/sauce.html', context)
-            else:
-                return HttpResponseRedirect('/crust')
-        else:
-            return HttpResponseRedirect('/pizza')
+        return HttpResponseRedirect('/pizza')
     else:
         return HttpResponseRedirect('/login')
 
@@ -184,109 +175,114 @@ def allergies(request):
         return HttpResponseRedirect('/login')
 
 
+def clear_session(request):
+    del request.session['pizza']
+    del request.session['sauce']
+    del request.session['crust']
+    topping_list = Topping.objects.all()
+    for topping in topping_list:
+        if str(topping) in request.session:
+            del request.session[str(topping)]
+
+
+def calorie_post(request):
+    if ('confirm' in request.POST):
+        current_id = Pizza.objects.all(). \
+                         aggregate(Max('pizza_id'))['pizza_id__max'] + 1
+        pizza = None
+        if request.session['pizza'] == '':
+            if Pizza.objects.filter(pizza_name=request.POST['pizza_name']):
+                request.session['duplicate_name'] = True
+                return HttpResponseRedirect('/confirmation')
+            pizza = Pizza(current_id, str(request.POST['pizza_name']),
+                          request.session['sauce'],
+                          request.session['crust'])
+            pizza.save()
+            topping_list = Topping.objects.all()
+            for topping in topping_list:
+                if str(topping) in request.session:
+                    HasTopping(pizza_id=pizza, topping_name=topping).save()
+            clear_session(request)
+        else:
+            pizza = Pizza.objects.get(pizza_name=request.session['pizza'])
+        user = User.objects.filter(user_name=str(request.user))[:1].get()
+        order_id = Orders.objects.all(). \
+                       aggregate(Max('id'))['id__max'] + 1
+        Orders(id=order_id, user_name=user, pizza_id=pizza).save()
+        return HttpResponseRedirect('/goodbye')
+
+    else:
+        if request.session['pizza'] == '':
+            clear_session(request)
+        request.session['order_cancelled'] = True
+        return HttpResponseRedirect('/pizza')
+
+def calorie_render(request):
+    pizza = None
+    crust = None
+    sauce = None
+    crust_calorie = 0
+    sauce_calorie = 0
+    top_cal_sum = 0
+    toppings = []
+    pizza_name = request.session['pizza']
+    if pizza_name != '':
+        pizza = Pizza.objects.get(pizza_name=request.session['pizza'])
+        crust = Crust.objects.get(crust_name=pizza.crust_name)
+        crust_calorie = crust.calorie
+
+        sauce = Sauce.objects.get(sauce_name=pizza.sauce_name)
+        sauce_calorie = sauce.calorie
+
+        hasToppings = HasTopping.objects.filter(pizza_id=pizza.pizza_id)
+
+        for ht in hasToppings:
+            topping = Topping.objects.get(topping_name=ht.topping_name)
+            toppings.append(topping)
+            top_cal_sum = top_cal_sum + topping.calorie
+    else:
+        crust = Crust.objects.get(crust_name=request.session['crust'])
+        sauce = Sauce.objects.get(sauce_name=request.session['sauce'])
+        crust_calorie = crust.calorie
+        sauce_calorie = sauce.calorie
+        topping_list = Topping.objects.all()
+        topping_str = []
+        for topping in topping_list:
+            if str(topping) in request.session:
+                topping_str.append(topping)
+        for topping in topping_str:
+            topping = Topping.objects.get(topping_name=topping)
+            toppings.append(topping)
+            top_cal_sum += topping.calorie
+
+    cal_total = top_cal_sum + sauce_calorie + crust_calorie
+
+    context = {'crust': crust,
+               'sauce': sauce,
+               'toppings': toppings,
+                'cal_total': cal_total,
+                'duplicate_name': request.session['duplicate_name']}
+    request.session['duplicate_name'] = False
+    if request.session['pizza'] == '':
+        context['pizza'] = True
+    else:
+        context['pizza'] = False
+    return render(request, settings.TEMPLATE_DIRS +
+                       '/public_html/Confirmation/confirmation.html', context)
+
 # This function provides an appropriate response to a request for the calorie
 # page.
-
 def calorie(request):
     if request.user.is_authenticated():
         #TODO: Validate appropriate fields are filled out
         if request.method == 'POST':
-            if ('confirm' in request.POST):
-                current_id = Pizza.objects.all().\
-                             aggregate(Max('pizza_id'))['pizza_id__max'] + 1
-                pizza = None
-                if request.session['pizza'] == '':
-                    if Pizza.objects.filter(pizza_name=request.POST[
-                            'pizza_name']):
-                        request.session['duplicate_name'] = True
-                        return HttpResponseRedirect('/confirmation')
-                    pizza = Pizza(current_id, str(request.POST['pizza_name']),
-                                  request.session['sauce'],
-                                  request.session['crust'])
-                    pizza.save()
-                    del request.session['pizza']
-                    del request.session['sauce']
-                    del request.session['crust']
-                    topping_list = Topping.objects.all()
-                    for topping in topping_list:
-                        if str(topping) in request.session:
-                            HasTopping(pizza_id=pizza, topping_name=topping).save()
-                            del request.session[str(topping)]
-                else:
-                    pizza = Pizza.objects.get(pizza_name=request.session['pizza'])
-                user = User.objects.filter(user_name=str(request.user))[:1].get()
-                order_id = Orders.objects.all(). \
-                            aggregate(Max('id'))['id__max'] + 1
-                Orders(id=order_id, user_name=user, pizza_id=pizza).save()
-                return HttpResponseRedirect('/goodbye')
-
-            else:
-                if request.session['pizza'] == '':
-                    del request.session['pizza']
-                    del request.session['sauce']
-                    del request.session['crust']
-                    topping_list = Topping.objects.all()
-                    for topping in topping_list:
-                        if str(topping) in request.session:
-                            del request.session[str(topping)]
-                request.session['order_cancelled'] = True
-                return HttpResponseRedirect('/pizza')
+            return calorie_post(request)
         else:
-            pizza = None
-            crust = None
-            sauce = None
-            crust_calorie = 0
-            sauce_calorie = 0
-            top_cal_sum = 0
-            toppings = []
-            pizza_name = request.session['pizza']
-            if pizza_name != '':
-                pizza = Pizza.objects.get(pizza_name=request.session['pizza'])
-                crust = Crust.objects.get(crust_name=pizza.crust_name)
-                crust_calorie = crust.calorie
-    
-                sauce = Sauce.objects.get(sauce_name=pizza.sauce_name)
-                sauce_calorie = sauce.calorie
-
-                hasToppings = HasTopping.objects.filter(pizza_id=pizza.pizza_id)
-
-                for ht in hasToppings:
-                    topping = Topping.objects.get(topping_name=ht.topping_name)
-                    toppings.append(topping)
-                    top_cal_sum = top_cal_sum + topping.calorie
-            else:
-                crust = Crust.objects.get(crust_name=request.session['crust'])
-                sauce = Sauce.objects.get(sauce_name=request.session['sauce'])
-                crust_calorie = crust.calorie
-                sauce_calorie = sauce.calorie
-                topping_list = Topping.objects.all()
-                topping_str = []
-                for topping in topping_list:
-                    if str(topping) in request.session:
-                        topping_str.append(topping)
-                for topping in topping_str:
-                    topping = Topping.objects.get(topping_name=topping)
-                    toppings.append(topping)
-                    top_cal_sum += topping.calorie
-
-            cal_total = top_cal_sum + sauce_calorie + crust_calorie
-    
-            context = {'crust': crust,
-                        'sauce': sauce,
-                        'toppings': toppings,
-                        'cal_total': cal_total,
-                        'duplicate_name': request.session['duplicate_name']}
-            request.session['duplicate_name'] = False
-            if request.session['pizza'] == '':
-                context['pizza'] = True
-            else:
-                context['pizza'] = False
-            return render(request, settings.TEMPLATE_DIRS +
-                         '/public_html/Confirmation/confirmation.html', context)
+            return calorie_render(request)
     else:
         return HttpResponseRedirect('/login')
 
-
+    #
 # This function handles a request to the returns page.
 def return_pizza(request):
     if request.user.is_authenticated():
@@ -361,6 +357,7 @@ def waste(request):
 
 def disclaimer(request):
     if request.user.is_authenticated():
+        request.session['pizza'] = ''
         if request.method == 'POST':
             if 'confirm' in request.POST:
                 request.session['order_complete'] = False
