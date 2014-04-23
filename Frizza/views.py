@@ -61,7 +61,7 @@ def toppings(request):
                     return HttpResponseRedirect('/allergies')
                 else:
                     del request.session['sauce']
-                    return HttpResponseRedirect['sauce']
+                    return HttpResponseRedirect['/sauce']
             else:
                 context = {'topping_list': topping_list}
                 return render(request, settings.TEMPLATE_DIRS +
@@ -359,7 +359,7 @@ def waste(request):
                        'wasted_sauce': wasted_sauce,
                        'wasted_crust': wasted_crust}
         else:
-            return HttpResponseRedirect('/return')
+            return HttpResponseRedirect('/pizza')
 
         return render(request, settings.TEMPLATE_DIRS +
                            '/public_html/Waste/waste.html', context)
