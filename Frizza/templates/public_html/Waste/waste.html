@@ -79,11 +79,9 @@
         <div class="column">
 
         {% if wasted_toppings %}
-            <ul>
             {% for topping in wasted_toppings %}
-                <li>{{ topping.topping_name }}</li>
+                <p>{{ topping.topping_name }}</p>
             {% endfor %}
-            </ul>
         {% else %}
         <p> No toppings wasted </p>
         {% endif %}
@@ -97,11 +95,9 @@
         <div class="column">
 
         {% if wasted_sauce %}
-            <ul>
             {% for sauce in wasted_sauce %}
-                 <li>{{ sauce.sauce_name }}</li>
+                 <p>{{ sauce.sauce_name }}</p>
             {% endfor %}
-            </ul>
         {% else %}
         <p> No sauce wasted </p>
         {% endif %}
@@ -113,11 +109,9 @@
         <div class="row">
         <div class="column">
         {% if wasted_crust %}
-            <ul>
             {% for crust in wasted_crust %}
-                <li>{{ crust.crust_name }}</li>
+                <p>{{ crust.crust_name }}</p>
             {% endfor %}
-            </ul>
         {% else %}
         <p> No crust wasted </p>
         {% endif %}
