@@ -177,7 +177,7 @@ def allergies(request):
                            }
                 return render(request, settings.TEMPLATE_DIRS +
                                        '/public_html/Allergies/allergies.html', context)
-        HttpResponseRedirect('/pizza')
+        return HttpResponseRedirect('/pizza')
     else:
         return HttpResponseRedirect('/login')
 
