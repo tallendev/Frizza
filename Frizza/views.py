@@ -7,7 +7,6 @@ from django.http import HttpResponseRedirect
 import logging
 from django.db.models import Max
 
-logger = logging.getLogger('registration')
 
 
 # This function provides an appropriate response to a request for the pizza
@@ -68,12 +67,7 @@ def toppings(request):
                         context = {'topping_list': topping_list}
                         return render(request, settings.TEMPLATE_DIRS +
                                '/public_html/Toppings/toppings.html', context)
-                else:
-                    return HttpResponseRedirect('/sauce')
-            else:
-                return HttpResponseRedirect('/crust')
-        else:
-            return HttpResponseRedirect('/pizza')
+        return HttpResponseRedirect('/pizza')
     else:
         return HttpResponseRedirect('/login')
 
@@ -124,10 +118,7 @@ def sauce(request):
                     context = {'sauce_list': sauce_list}
                     return render(request, settings.TEMPLATE_DIRS +
                                    '/public_html/Sauce/sauce.html', context)
-            else:
-                return HttpResponseRedirect('/crust')
-        else:
-            return HttpResponseRedirect('/pizza')
+        return HttpResponseRedirect('/pizza')
     else:
         return HttpResponseRedirect('/login')
 
