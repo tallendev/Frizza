@@ -8,9 +8,14 @@ import logging
 from django.db.models import Max
 
 
-# This function provides an appropriate response to a request for the pizza
-# page.
+''' This function provides an appropriate response to a request for the pizza
+    page. It will generate the available pizza selections, as well as
+    allowing for returns and the ability to make your own pizza.
+    Param: request - the request object that contains information about how
+                     the page was accessed and session information.'''
 def pizza(request):
+    if 'disclaimer_conf' in request.session:
+        return HttpResponseRedirect('/logout')
     if request.user.is_authenticated():
         clear_session(request)
         order_list = Orders.objects.filter(user_name="admin")
@@ -46,8 +51,11 @@ def pizza(request):
         return HttpResponseRedirect('/login')
 
 
-# This function provides an appropriate response to a request for the toppings
-# page.
+'''This function provides an appropriate response to a request for the toppings
+   page. It provides a list of checkboxes of available toppings. It is not
+   required to select a topping.
+   Param: request - the request object that contains information about how
+                     the page was accessed and session information.'''
 def toppings(request):
     if request.user.is_authenticated():
         if 'pizza' in request.session and 'crust' in request.session and \
@@ -71,8 +79,11 @@ def toppings(request):
         return HttpResponseRedirect('/login')
 
 
-# This function provides an appropriate response to a request for the crust
-# page.
+''' This function provides an appropriate response to a request for the crust
+    page. There are radio buttons for crust selections. After this page
+    you will be redirected to the sauce page.
+    Param: request - the request object that contains information about how
+                     the page was accessed and session information. '''
 def crust(request):
     if request.user.is_authenticated():
         if 'pizza' in request.session:
@@ -99,8 +110,10 @@ def crust(request):
         return HttpResponseRedirect('/login')
 
 
-# This function provides the appropriate response to a request for the sauce
-# page.
+''' This function provides the appropriate response to a request for the sauce
+    page. It redirects to the toppings page afterwards.
+    Param: request - the request object that contains information about how
+                     the page was accessed and session information.'''
 def sauce(request):
     if request.user.is_authenticated():
         if 'pizza' in request.session and 'crust' in request.session:
@@ -127,7 +140,10 @@ def sauce(request):
         return HttpResponseRedirect('/login')
 
 
-#This function does not work, but we would like to revisit it in the future.
+''' Displays allergy information for crust, toppings, and sauces. You may
+    back up from here or start over on the next page.
+    Param: request - the request object that contains information about how
+                     the page was accessed and session information.'''
 def allergies(request):
     if request.user.is_authenticated():
         if 'pizza' in request.session and (('crust' in request.session and
@@ -182,7 +198,9 @@ def allergies(request):
     else:
         return HttpResponseRedirect('/login')
 
-
+''' Helper function for clearing the session information out.
+    Param: request - the request object that contains information about how
+                     the page was accessed and session information.'''
 def clear_session(request):
     if 'pizza' in request.session: del request.session['pizza']
     if 'sauce' in request.session: del request.session['sauce']
@@ -193,6 +211,10 @@ def clear_session(request):
             del request.session[str(topping)]
 
 
+''' Helper function for post-actions on the confirmation page. Handles
+    saving to the database and redirecting to the next page.
+    Param: request - the request object that contains information about how
+                     the page was accessed and session information.'''
 def calorie_post(request):
     if ('confirm' in request.POST):
         current_id = Pizza.objects.all(). \
@@ -225,7 +247,10 @@ def calorie_post(request):
         request.session['order_cancelled'] = True
         return HttpResponseRedirect('/pizza')
 
-
+''' Handles building the calorie page and displaying the user-selected
+    information.
+    Param: request - the request object that contains information about how
+                     the page was accessed and session information.'''
 def calorie_render(request):
     pizza = None
     crust = None
@@ -280,8 +305,11 @@ def calorie_render(request):
                        '/public_html/Confirmation/confirmation.html', context)
 
 
-# This function provides an appropriate response to a request for the calorie
-# page.
+'''This function provides an appropriate response to a request for the
+    confirmation page. Checks validity of page request but then calls the two
+    helper functions.
+   Param: request - the request object that contains information about how
+                     the page was accessed and session information.'''
 def calorie(request):
     if request.user.is_authenticated():
         if 'pizza' in request.session and (('crust' in request.session and
@@ -296,7 +324,10 @@ def calorie(request):
         return HttpResponseRedirect('/login')
 
 
-# This function handles a request to the returns page.
+''' This function handles a request to the returns page. This page allows
+    you to return your pizza.
+    Param: request - the request object that contains information about how
+                     the page was accessed and session information.'''
 def return_pizza(request):
     if request.user.is_authenticated():
         if 'pizza' in request.session and 'crust' in request.session and \
@@ -325,8 +356,10 @@ def return_pizza(request):
         return HttpResponseRedirect('/login')
             
 
-# This function provides an appropriate response to a request for the
-# returns/waste page.
+''' This page is called after a return call and displays what toppings were
+    lost.
+    Param: request - the request object that contains information about how
+                     the page was accessed and session information.'''
 def waste(request):
     if request.user.is_authenticated():
         if 'pizza' in request.session and 'crust' in request.session and \
@@ -368,7 +401,10 @@ def waste(request):
     else:
         return HttpResponseRedirect('/login')
 
-
+''' Displays the disclaimer, but also sets up state for the rest of the
+    session to check for error messages.
+    Param: request - the request object that contains information about how
+                     the page was accessed and session information.'''
 def disclaimer(request):
     if request.user.is_authenticated():
         clear_session(request)
@@ -381,18 +417,21 @@ def disclaimer(request):
         request.session['crust_error'] = False
         if request.method == 'POST':
             if 'confirm' in request.POST:
+                # Verifies user actually accepted disclaimer.
+                request.session['disclaimer_conf'] = True
                 return HttpResponseRedirect('/pizza')
             else:
                 return HttpResponseRedirect('/logout')
         else:
             return render(request, settings.TEMPLATE_DIRS +
-                          '/public_html/Disclaimer/disclaimer.html')
+                                   '/public_html/Disclaimer/disclaimer.html')
     else:
         return HttpResponseRedirect('/login')
 
 
-# This function provides the appropriate response to a request for the
-# registration page.
+''' This function provides the appropriate response to a request for the
+ registration page. Handles the ability to register and updates appropriate
+ tables.'''
 def registration(request):
     if request.method == 'POST':
         post = request.POST
@@ -407,9 +446,9 @@ def registration(request):
     registration_list = User.objects.all()  # Registration?
     context = {'registration_list': registration_list}
     return render(request, settings.TEMPLATE_DIRS +
-                  '/public_html/Registration/registration.html', context)
+                '/public_html/Registration/registration.html', context)
 
-
+''' Dispalayed when you succesfully order.'''
 def thank(request):
     if 'pizza' in request.session and (('crust' in request.session and
         'sauce' in request.session) or request.session['pizza'] != ''):
