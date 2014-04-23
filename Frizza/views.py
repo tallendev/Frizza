@@ -420,10 +420,12 @@ def waste(request):
                                             pizza_id=pizza.pizza_id).aggregate(
                                             Max('id'))['id__max']
 
-            order = Orders.objects.get(id=order_id)
-            order.delete()
+
 
             if request.method == 'POST':
+                order = Orders.objects.get(id=order_id)
+                order.delete()
+
                 pizza_ordered = Orders.objects.filter( pizza_id=pizza.pizza_id).exists()
 
                 if not pizza_ordered:
