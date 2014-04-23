@@ -93,6 +93,8 @@ def toppings(request):
 
 def crust(request):
     if request.user.is_authenticated():
+        if not request.session['disclaimer_conf']:
+            HttpResponseRedirect('/logout')
         if 'pizza' in request.session:
             if request.method == 'POST':
                 if 'confirm' in request.POST:
