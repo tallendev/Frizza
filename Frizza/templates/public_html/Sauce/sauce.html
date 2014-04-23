@@ -86,8 +86,7 @@
             <div class="column">
                 {% if sauce_list %}
                 {% for sauce in sauce_list %}
-                <input type="radio" name="sauce" value="{{ sauce.sauce_name }}">{{
-                sauce.sauce_name }}<br>
+                <input type="radio" name="sauce" value="{{ sauce.sauce_name }}">{{ sauce.sauce_name }}<br>
                 {% endfor %}
                 {% else %}
                 <p> No sauce </p>

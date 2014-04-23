@@ -86,8 +86,7 @@
             <div class="column">
                 {% if crust_list %}
                 {% for crust in crust_list %}
-                <input type="radio" name="crust" value="{{ crust.crust_name }}">{{
-                crust.crust_name }}<br>
+                <input type="radio" name="crust" value="{{ crust.crust_name }}">{{ crust.crust_name }}<br>
                 {% endfor %}
                 {% else %}
                 <p>No crust</p>
