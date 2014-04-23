@@ -367,7 +367,7 @@ def return_pizza(request):
         if not request.session['disclaimer_conf']:
             return HttpResponseRedirect('/logout')
         if request.method == 'POST':
-            if 'submit' in request.POST:
+            if 'confirm' in request.POST:
                 if 'return_pizza' in request.POST:
                     request.session['return_pizza'] = request.POST['return_pizza']
                     return HttpResponseRedirect('/waste')
