@@ -405,6 +405,7 @@ def waste(request):
                      the page was accessed and session information.'''
 def disclaimer(request):
     if request.user.is_authenticated():
+        request.session['disclaimer_conf'] = False
         clear_session(request)
         request.session['pizza'] = ''
         request.session['order_complete'] = False
