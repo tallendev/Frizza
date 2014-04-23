@@ -305,7 +305,7 @@ def return_pizza(request):
             request.session['return_pizza'] = request.POST['return_pizza']
             return HttpResponseRedirect('/waste')
         else:
-            context = {'orders': orders
+            context = {'orders': orders,
                        'pizza_counts' : pizza_counts}
             return render(request, settings.TEMPLATE_DIRS +
                           '/public_html/Return/return.html', context)
@@ -385,7 +385,6 @@ def registration(request):
         if form.is_valid():
             username = post.get('username', '')
             password = post.get('password1', '')
-            logger.debug('Is_Valid from registration')
             u = User(user_name=username, password=password)
             u.save()
             form.save()
