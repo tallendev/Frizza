@@ -51,23 +51,22 @@ def pizza(request):
 # page.
 def toppings(request):
     if request.user.is_authenticated():
-        if 'pizza' in request.session:
-            if 'crust' in request.session:
-                if 'sauce' in request.session:
-                    topping_list = Topping.objects.all()
-                    if request.method == 'POST':
-                        if 'confirm' in request.POST:
-                            for i in topping_list:
-                                if str(i) in request.POST:
-                                    request.session[str(i)] = str(i)
-                            return HttpResponseRedirect('/allergies')
-                        else:
-                            del request.session['sauce']
-                            return HttpResponseRedirect['sauce']
-                    else:
-                        context = {'topping_list': topping_list}
-                        return render(request, settings.TEMPLATE_DIRS +
-                               '/public_html/Toppings/toppings.html', context)
+        if 'pizza' in request.session and 'crust' in request.session and \
+                        'sauce' in request.session:
+            topping_list = Topping.objects.all()
+            if request.method == 'POST':
+                if 'confirm' in request.POST:
+                    for i in topping_list:
+                        if str(i) in request.POST:
+                            request.session[str(i)] = str(i)
+                    return HttpResponseRedirect('/allergies')
+                else:
+                    del request.session['sauce']
+                    return HttpResponseRedirect['sauce']
+            else:
+                context = {'topping_list': topping_list}
+                return render(request, settings.TEMPLATE_DIRS +
+                                       '/public_html/Toppings/toppings.html', context)
         return HttpResponseRedirect('/pizza')
     else:
         return HttpResponseRedirect('/login')
@@ -102,24 +101,23 @@ def crust(request):
 # page.
 def sauce(request):
     if request.user.is_authenticated():
-        if 'pizza' in request.session:
-            if 'crust' in request.session:
-                if request.method == 'POST':
-                    if 'confirm' in request.POST:
-                        if 'sauce' in request.POST:
-                            request.session['sauce'] = request.POST['sauce']
-                            return HttpResponseRedirect('/toppings')
-                        else:
-                            HttpResponseRedirect('/toppings')
+        if 'pizza' in request.session and 'crust' in request.session:
+            if request.method == 'POST':
+                if 'confirm' in request.POST:
+                    if 'sauce' in request.POST:
+                        request.session['sauce'] = request.POST['sauce']
+                        return HttpResponseRedirect('/toppings')
                     else:
-                        del request.session['crust']
-                        return HttpResponseRedirect('/crust')
+                        HttpResponseRedirect('/toppings')
                 else:
-                    sauce_list = Sauce.objects.all()
-                    context = {'sauce_list': sauce_list}
-                    return render(request, settings.TEMPLATE_DIRS +
-                                   '/public_html/Sauce/sauce.html', context)
-            return HttpResponseRedirect('/pizza')
+                    del request.session['crust']
+                    return HttpResponseRedirect('/crust')
+            else:
+                sauce_list = Sauce.objects.all()
+                context = {'sauce_list': sauce_list}
+                return render(request, settings.TEMPLATE_DIRS +
+                                       '/public_html/Sauce/sauce.html', context)
+        return HttpResponseRedirect('/pizza')
     else:
         return HttpResponseRedirect('/login')
 
