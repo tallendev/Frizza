@@ -1,0 +1,299 @@
+// def pizza
+--------------------------------------------------------------------------
+Django code:
+
+order_list = Orders.objects.filter(user_name="admin")
+admin_list = []
+for order in order_list:
+    if order.pizza_id not in admin_list:
+	    admin_list.append(order.pizza_id)
+		
+uorder_list = Orders.objects.filter(user_name=str(request.user))
+user_list = []
+for uorder in uorder_list:
+    if uorder.pizza_id not in user_list and uorder.pizza_id not in admin_list:
+	    user_list.append(uorder.pizza_id)
+--------------------------------------------------------------------------
+SQL
+
+SELECT DISTINCT pizza_name
+FROM   Orders, Pizza
+WHERE  user_name="admin" and Orders.pizza_id = Pizza.pizza_id
+
+SELECT DISTINCT pizza_name
+FROM   Orders, Pizza
+WHERE  user_name= user and Orders.pizza_id = Pizza.pizza_id
+       and Orders.pizza_id not in (SELECT pizza_name
+                                   FROM   Orders, Pizza
+                                   WHERE  user_name="admin" and 
+								          Orders.pizza_id = Pizza.pizza_id)								   
+---------------------------------------------------------------------------
+// def toppings
+--------------------------------------------------------------------------
+Django code:
+
+topping_list = Topping.objects.all()
+--------------------------------------------------------------------------
+SQL
+
+SELECT topping_name
+FROM   Topping
+--------------------------------------------------------------------------
+// def crust
+--------------------------------------------------------------------------
+Django code:
+
+crust_list = Crust.objects.all()
+--------------------------------------------------------------------------
+SQL
+
+SELECT crust_name
+FROM   Crust
+--------------------------------------------------------------------------
+// def sauce
+--------------------------------------------------------------------------
+Django code:
+
+sauce_list = Sauce.objects.all()
+--------------------------------------------------------------------------
+SQL
+
+SELECT sauce_name
+FROM   Sauce
+--------------------------------------------------------------------------
+// def calorie_post
+--------------------------------------------------------------------------
+		
+	pizza = Pizza(current_id, str(request.POST['pizza_name']),
+	              request.session['sauce'],
+				  request.session['crust'])
+	pizza.save()
+	topping_list = Topping.objects.all()
+	for topping in topping_list:
+	    if str(topping) in request.session:
+		    HasTopping(pizza_id=pizza, topping_name=topping).save()
+	else:
+	    pizza = pizza.objects.get(pizza_name=request.session['pizza'])
+	user = User.objects.filter(user_name=str(request.user))[:1].get()
+	order_id = Orders.objects.all(). \=
+	               aggregate(Max('id'))['id__max'] + 1
+	Orders(id=order_id, user_name=user, pizza_id=pizza).save()
+--------------------------------------------------------------------------
+SQL
+
+INSERT into Pizza
+         values(current_id, pizza_name, sauce, crust)
+
+INSERT into HasTopping
+         values(current_id, topping)
+
+INSERT into Orders
+         values(order_id, user, pizza)
+
+--------------------------------------------------------------------------
+// def calorie_render
+--------------------------------------------------------------------------
+Django
+
+pizza = Pizza.objects.get(pizza_name=request.session['pizza'])
+crust = Crust.objects.get(crust_name=Pizza.crust_name)
+crust_calorie = crust.calorie
+
+sauce = Sauce.objects.get(sauce_name=pizza.sauce_name)
+sauce_calorie = sauce.calorie
+
+hasToppings = HassTopping.objects.filter(pizza_id=pizza.pizza_id)
+
+for ht in hasToppings:
+    topping = Topping.objects.get(topping_name=ht.topping_name)
+	toppings.append(topping)
+	top_cal_sum = top_cal_sum + topping.calorie
+	
+crust = Crust.objects.get(crust_name=request.session['crust'])
+sauce = Sauce.objects.get(sauce_name=request.session['sauce'])
+crust_calorie = crust.calorie
+sauce_calorie = sauce.calorie
+topping_list = Topping.objects.all()
+topping_str = []
+for topping in topping_list:
+    if str(topping) in request.session:
+	    topping_str.append(topping)
+	for topping in topping_str:
+	    topping = Topping.objects.get(topping_name=topping)
+		toppings.append(topping)
+		top_cal_sum += topping.calorie
+--------------------------------------------------------------------------
+SQL 
+
+SELECT calorie
+FROM Pizza naturalJoin Crust
+WHERE pizza_name = pizza
+
+SELECT calorie
+FROM Pizza naturalJoin Sauce
+WHERE pizza_name = pizza
+
+SELECT sum (calorie)
+FROM   Topping naturalJoin HasTopping
+WHERE  pizza_name = pizza
+
+SELECT calorie
+FROM   Crust
+WHERE  crust_name = crust
+
+SELECT calorie
+FROM   Sauce
+WHERE  sauce_name = sauce
+
+SELECT calorie
+FROM   Topping
+WHERE  topping_name = topping
+--------------------------------------------------------------------------
+// def registration
+--------------------------------------------------------------------------
+Django
+
+u = User(user_name=username, password = password)
+u.save()
+--------------------------------------------------------------------------
+SQL
+
+INSERT into User
+         VALUES(username, password)
+--------------------------------------------------------------------------
+// def return_pizza
+--------------------------------------------------------------------------
+Django
+
+uorder_list = Orders.objects.filter(user_name=str(request.user))
+
+orders = []
+for uorder in uorder_list:
+    orders.append(uorder.pizza_id)
+	
+used_ids = []
+pizza_counts = {}
+for o in orders:
+    if o.pizza_name not in pizza_counts:
+	    pizza_counts[o.pizza_name] = 1
+    else:
+	    pizza_counts[o.pizza_name] += 1
+--------------------------------------------------------------------------
+SQL
+
+SELECT pizza_name, distinct count(pizza_id) as count
+FROM   Pizza, Orders
+WHERE  Orders.pizza_id = Pizza.pizza_id and Orders.user_name = user
+GROUP BY pizza_name
+--------------------------------------------------------------------------
+// def waste
+--------------------------------------------------------------------------
+Django
+
+pizza = Pizza.objects.get(pizza_name=request.session['return_pizza']
+wasted_toppings = HasTopping.objects.filter(pizza_id=pizza.pizza_id).\
+                             select_related('orders__pizza_name')
+							
+order_id = Orders.objects.filter(user_name=str(request.user), \
+        pizza_id=pizza_id).aggregate(Max('id'))['id__max']
+		
+order = Orders.objects.get(id=order_id)
+order.delete()
+
+pizza_ordered = Orders.objects.filter(pizza_id=pizza.pizza_id).exists()
+
+if not pizza_ordered:
+    HasTopping.objects.filter(pizza_id=pizza.pizza_id).delete()
+	Pizza.objects.get(pizza_id=pizza.pizza_id).delete()
+--------------------------------------------------------------------------
+SQL
+
+SELECT topping_name
+FROM   Orders naturalJoin HasTopping
+WHERE  pizza_name = return_pizza
+
+SELECT crust_name
+FROM   Orders naturalJoin Pizza
+WHERE  pizza_name = return_pizza
+
+SELECT sauce_name
+FROM   Orders naturalJoin Pizza
+WHERE  pizza_name = return_pizza
+
+WITH max_id (id) as
+     (SELECT max(id)
+	  FROM   Orders
+	  WHERE  pizza_id = p_id and user_name = user)
+DELETE from Orders
+WHERE  user_name = user and id = max_id.id
+
+DELETE from HasTopping
+WHERE  pizza_id = p_id 
+       and pizza_id not in (SELECT pizza_id
+                            FROM   Orders)
+
+DELETE from Pizza
+WHERE  pizza_id = p_id
+
+--------------------------------------------------------------------------
+//def allergies
+--------------------------------------------------------------------------
+Django
+
+topping_allergies = []
+sauce_allergies = []
+crust_allergies = []
+
+if request.session['pizza'] == '':
+    crust = Crust.objects.get(crust_name=request.session['crust'])
+	sauce = Sauce.objects.get(sauce_name=request.session['sauce'])
+	all_toppings = Topping.objects.all()
+	for i in all_toppings:
+	    if str(i) in request.session:
+		    allergies = Allergy.objects.filter(ingredient_name=i.topping_name)
+			for j in Allergies:
+			    topping_allergies.append(j)
+				
+else:
+    pizza = Pizza.objects.get(pizza_name=request.session['pizza'])
+	crust = Crust.objects.get(crust_name=pizza.crust_name)
+	sauce = Sauce.objects.get(sauce_name=pizza.sauce_name)
+	
+	pizzaToppings = HasTopping.objects.filter(pizza_id=pizza)
+	
+	for topping in pizzaToppings:
+	    allergies = Allergy.objects.fitler(ingredient_name=topping.topping_name)
+		
+		for allergy in allergies:
+		    topping_allergies.append(allergy)
+			
+	sauce_allergies = Allergy.objects.filter(ingredient_name=sauce.sauce_name)
+	crust_allergies = Allergy.objects.filter(ingredient_name=crust.crust_name)
+	
+--------------------------------------------------------------------------------
+SQL
+
+SELECT allergy_name
+FROM   Allergy
+WHERE  ingredient_name = crust
+
+SELECT allergy_name
+FROM   Allergy
+WHERE  ingredient_name = sauce
+
+SELECT allergy_name
+FROM   Allergy, Topping
+WHERE  Allergy.ingredient_name = Topping.topping_name
+
+SELECT allergy_name
+FROM   Allergy, HasTopping
+WHERE  Allergy.ingredient_name = HasTopping.topping_name 
+       and HasTopping.pizza_id = p_id
+	   
+SELECT allergy_name
+FROM   Allergy, Pizza
+WHERE  Allergy.ingredient_name = Pizza.crust_name
+
+SELECT allergy_name
+FROM   Allergy, Pizza
+WHERE  Allergy.ingredient_name = Pizza.sauce_name
