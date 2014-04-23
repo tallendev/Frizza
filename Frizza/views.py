@@ -330,6 +330,12 @@ def waste(request):
  
             order = Orders.objects.get(id=order_id)
             order.delete()
+            
+            pizza_ordered = Orders.objects.filter(pizza_id=pizza.pizza_id).exists()
+
+            if not pizza_ordered:
+                HasTopping.objects.filter(pizza_id=pizza.pizza_id).delete()
+                Pizza.objects.get(pizza_id=pizza.pizza_id).delete()
 
             del request.session['return_pizza']
 
