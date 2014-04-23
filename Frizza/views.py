@@ -290,12 +290,20 @@ def calorie(request):
 # This function handles a request to the returns page.
 def return_pizza(request):
     if request.user.is_authenticated():
-        uorder_list = Orders.objects.filter(user_name=str(request.user))
+        uorder = Orders.objects.filter(user_name=str(request.user))
         
         orders = []
         for uorder in uorder_list:
             orders.append(uorder.pizza_id)
-       
+
+        used_ids = []
+        pizza_counts = {}
+        for o in orders:
+            if o.pizza_id not in pizza_counts:
+                pizza_counts[o.pizza_name] = 1
+            else:
+                pizza_counts[o.pizza_name] += 1
+
         if request.method == 'POST' and 'return_pizza' in request.POST:
             request.session['return_pizza'] = request.POST['return_pizza']
             return HttpResponseRedirect('/waste')
