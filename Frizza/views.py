@@ -372,6 +372,7 @@ def return_pizza(request):
                     request.session['return_pizza'] = request.POST['return_pizza']
                     return HttpResponseRedirect('/waste')
                 else:
+                    request.session['error_return'] = True
                     return HttpResponseRedirect('/return')
             else:
                 return HttpResponseRedirect('/pizza')
@@ -387,7 +388,9 @@ def return_pizza(request):
             else:
                 pizza_counts[o.pizza_name] += 1
         else:
-            context = {'pizza_counts': pizza_counts}
+            context = {'pizza_counts': pizza_counts,
+                       'error_return': request.session['error_return']}
+            request.session['error_return'] = False
             return render(request, settings.TEMPLATE_DIRS +
                                    '/public_html/Return/return.html', context)
     else:
@@ -462,6 +465,7 @@ def disclaimer(request):
         request.session['duplicate_name'] = False
         request.session['sauce_error'] = False
         request.session['crust_error'] = False
+        request.session['error_return'] = False
         if request.method == 'POST':
             if 'confirm' in request.POST:
                 # Verifies user actually accepted disclaimer.
