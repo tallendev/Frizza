@@ -422,8 +422,6 @@ def waste(request):
                                             pizza_id=pizza.pizza_id).aggregate(
                                             Max('id'))['id__max']
 
-
-
             if request.method == 'POST':
                 order = Orders.objects.get(id=order_id)
                 order.delete()
