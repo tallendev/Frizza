@@ -397,8 +397,7 @@ def return_pizza(request):
 
 def waste(request):
     if request.user.is_authenticated():
-        if 'pizza' in request.session and 'crust' in request.session and \
-                        'sauce' in request.session:
+        if 'pizza' in request.session:
             if 'return_pizza' in request.session:
                 pizza = Pizza.objects.get(
                     pizza_name=request.session['return_pizza'])
