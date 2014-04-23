@@ -448,7 +448,7 @@ def registration(request):
     return render(request, settings.TEMPLATE_DIRS +
                 '/public_html/Registration/registration.html', context)
 
-''' Dispalayed when you succesfully order.'''
+''' Displayed when you succesfully order.'''
 def thank(request):
     if 'pizza' in request.session and (('crust' in request.session and
         'sauce' in request.session) or request.session['pizza'] != ''):
