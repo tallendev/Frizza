@@ -325,9 +325,10 @@ def waste(request):
             wasted_crust = Pizza.objects.filter(pizza_id=pizza.pizza_id).\
                                  select_related('orders__pizza_name')
 
-            order = Orders.objects.filter(user_name=str(request.user), \
-                    pizza_id=pizza.pizza_id).aggregate(Max('id'))
+            order_id = Orders.objects.filter(user_name=str(request.user), \
+                    pizza_id=pizza.pizza_id).aggregate(Max('id'))[id__max]
  
+            order = Orders.objects.get(id=order_id)
             order.delete()
 
             del request.session['return_pizza']
