@@ -348,7 +348,6 @@ def confirmation(request):
                                                     'sauce' in request.session) or
                                                    request.session[
                                                        'pizza'] != ''):
-            #TODO: Validate appropriate fields are filled out
             if request.method == 'POST':
                 return confirmation_post(request)
             else:
@@ -367,6 +366,15 @@ def return_pizza(request):
     if request.user.is_authenticated():
         if not request.session['disclaimer_conf']:
             return HttpResponseRedirect('/logout')
+        if request.method == 'POST':
+            if 'submit' in request.POST:
+                if 'return_pizza' in request.POST:
+                    request.session['return_pizza'] = request.POST['return_pizza']
+                    return HttpResponseRedirect('/waste')
+                else:
+                    return HttpResponseRedirect('/return')
+            else:
+                return HttpResponseRedirect('/pizza')
         uorder_list = Orders.objects.filter(user_name=str(request.user))
         orders = []
         for uorder in uorder_list:
@@ -378,9 +386,6 @@ def return_pizza(request):
                 pizza_counts[o.pizza_name] = 1
             else:
                 pizza_counts[o.pizza_name] += 1
-        if request.method == 'POST' and 'return_pizza' in request.POST:
-            request.session['return_pizza'] = request.POST['return_pizza']
-            return HttpResponseRedirect('/waste')
         else:
             context = {'pizza_counts': pizza_counts}
             return render(request, settings.TEMPLATE_DIRS +
