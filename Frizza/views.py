@@ -365,12 +365,12 @@ def disclaimer(request):
     if request.user.is_authenticated():
         clear_session(request)
         request.session['pizza'] = ''
+        request.session['order_complete'] = False
+        request.session['return_success'] = False
+        request.session['order_cancelled'] = False
+        request.session['duplicate_name'] = False
         if request.method == 'POST':
             if 'confirm' in request.POST:
-                request.session['order_complete'] = False
-                request.session['return_success'] = False
-                request.session['order_cancelled'] = False
-                request.session['duplicate_name'] = False
                 return HttpResponseRedirect('/pizza')
             else:
                 return HttpResponseRedirect('/logout')
