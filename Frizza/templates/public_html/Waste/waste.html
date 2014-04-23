@@ -29,15 +29,20 @@
     <link href="/static/return.css" rel="stylesheet">
     <style>
         body {
-        padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
+        padding-top: 60px; /* 60px to make the container go all the way to the
+        bottom of the topbar */
         }
     </style>
     <link href="/static/dist/css/bootstrap.css" rel="stylesheet">
 
-    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../assets/ico/apple-touch-icon-144-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../assets/ico/apple-touch-icon-114-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../assets/ico/apple-touch-icon-72-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" href="../assets/ico/apple-touch-icon-57-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="144x144"
+          href="../assets/ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114"
+          href="../assets/ico/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72"
+          href="../assets/ico/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed"
+          href="../assets/ico/apple-touch-icon-57-precomposed.png">
     <link rel="shortcut icon" href="/static/favicon.ico">
 </head>
 
@@ -47,7 +52,8 @@
 <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
     <div class="container">
         <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <button type="button" class="navbar-toggle" data-toggle="collapse"
+                    data-target=".navbar-collapse">
                 <span class="sr-only">Toggle navigation</span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
@@ -57,77 +63,79 @@
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                <li class="active"><a >Waste</a></li>
+                <li class="active"><a>Waste</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li><a >{{ user.username }}</a> </li>
+                <li><a>{{ user.username }}</a></li>
                 <li><a href="/logout">Sign Out</a></li>
             </ul>
-        </div><!--/.nav-collapse -->
+        </div>
+        <!--/.nav-collapse -->
     </div>
 </div>
 
 
 <div class="container theme-showcase" role="main">
-        <div class="page-header">
-        </div>
+    <div class="page-header">
+    </div>
 
 
-        <p class="lead">Wasted Toppings:</p>
-        
-        <div class="row">
+    <p class="lead">Wasted Toppings:</p>
+
+    <div class="row">
         <div class="column">
 
-        {% if wasted_toppings %}
+            {% if wasted_toppings %}
             {% for topping in wasted_toppings %}
-                <p>{{ topping.topping_name }}</p>
+            <p>{{ topping.topping_name }}</p>
             {% endfor %}
-        {% else %}
-        <p> No toppings wasted </p>
-        {% endif %}
-        
-        </div>
-        </div>
+            {% else %}
+            <p> No toppings wasted </p>
+            {% endif %}
 
-        <p class="lead">Wasted Sauce:</p>
+        </div>
+    </div>
 
-        <div class="row">
+    <p class="lead">Wasted Sauce:</p>
+
+    <div class="row">
         <div class="column">
 
-        {% if wasted_sauce %}
+            {% if wasted_sauce %}
             {% for sauce in wasted_sauce %}
-                 <p>{{ sauce.sauce_name }}</p>
+            <p>{{ sauce.sauce_name }}</p>
             {% endfor %}
-        {% else %}
-        <p> No sauce wasted </p>
-        {% endif %}
+            {% else %}
+            <p> No sauce wasted </p>
+            {% endif %}
         </div>
-        </div>
+    </div>
 
-        <p class="lead">Wasted Crust:</p>
-        
-        <div class="row">
+    <p class="lead">Wasted Crust:</p>
+
+    <div class="row">
         <div class="column">
-        {% if wasted_crust %}
+            {% if wasted_crust %}
             {% for crust in wasted_crust %}
-                <p>{{ crust.crust_name }}</p>
+            <p>{{ crust.crust_name }}</p>
             {% endfor %}
-        {% else %}
-        <p> No crust wasted </p>
-        {% endif %}
+            {% else %}
+            <p> No crust wasted </p>
+            {% endif %}
         </div>
-        </div>
+    </div>
 
-        <div class="row">
-            <div class="column">
-                <div class="button_container">
-                    <p>
-                        <a href="/pizza" class="btn btn-lg btn-primary" type="submit">Ok</a>
-                    </p>
-                </div>
+    <div class="row">
+        <div class="column">
+            <div class="button_container">
+                <p>
+                    <a href="/pizza" class="btn btn-lg btn-primary"
+                       type="submit">Ok</a>
+                </p>
             </div>
         </div>
     </div>
+</div>
 </div>
 
 

@@ -29,15 +29,20 @@
     <link href="/static/toppings.css" rel="stylesheet">
     <style>
         body {
-        padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
+        padding-top: 60px; /* 60px to make the container go all the way to the
+        bottom of the topbar */
         }
     </style>
     <link href="/static/dist/css/bootstrap.css" rel="stylesheet">
 
-    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../assets/ico/apple-touch-icon-144-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../assets/ico/apple-touch-icon-114-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../assets/ico/apple-touch-icon-72-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" href="../assets/ico/apple-touch-icon-57-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="144x144"
+          href="../assets/ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114"
+          href="../assets/ico/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72"
+          href="../assets/ico/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed"
+          href="../assets/ico/apple-touch-icon-57-precomposed.png">
     <link rel="shortcut icon" href="/static/favicon.ico">
 </head>
 
@@ -47,7 +52,8 @@
 <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
     <div class="container">
         <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <button type="button" class="navbar-toggle" data-toggle="collapse"
+                    data-target=".navbar-collapse">
                 <span class="sr-only">Toggle navigation</span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
@@ -57,13 +63,14 @@
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                <li class="active"><a >Toppings</a></li>
+                <li class="active"><a>Toppings</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li><a >{{ user.username }}</a> </li>
+                <li><a>{{ user.username }}</a></li>
                 <li><a href="/logout">Sign Out</a></li>
             </ul>
-        </div><!--/.nav-collapse -->
+        </div>
+        <!--/.nav-collapse -->
     </div>
 </div>
 
@@ -77,13 +84,16 @@
         <div class="row">
             <div class="column">
                 {% if topping_list %}
-                    {% for topping in topping_list %}
-                    <input type="checkbox" name="{{ topping.topping_name }}" value="{{ topping.topping_name }}">{{ topping.topping_name }}<br>
-                    {% endfor %}
+                {% for topping in topping_list %}
+                <input type="checkbox" name="{{ topping.topping_name }}"
+                       value="{{ topping.topping_name }}">{{
+                topping.topping_name }}<br>
+                {% endfor %}
                 {% else %}
-                    <p> No toppings </p>
+                <p> No toppings </p>
                 {% endif %}
-            </div><!-- /.col-sm-4 -->
+            </div>
+            <!-- /.col-sm-4 -->
         </div>
 
         <div class="page-header"></div>
@@ -94,8 +104,10 @@
             <div class="column">
                 <div class="button_container">
                     <p>
-                        <input type="submit" class="btn btn-lg btn-primary" name="confirm" value="Dispense">
-                        <input type="submit" class="btn btn-lg btn-default" value="Back">
+                        <input type="submit" class="btn btn-lg btn-primary"
+                               name="confirm" value="Dispense">
+                        <input type="submit" class="btn btn-lg btn-default"
+                               value="Back">
                     </p>
                 </div>
             </div>

@@ -1,9 +1,9 @@
 # Django settings for Frizza project.
-import os, sys
+import os
 
 #stackoverflow.com/questions/14012340/django-setting-up-urls-py-and-views-py
 PROJECT_ROOT = os.path.dirname(__file__)
-TEMPLATE_DIRS = ( 
+TEMPLATE_DIRS = (
     os.path.join(PROJECT_ROOT, 'templates')
 )
 LOG_DIRS = (
@@ -14,22 +14,24 @@ DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
-    # ('Your Name', 'your_email@example.com'),
+# ('Your Name', 'your_email@example.com'),
 )
 
 MANAGERS = ADMINS
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'frizza',                      # Or path to database file if using sqlite3.
-        'USER': 'tyler',                      # Not used with sqlite3.
-        'PASSWORD': 'sharknado',                  # Not used with sqlite3.
-        'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
-        'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+        'NAME': 'frizza', # Or path to database file if using sqlite3.
+        'USER': 'tyler', # Not used with sqlite3.
+        'PASSWORD': 'sharknado', # Not used with sqlite3.
+        'HOST': '', # Set to empty string for localhost. Not used with sqlite3.
+        'PORT': '', # Set to empty string for default. Not used with sqlite3.
     }
 }
 import dj_database_url
+
 DATABASES['default'] = dj_database_url.config()
 #DATABASES['default'] = dj_database_url.config(default='postgres://icowxynaccyism:plPLUP3xzFpHlG6ZC_KmoGeWyx@ec2-54-204-27-119.compute-1.amazonaws.com:5432/dakh2i75c4ql0a')
 # Hosts/domain names that are valid for this site; required if DEBUG is False
@@ -91,7 +93,7 @@ STATICFILES_DIRS = (
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-#    'django.contrib.staticfiles.finders.DefaultStorageFinder',
+    #    'django.contrib.staticfiles.finders.DefaultStorageFinder',
 )
 
 # Make this unique, and don't share it with anybody.
@@ -101,7 +103,7 @@ SECRET_KEY = 'zbfu*4g3=z33jdirc!4u4++ko06q0r=7qy5r6$)_qoqje8=t+!'
 TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.Loader',
     'django.template.loaders.app_directories.Loader',
-#     'django.template.loaders.eggs.Loader',
+    #     'django.template.loaders.eggs.Loader',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -118,7 +120,6 @@ ROOT_URLCONF = 'Frizza.urls'
 
 # Python dotted path to the WSGI application used by Django's runserver.
 WSGI_APPLICATION = 'Frizza.wsgi.application'
-
 
 INSTALLED_APPS = (
     'django.contrib.auth',
@@ -169,6 +170,6 @@ LOGGING = {
             'handlers': ['file'],
             'level': 'DEBUG',
             'propagate': True,
-            },
+        },
     }
 }

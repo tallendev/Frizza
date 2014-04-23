@@ -18,7 +18,9 @@
 
 <!DOCTYPE html>
 <!-- saved from url=(0039)http://getbootstrap.com/examples/cover/ -->
-<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <head>
     <style>
         form{display:inline;}
@@ -39,60 +41,73 @@
 <!-- Custom styles for this template -->
 <link href="/static/confirmation.css" rel="stylesheet">
 
-<style type="text/css"></style><style id="holderjs-style" type="text/css"></style>
+<style type="text/css"></style>
+<style id="holderjs-style" type="text/css"></style>
 
 <body>
 <!--<div class="container theme-showcase" role="main">-->
-    <div class="site-wrapper">
+<div class="site-wrapper">
 
-        <div class="site-wrapper-inner">
+    <div class="site-wrapper-inner">
 
-            <div class="cover-container">
+        <div class="cover-container">
 
-                <div class="inner cover">
-                    <h1 class="cover-heading">Please check your order:</h1>
-                    <div class="row">
-                        <div class="column">
-                            <ul>
-                                <li>{{ crust }} Crust: {{ crust.calorie }} Calories</li>
-                                <li>{{ sauce }} Sauce: {{ sauce.calorie }} Calories</li>
-                                {% if toppings %}
-                                {% for topping in toppings %}
-                                <li>{{ topping }}: {{ topping.calorie }} Calories</li>
-                                {% endfor %}
-                                {% endif %}
-                                <li> Total Calories: {{ cal_total }}</li><br>
-                            </ul>
-                        </div>
+            <div class="inner cover">
+                <h1 class="cover-heading">Please check your order:</h1>
+
+                <div class="row">
+                    <div class="column">
+                        <ul>
+                            <li>{{ crust }} Crust: {{ crust.calorie }}
+                                Calories
+                            </li>
+                            <li>{{ sauce }} Sauce: {{ sauce.calorie }}
+                                Calories
+                            </li>
+                            {% if toppings %}
+                            {% for topping in toppings %}
+                            <li>{{ topping }}: {{ topping.calorie }} Calories
+                            </li>
+                            {% endfor %}
+                            {% endif %}
+                            <li> Total Calories: {{ cal_total }}</li>
+                            <br>
+                        </ul>
                     </div>
-
                 </div>
-
-                {% block content %}
-
-                <form action="" class="form-signin" method="post">{% csrf_token %}
-                    {% if pizza %}
-                    <input type="text" maxlength="20" pattern="^[a-zA-Z0-9_]{1,20}$" name="pizza_name" id="pizza_name" class="form-control" placeholder="Pizza Name" required autofocus><br>
-                    {% endif %}
-                    <input class="btn btn-lg btn-primary" name="confirm" type="submit" value="Confirm">
-                </form>
-
-                <form action="" class="form-signin" method="post">{% csrf_token %}
-                    <input class="btn btn-lg btn-default" type="submit" value="Back to Pizza">
-                </form><br>
-
-                {% if duplicate_name %}
-                <div class="alert alert-danger">
-                    <strong>Pizza name already exists.</strong>
-                </div>
-                {% endif %}
-
-                {% endblock %}
 
             </div>
 
+            {% block content %}
+
+            <form action="" class="form-signin" method="post">{% csrf_token %}
+                {% if pizza %}
+                <input type="text" maxlength="20" pattern="^[a-zA-Z0-9_]{1,20}$"
+                       name="pizza_name" id="pizza_name" class="form-control"
+                       placeholder="Pizza Name" required autofocus><br>
+                {% endif %}
+                <input class="btn btn-lg btn-primary" name="confirm"
+                       type="submit" value="Confirm">
+            </form>
+
+            <form action="" class="form-signin" method="post">{% csrf_token %}
+                <input class="btn btn-lg btn-default" type="submit"
+                       value="Back to Pizza">
+            </form>
+            <br>
+
+            {% if duplicate_name %}
+            <div class="alert alert-danger">
+                <strong>Pizza name already exists.</strong>
+            </div>
+            {% endif %}
+
+            {% endblock %}
+
         </div>
+
     </div>
+</div>
 <!--</div>-->
 
 <!-- Bootstrap core JavaScript
@@ -102,7 +117,9 @@
 <script src="static/dist/js/bootstrap.min.js"></script>
 <script src="./Cover Template for Bootstrap_files/docs.min.js"></script>
 <!-- Just for debugging purposes. Don't actually copy this line! -->
-<!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+<!--[if lt IE 9]>
+<script src="../../assets/js/ie8-responsive-file-warning.js"></script>
+<![endif]-->
 
 <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
 <!--[if lt IE 9]>
@@ -111,4 +128,5 @@
 <![endif]-->
 
 
-</body></html>
+</body>
+</html>

@@ -18,7 +18,7 @@
 
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -31,50 +31,61 @@
     <!-- Bootstrap core CSS -->
     <link href="/static/dist/css/bootstrap.min.css" rel="stylesheet">
 
-      <!-- Custom styles for this template -->
-      <link href="/static/login.css" rel="stylesheet">
-  </head>
+    <!-- Custom styles for this template -->
+    <link href="/static/login.css" rel="stylesheet">
+</head>
 
-  <body>
+<body>
 
-    <div class="container">
+<div class="container">
 
-      <div class="jumbotron">
+    <div class="jumbotron">
         <h1><i>Frizza</i></h1>
 
-          <h2>"Frozen Pizza Dispenser"</h2>
+        <h2>"Frozen Pizza Dispenser"</h2>
 
-          {% block content %}
+        {% block content %}
 
-          <form action="" class="form-signin" method="post">{% csrf_token %}
-              <h3 class="form-signin-heading">Please log in</h3>
-              <input type="text" maxlength="20" pattern="^[a-zA-Z0-9_]{1,20}$" name="username" id="Username" class="form-control" placeholder="User Name" required autofocus><br>
-              <input type="password" maxlength="30" pattern="^[a-zA-Z0-9]{1,30}$" name="password" id="Password" class="form-control" placeholder="Password" required>
-              <input class="btn btn-lg btn-primary btn-block" type="submit" value="Log in">
-              <a href="/registration" class="btn btn-lg btn-default btn-block">Register</a>
+        <form action="" class="form-signin" method="post">{% csrf_token %}
+            <h3 class="form-signin-heading">Please log in</h3>
 
-              <input type="hidden" name="next" value="/disclaimer" />
-          </form>
+            <p>
+                Username must consist of alphanumeric characters or '_'.<br>
+                Password must consist of ONLY alphanumeric characters.
+            </p>
+            <input type="text" maxlength="20" pattern="^[a-zA-Z0-9_]{1,20}$"
+                   name="username" id="Username" class="form-control"
+                   placeholder="User Name" required autofocus><br>
+            <input type="password" maxlength="30" pattern="^[a-zA-Z0-9]{1,30}$"
+                   name="password" id="Password" class="form-control"
+                   placeholder="Password" required>
+            <input class="btn btn-lg btn-primary btn-block" type="submit"
+                   value="Log in">
+            <a href="/registration" class="btn btn-lg btn-default btn-block">Register</a>
 
-          {% if form.errors %}
-          <div class="alert alert-danger">
-              <strong>Invalid username or password.</strong>
-          </div>
-          {% endif %}
+            <input type="hidden" name="next" value="/disclaimer"/>
+        </form>
 
-          {% endblock %}
+        {% if form.errors %}
+        <div class="alert alert-danger">
+            <strong>Invalid username or password.</strong>
+        </div>
+        {% endif %}
 
-      </div>
+        {% endblock %}
 
-    </div> <!-- /container -->
+    </div>
 
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-  </body>
-  <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-  <!--[if lt IE 9]>
-  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-  <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-  <![endif]-->
+</div>
+<!-- /container -->
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+</body>
+<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
 </html>
