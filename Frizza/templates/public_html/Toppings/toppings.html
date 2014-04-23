@@ -85,9 +85,7 @@
             <div class="column">
                 {% if topping_list %}
                 {% for topping in topping_list %}
-                <input type="checkbox" name="{{ topping.topping_name }}"
-                       value="{{ topping.topping_name }}">{{
-                topping.topping_name }}<br>
+                <input type="checkbox" name="{{ topping.topping_name }}" value="{{ topping.topping_name }}">{{ topping.topping_name }}<br>
                 {% endfor %}
                 {% else %}
                 <p> No toppings </p>
