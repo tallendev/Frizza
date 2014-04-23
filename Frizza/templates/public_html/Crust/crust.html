@@ -103,6 +103,11 @@
 
     </form>
 
+    {% if crust_error %}
+    <div class="alert alert-danger">
+        <strong>Please select a crust before proceeding.</strong>
+    </div>
+
     {% endblock %}
 
 </div>
