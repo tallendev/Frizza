@@ -277,7 +277,7 @@ def confirmation_post(request):
             for topping in topping_list:
                 if str(topping) in request.session:
                     HasTopping(pizza_id=pizza, topping_name=topping).save()
-            clear_session(request)
+            #clear_session(request)
         else:
             pizza = Pizza.objects.get(pizza_name=request.session['pizza'])
         user = User.objects.filter(user_name=str(request.user))[:1].get()
@@ -364,9 +364,8 @@ def confirmation_render(request):
 def confirmation(request):
     if request.user.is_authenticated():
         if 'pizza' in request.session and (('crust' in request.session and
-                                                    'sauce' in request.session) or
-                                                   request.session[
-                                                       'pizza'] != ''):
+                                            'sauce' in request.session) or
+                                            request.session['pizza'] != ''):
             if request.method == 'POST':
                 return confirmation_post(request)
             else:
@@ -527,6 +526,7 @@ def thank(request):
     if 'pizza' in request.session and (('crust' in request.session and
                                                 'sauce' in request.session) or
                                                request.session['pizza'] != ''):
+        clear_session(request)
         # Redirect to a success page.
         request.session['order_complete'] = True
         return render(request, settings.TEMPLATE_DIRS +
